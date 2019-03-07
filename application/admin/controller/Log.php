@@ -10,8 +10,10 @@ class Log extends Base
 
     /**
      * [operate_log 操作日志]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function operate_log()
     {
@@ -46,8 +48,7 @@ class Log extends Base
 
     /**
      * [del_log 删除日志]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function del_log()
     {

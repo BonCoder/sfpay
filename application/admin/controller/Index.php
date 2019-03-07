@@ -15,8 +15,7 @@ class Index extends Base
 
     /**
      * [indexPage 后台首页]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed [type] [description]
      */
     public function indexPage()
     {
@@ -38,11 +37,14 @@ class Index extends Base
     }
 
 
-
     /**
      * [userEdit 修改密码]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function editpwd(){
 

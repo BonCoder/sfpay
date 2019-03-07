@@ -12,7 +12,7 @@ class Login extends Controller
 
     /**
      * 登录页面
-     * @return
+     * @return mixed
      */
     public function index()
     {
@@ -23,7 +23,12 @@ class Login extends Controller
 
     /**
      * 登录操作
-     * @return
+     * @return \think\response\Json
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function doLogin()
     {
@@ -91,7 +96,7 @@ class Login extends Controller
 
     /**
      * 验证码
-     * @return
+     * @return void
      */
     public function checkVerify()
     {

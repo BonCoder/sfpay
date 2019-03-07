@@ -13,7 +13,6 @@ class AdPositionModel extends Model
 
     /**
      * [getAll 根据条件获取全部数据]
-     * @author [田建龙] [864491238@qq.com]
      */
     public function getAll($nowpage, $limits)
     {
@@ -23,6 +22,7 @@ class AdPositionModel extends Model
     /**
      * 插入信息
      * @param $param
+     * @return array
      */
     public function insertAdPosition($param)
     {
@@ -41,6 +41,7 @@ class AdPositionModel extends Model
     /**
      * 编辑信息
      * @param $param
+     * @return array
      */
     public function editAdPosition($param)
     {
@@ -59,6 +60,7 @@ class AdPositionModel extends Model
     /**
      * 根据id获取一条信息
      * @param $id
+     * @return array|false|\PDOStatement|string|Model
      */
     public function getOne($id)
     {
@@ -68,7 +70,6 @@ class AdPositionModel extends Model
 
     /**
      * [getAll 获取全部广告位]
-     * @author [田建龙] [864491238@qq.com]
      */
     public function getAllPosition()
     {

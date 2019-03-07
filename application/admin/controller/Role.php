@@ -10,8 +10,7 @@ class Role extends Base
 
     /**
      * [index 角色列表]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function index(){
 
@@ -38,11 +37,9 @@ class Role extends Base
     }
 
 
-
     /**
      * [roleAdd 添加角色]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function roleAdd()
     {
@@ -58,11 +55,9 @@ class Role extends Base
     }
 
 
-
     /**
      * [roleEdit 编辑角色]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function roleEdit()
     {
@@ -81,11 +76,9 @@ class Role extends Base
     }
 
 
-
     /**
      * [roleDel 删除角色]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function roleDel()
     {
@@ -96,11 +89,9 @@ class Role extends Base
     }
 
 
-
     /**
      * [role_state 用户状态]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function role_state()
     {
@@ -120,11 +111,9 @@ class Role extends Base
     }
 
 
-
     /**
      * [giveAccess 分配权限]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function giveAccess()
     {

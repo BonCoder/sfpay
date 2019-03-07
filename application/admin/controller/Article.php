@@ -10,7 +10,8 @@ class Article extends Base
 
     /**
      * [index 文章列表]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json
+     * @author   Bob<bob@bobcoder.cc>
      */
     public function index(){
 
@@ -38,8 +39,7 @@ class Article extends Base
 
     /**
      * [add_article 添加文章]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function add_article()
     {
@@ -59,8 +59,7 @@ class Article extends Base
 
     /**
      * [edit_article 编辑文章]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function edit_article()
     {
@@ -80,11 +79,9 @@ class Article extends Base
     }
 
 
-
     /**
      * [del_article 删除文章]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function del_article()
     {
@@ -95,11 +92,9 @@ class Article extends Base
     }
 
 
-
     /**
      * [article_state 文章状态]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function article_state()
     {
@@ -124,8 +119,7 @@ class Article extends Base
 
     /**
      * [index_cate 分类列表]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed [type] [description]
      */
     public function index_cate(){
 
@@ -138,8 +132,7 @@ class Article extends Base
 
     /**
      * [add_cate 添加分类]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function add_cate()
     {
@@ -157,8 +150,7 @@ class Article extends Base
 
     /**
      * [edit_cate 编辑分类]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function edit_cate()
     {
@@ -179,8 +171,7 @@ class Article extends Base
 
     /**
      * [del_cate 删除分类]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function del_cate()
     {
@@ -191,11 +182,9 @@ class Article extends Base
     }
 
 
-
     /**
      * [cate_state 分类状态]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function cate_state()
     {

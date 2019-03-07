@@ -11,8 +11,7 @@ class Ad extends Base
     //*********************************************广告列表*********************************************//
     /**
      * [index 广告列表]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function index(){
 
@@ -42,8 +41,7 @@ class Ad extends Base
 
     /**
      * [add_ad 添加广告]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function add_ad()
     {
@@ -64,8 +62,7 @@ class Ad extends Base
 
     /**
      * [edit_ad 编辑广告]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function edit_ad()
     {
@@ -84,8 +81,7 @@ class Ad extends Base
 
     /**
      * [del_ad 删除广告]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function del_ad()
     {
@@ -98,8 +94,7 @@ class Ad extends Base
 
     /**
      * [ad_state 广告状态]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function ad_state()
     {
@@ -120,10 +115,10 @@ class Ad extends Base
 
 
     //*********************************************广告位*********************************************//
+
     /**
      * [index_position 广告位列表]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed [type] [description]
      */
     public function index_position(){
 
@@ -142,8 +137,7 @@ class Ad extends Base
 
     /**
      * [add_position 添加广告位]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function add_position()
     {
@@ -161,8 +155,7 @@ class Ad extends Base
 
     /**
      * [edit_position 编辑广告位]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return mixed|\think\response\Json [type] [description]
      */
     public function edit_position()
     {
@@ -181,8 +174,7 @@ class Ad extends Base
 
     /**
      * [del_position 删除广告位]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function del_position()
     {
@@ -193,11 +185,9 @@ class Ad extends Base
     }
 
 
-
     /**
      * [position_state 广告位状态]
-     * @return [type] [description]
-     * @author [田建龙] [864491238@qq.com]
+     * @return \think\response\Json [type] [description]
      */
     public function position_state()
     {

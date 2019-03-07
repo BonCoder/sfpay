@@ -21,6 +21,7 @@ class MemberModel extends Model
     /**
      * 根据搜索条件获取所有的用户数量
      * @param $where
+     * @return int|string
      */
     public function getAllCount($map)
     {

@@ -1,5 +1,7 @@
 <?php
+
 namespace app\admin\controller;
+
 use think\Config;
 use think\Db;
 use think\Session;
@@ -10,9 +12,9 @@ class Data extends Base
 {
     /**
      * 数据备份首页
-     * @author 田建龙 <864491238@qq.com>
      */
-    public function index() {
+    public function index()
+    {
         $Db = Db::connect();
         $tmp = $Db->query('SHOW TABLE STATUS');
         $data = array_map('array_change_key_case', $tmp);
@@ -23,12 +25,13 @@ class Data extends Base
 
     /**
      * 备份数据库
-     * @param  String  $ids 表名
-     * @param  Integer $id     表ID
-     * @param  Integer $start  起始行数
-     * @author 田建龙 <864491238@qq.com>
+     * @param  String $ids 表名
+     * @param  Integer $id 表ID
+     * @param  Integer $start 起始行数
+     * @return \think\response\Json|void
      */
-    public function export($ids = null, $id = null, $start = null) {
+    public function export($ids = null, $id = null, $start = null)
+    {
         $Request = Request::instance();
         if ($Request->isPost() && !empty($ids) && is_array($ids)) { //初始化
             $path = Config::get('data_backup_path');
@@ -72,7 +75,7 @@ class Data extends Base
             $tables = Session::get('backup_tables');
             //备份指定表
             $Database = new \com\Database(Session::get('backup_file'), Session::get('backup_config'));
-            $start = $Database->backup($tables[(int) $id], $start);
+            $start = $Database->backup($tables[(int)$id], $start);
             if (false === $start) { //出错
                 $this->error('备份出错！');
             } elseif (0 === $start) { //下一表
@@ -91,7 +94,7 @@ class Data extends Base
                 $rate = floor(100 * ($start[0] / $start[1]));
                 return $this->success("正在备份...({$rate}%)", '', ['tab' => $tab]);
             }
-        } else { 
+        } else {
 
             return json(['msg' => '请选择要备份的数据表！']);
         }
@@ -101,7 +104,8 @@ class Data extends Base
      * 优化表
      * @param  String $ids 表名
      */
-    public function optimize($ids = null) {
+    public function optimize($ids = null)
+    {
         if (empty($ids)) {
             return $this->error("请指定要优化的表！");
         }
@@ -109,7 +113,7 @@ class Data extends Base
         if (is_array($ids)) {
             $tables = implode('`,`', $ids);
             $list = $Db->query("OPTIMIZE TABLE `{$tables}`");
-            if($list){
+            if ($list) {
                 $this->success("数据表优化完成！");
             } else {
                 $this->error("数据表优化出错请重试！");
@@ -117,7 +121,7 @@ class Data extends Base
         } else {
 
             $list = $Db->query("OPTIMIZE TABLE `{$ids}`");
-            if($list){
+            if ($list) {
                 $this->success("数据表'{$ids}'优化完成！");
                 //return json("数据表'{$ids}'优化完成！");
             } else {
@@ -127,13 +131,12 @@ class Data extends Base
     }
 
 
-
     /**
      * 修复表
      * @param  String $ids 表名
-     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
-    public function repair($ids = null) {
+    public function repair($ids = null)
+    {
         if (empty($ids)) {
             return $this->error("请指定要修复的表！");
         }
@@ -141,14 +144,14 @@ class Data extends Base
         if (is_array($ids)) {
             $tables = implode('`,`', $ids);
             $list = $Db->query("REPAIR TABLE `{$tables}`");
-            if($list){
+            if ($list) {
                 $this->success("数据表修复完成！");
             } else {
                 $this->error("数据表修复出错请重试！");
             }
         } else {
             $list = $Db->query("REPAIR TABLE `{$ids}`");
-            if($list){
+            if ($list) {
                 $this->success("数据表'{$ids}'修复完成！");
                 //return json("数据表'{$ids}'优化完成！");
             } else {
@@ -158,15 +161,12 @@ class Data extends Base
     }
 
 
-
-
     /**
      * 还原数据库
      * @param 类型 参数 参数说明
-     * @author staitc7 <static7@qq.com>
      */
-
-    public function import() {
+    public function import()
+    {
         //列出备份文件列表
         $path_tmp = Config::get('data_backup_path');
         is_dir($path_tmp) || mkdir($path_tmp, 0755, true);
@@ -203,9 +203,9 @@ class Data extends Base
     /**
      * 删除备份文件
      * @param  Integer $time 备份时间
-     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
-    public function del($time = 0) {
+    public function del($time = 0)
+    {
         empty($time) && $this->error('参数错误！');
         $name = date('Ymd-His', $time) . '-*.sql*';
         $path = realpath(Config::get('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
@@ -219,9 +219,9 @@ class Data extends Base
 
     /**
      * 还原数据库
-     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
-    public function revert($time = 0, $part = null, $start = null) {
+    public function revert($time = 0, $part = null, $start = null)
+    {
         if (is_numeric($time) && is_null($part) && is_null($start)) { //初始化
             //获取备份文件信息
             $name = date('Ymd-His', $time) . '-*.sql*';
@@ -245,8 +245,8 @@ class Data extends Base
         } elseif (is_numeric($part) && is_numeric($start)) {
             $list = Session::get('backup_list');
             $db = new \com\Database($list[$part], [
-                'path' => realpath(Config::get('data_backup_path')) . DIRECTORY_SEPARATOR,
-                'compress' => $list[$part][2]
+                    'path' => realpath(Config::get('data_backup_path')) . DIRECTORY_SEPARATOR,
+                    'compress' => $list[$part][2]
                 ]
             );
             $start = $db->import($start);
