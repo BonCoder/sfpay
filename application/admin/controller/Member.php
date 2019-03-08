@@ -103,7 +103,7 @@ class Member extends Base
     public function index(){
 
         $key = input('key');
-        $map['closed'] = 0;//0未删除，1已删除
+        $map = [];
         if($key&&$key!=="")
         {
             $map['account|nickname|mobile'] = ['like',"%" . $key . "%"];          

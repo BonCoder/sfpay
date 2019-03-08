@@ -3,3 +3,4 @@ composer.lock
 *.log
 thinkphp.iml
 application/database.php
+application/database.php

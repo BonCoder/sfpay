@@ -9,13 +9,22 @@ class MemberModel extends Model
     protected $name = 'member';  
     protected $autoWriteTimestamp = true;   // 开启自动写入时间戳
 
+
     /**
      * 根据搜索条件获取用户列表信息
+     * @param $map
+     * @param $Nowpage
+     * @param $limits
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @author   Bob<bob@bobcoder.cc>
      */
     public function getMemberByWhere($map, $Nowpage, $limits)
     {
         return $this->field('think_member.*,group_name')->join('think_member_group', 'think_member.group_id = think_member_group.id')
-            ->where($map)->page($Nowpage, $limits)->order('id desc')->select();
+            ->where($map)->page($Nowpage, $limits)->select();
     }
 
     /**
@@ -49,6 +58,7 @@ class MemberModel extends Model
     /**
      * 编辑信息
      * @param $param
+     * @return array
      */
     public function editMember($param)
     {
@@ -68,6 +78,10 @@ class MemberModel extends Model
     /**
      * 根据管理员id获取角色信息
      * @param $id
+     * @return array|false|\PDOStatement|string|Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getOneMember($id)
     {
@@ -78,6 +92,9 @@ class MemberModel extends Model
     /**
      * 删除管理员
      * @param $id
+     * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
     public function delUser($id)
     {

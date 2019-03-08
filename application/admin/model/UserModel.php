@@ -8,8 +8,17 @@ class UserModel extends Model
 {
     protected $name = 'admin';
 
+
     /**
      * 根据搜索条件获取用户列表信息
+     * @param $map
+     * @param $Nowpage
+     * @param $limits
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @author   Bob<bob@bobcoder.cc>
      */
     public function getUsersByWhere($map, $Nowpage, $limits)
     {
