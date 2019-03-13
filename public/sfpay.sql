@@ -1,432 +1,4901 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : mysql
 Source Server Version : 50553
 Source Host           : localhost:3306
-Source Database       : lunhui_tp5
+Source Database       : advert
 
 Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-13 16:44:06
+Date: 2019-03-13 14:22:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for think_ad
+-- Table structure for ad_adverts
 -- ----------------------------
-DROP TABLE IF EXISTS `think_ad`;
-CREATE TABLE `think_ad` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(64) DEFAULT NULL,
-  `ad_position_id` varchar(10) DEFAULT NULL COMMENT '广告位',
-  `link_url` varchar(128) DEFAULT NULL,
-  `images` varchar(128) DEFAULT NULL,
-  `start_date` date DEFAULT NULL COMMENT '开始时间',
-  `end_date` date DEFAULT NULL COMMENT '结束时间',
-  `status` tinyint(1) DEFAULT NULL COMMENT '状态',
-  `closed` tinyint(1) DEFAULT '0',
-  `orderby` tinyint(3) DEFAULT '100',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of think_ad
--- ----------------------------
-INSERT INTO `think_ad` VALUES ('24', '23', '1', '123', '20170416\\363c841674371a9e730e65a085fbdf18.jpg', '0000-00-00', '0000-00-00', '1', '0', '23');
-INSERT INTO `think_ad` VALUES ('25', '123', '1', '213', '20170416\\d8f2098b4846f2e087cc2c5dd1575219.jpg', '2016-10-12', '2016-10-12', '1', '0', '100');
-INSERT INTO `think_ad` VALUES ('26', '345', '1', '345', '20170416\\f59059c762d959f04f9226eb0c126987.jpg', '2016-10-25', '2016-10-20', '0', '1', '127');
-
--- ----------------------------
--- Table structure for think_admin
--- ----------------------------
-DROP TABLE IF EXISTS `think_admin`;
-CREATE TABLE `think_admin` (
+DROP TABLE IF EXISTS `ad_adverts`;
+CREATE TABLE `ad_adverts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) COLLATE utf8_bin DEFAULT '' COMMENT '用户名',
-  `password` varchar(32) COLLATE utf8_bin DEFAULT '' COMMENT '密码',
-  `portrait` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '头像',
-  `loginnum` int(11) DEFAULT '0' COMMENT '登陆次数',
-  `last_login_ip` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '最后登录IP',
-  `last_login_time` int(11) DEFAULT '0' COMMENT '最后登录时间',
-  `real_name` varchar(20) COLLATE utf8_bin DEFAULT '' COMMENT '真实姓名',
-  `status` int(1) DEFAULT '0' COMMENT '状态',
-  `groupid` int(11) DEFAULT '1' COMMENT '用户角色id',
-  `token` varchar(32) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
--- Records of think_admin
--- ----------------------------
-INSERT INTO `think_admin` VALUES ('1', 'admin', '218dbb225911693af03a713581a7227f', '20161122\\admin.jpg', '308', '0.0.0.0', '1505291620', 'admin', '1', '1', '1ac2fc424c64cdf80db98a246f439287');
-INSERT INTO `think_admin` VALUES ('13', 'test', '218dbb225911693af03a713581a7227f', '20161122\\293c8cd05478b029a378ac4e5a880303.jpg', '1797', '116.23.230.7', '1502432142', 'test', '1', '4', '4ee2e395e9921f515d00599a5f79ae3f');
-
--- ----------------------------
--- Table structure for think_ad_position
--- ----------------------------
-DROP TABLE IF EXISTS `think_ad_position`;
-CREATE TABLE `think_ad_position` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL COMMENT '分类名称',
-  `orderby` varchar(10) DEFAULT '100' COMMENT '排序',
-  `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
-  `update_time` int(11) DEFAULT NULL COMMENT '更新时间',
-  `status` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of think_ad_position
--- ----------------------------
-INSERT INTO `think_ad_position` VALUES ('23', 'aaa', '30', '1501813046', '1501813046', '1');
-INSERT INTO `think_ad_position` VALUES ('22', 'abvc', '15', '1501813036', '1502294001', '1');
-INSERT INTO `think_ad_position` VALUES ('25', '首页banner', '50', '1502181832', '1502181832', '1');
-INSERT INTO `think_ad_position` VALUES ('26', '6168', '11', '1502182772', '1502182772', '1');
-
--- ----------------------------
--- Table structure for think_article
--- ----------------------------
-DROP TABLE IF EXISTS `think_article`;
-CREATE TABLE `think_article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章逻辑ID',
-  `title` varchar(128) NOT NULL COMMENT '文章标题',
-  `cate_id` int(11) NOT NULL DEFAULT '1' COMMENT '文章类别',
-  `photo` varchar(64) DEFAULT '' COMMENT '文章图片',
-  `remark` varchar(256) DEFAULT '' COMMENT '文章描述',
-  `keyword` varchar(32) DEFAULT '' COMMENT '文章关键字',
-  `content` text NOT NULL COMMENT '文章内容',
-  `views` int(11) NOT NULL DEFAULT '1' COMMENT '浏览量',
-  `status` tinyint(1) DEFAULT NULL,
-  `type` int(1) NOT NULL DEFAULT '1' COMMENT '文章类型',
-  `is_tui` int(1) DEFAULT '0' COMMENT '是否推荐',
-  `from` varchar(16) NOT NULL DEFAULT '' COMMENT '来源',
-  `writer` varchar(64) NOT NULL COMMENT '作者',
-  `ip` varchar(16) NOT NULL,
-  `create_time` int(11) NOT NULL COMMENT '创建时间',
-  `update_time` int(11) DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  KEY `a_title` (`title`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='文章表';
-
--- ----------------------------
--- Records of think_article
--- ----------------------------
-INSERT INTO `think_article` VALUES ('46', 'PHP人民币金额数字转中文大写的函数代码', '5', '20170416\\8b2ef718255d495dc9668f0dec0224af.jpg', '在网上看到一个非常有趣的PHP人民币金额数字转中文大写的函数，其实质就是数字转换成中文大写，测试了一下，非常有趣，随便输个数字，就可以将其大写打印出来，新手朋友们试一下吧', '人民币转大写', '<p>在网上看到一个非常有趣的PHP人民币金额数字转中文大写的函数，其实质就是数字转换成中文大写，测试了一下，非常有趣，随便输个数字，就可以将其大写打印出来，新手朋友们试一下吧</p><pre class=\"brush:php;toolbar:false\">/**\n*数字金额转换成中文大写金额的函数\n*String&nbsp;Int&nbsp;&nbsp;$num&nbsp;&nbsp;要转换的小写数字或小写字符串\n*return&nbsp;大写字母\n*小数位为两位\n**/\nfunction&nbsp;get_amount($num){\n$c1&nbsp;=&nbsp;&quot;零壹贰叁肆伍陆柒捌玖&quot;;\n$c2&nbsp;=&nbsp;&quot;分角元拾佰仟万拾佰仟亿&quot;;\n$num&nbsp;=&nbsp;round($num,&nbsp;2);\n$num&nbsp;=&nbsp;$num&nbsp;*&nbsp;100;\nif&nbsp;(strlen($num)&nbsp;&gt;&nbsp;10)&nbsp;{\nreturn&nbsp;&quot;数据太长，没有这么大的钱吧，检查下&quot;;\n}&nbsp;\n$i&nbsp;=&nbsp;0;\n$c&nbsp;=&nbsp;&quot;&quot;;\nwhile&nbsp;(1)&nbsp;{\nif&nbsp;($i&nbsp;==&nbsp;0)&nbsp;{\n$n&nbsp;=&nbsp;substr($num,&nbsp;strlen($num)-1,&nbsp;1);\n}&nbsp;else&nbsp;{\n$n&nbsp;=&nbsp;$num&nbsp;%&nbsp;10;\n}&nbsp;\n$p1&nbsp;=&nbsp;substr($c1,&nbsp;3&nbsp;*&nbsp;$n,&nbsp;3);\n$p2&nbsp;=&nbsp;substr($c2,&nbsp;3&nbsp;*&nbsp;$i,&nbsp;3);\nif&nbsp;($n&nbsp;!=&nbsp;&#39;0&#39;&nbsp;||&nbsp;($n&nbsp;==&nbsp;&#39;0&#39;&nbsp;&amp;&amp;&nbsp;($p2&nbsp;==&nbsp;&#39;亿&#39;&nbsp;||&nbsp;$p2&nbsp;==&nbsp;&#39;万&#39;&nbsp;||&nbsp;$p2&nbsp;==&nbsp;&#39;元&#39;)))&nbsp;{\n$c&nbsp;=&nbsp;$p1&nbsp;.&nbsp;$p2&nbsp;.&nbsp;$c;\n}&nbsp;else&nbsp;{\n$c&nbsp;=&nbsp;$p1&nbsp;.&nbsp;$c;\n}&nbsp;\n$i&nbsp;=&nbsp;$i&nbsp;+&nbsp;1;\n$num&nbsp;=&nbsp;$num&nbsp;/&nbsp;10;\n$num&nbsp;=&nbsp;(int)$num;\nif&nbsp;($num&nbsp;==&nbsp;0)&nbsp;{\nbreak;\n}&nbsp;\n}\n$j&nbsp;=&nbsp;0;\n$slen&nbsp;=&nbsp;strlen($c);\nwhile&nbsp;($j&nbsp;&lt;&nbsp;$slen)&nbsp;{\n$m&nbsp;=&nbsp;substr($c,&nbsp;$j,&nbsp;6);\nif&nbsp;($m&nbsp;==&nbsp;&#39;零元&#39;&nbsp;||&nbsp;$m&nbsp;==&nbsp;&#39;零万&#39;&nbsp;||&nbsp;$m&nbsp;==&nbsp;&#39;零亿&#39;&nbsp;||&nbsp;$m&nbsp;==&nbsp;&#39;零零&#39;)&nbsp;{\n$left&nbsp;=&nbsp;substr($c,&nbsp;0,&nbsp;$j);\n$right&nbsp;=&nbsp;substr($c,&nbsp;$j&nbsp;+&nbsp;3);\n$c&nbsp;=&nbsp;$left&nbsp;.&nbsp;$right;\n$j&nbsp;=&nbsp;$j-3;\n$slen&nbsp;=&nbsp;$slen-3;\n}&nbsp;\n$j&nbsp;=&nbsp;$j&nbsp;+&nbsp;3;\n}&nbsp;\nif&nbsp;(substr($c,&nbsp;strlen($c)-3,&nbsp;3)&nbsp;==&nbsp;&#39;零&#39;)&nbsp;{\n$c&nbsp;=&nbsp;substr($c,&nbsp;0,&nbsp;strlen($c)-3);\n}\nif&nbsp;(empty($c))&nbsp;{\nreturn&nbsp;&quot;零元整&quot;;\n}else{\nreturn&nbsp;$c&nbsp;.&nbsp;&quot;整&quot;;\n}\n}</pre><p>最终实现效果：</p><p><img src=\"/Uploads/ueditor/2015-12-28/1451310141372440.png\" title=\"1451310141372440.png\" alt=\"1449026968974428.png\"/></p>', '1', '1', '1', '1', 'Win 8.1', '轮回', '124.152.7.106', '1449026848', '1492346057');
-INSERT INTO `think_article` VALUES ('47', 'Windows下mysql忘记密码的解决方法', '1', '20170416\\f5f5aacefa23b9efb1c81895cb932572.jpg', 'Windows下mysql忘记密码的解决方法', 'mysql', '<p>方法一：</p><p>1、在DOS窗口下输入</p><pre>net&nbsp;stop&nbsp;mysql5</pre><p>&nbsp;</p><p>或</p><pre>net&nbsp;stop&nbsp;mysql</pre><p>&nbsp;</p><p>2、开一个DOS窗口，这个需要切换到mysql的bin目录。<br/>一般在bin目录里面创建一个批处理1.bat,内容是cmd.exe运行一下即可就切换到当前目录，然后输入</p><pre>mysqld-nt&nbsp;--skip-grant-tables;</pre><p>&nbsp;</p><p>3、再开一个DOS窗口</p><pre>mysql&nbsp;-u&nbsp;root</pre><p>&nbsp;</p><p>4、输入：</p><pre>use&nbsp;mysql&nbsp;\nupdate&nbsp;user&nbsp;set&nbsp;password=password(&quot;new_pass&quot;)&nbsp;where&nbsp;user=&quot;root&quot;;&nbsp;\nflush&nbsp;privileges;&nbsp;\nexit</pre><p>&nbsp;</p><p>5、使用任务管理器，找到mysqld-nt的进程，结束进程&nbsp;<br/>或下面的步骤<br/>1，停止MYSQL服务，CMD打开DOS窗口，输入 net stop mysql&nbsp;<br/>2，在CMD命令行窗口，进入MYSQL安装目录 比如E:Program FilesMySQLMySQL Server 5.0bin&nbsp;<br/>示范命令:&nbsp;<br/>输入 e:回车,&nbsp;<br/>输入cd &quot;E:Program FilesMySQLMySQL Server 5.0bin&quot;&nbsp;<br/>注意双引号也要输入,这样就可以进入Mysql安装目录了.&nbsp;<br/>3，进入mysql安全模式，即当mysql起来后，不用输入密码就能进入数据库。&nbsp;<br/>命令为：</p><pre>mysqld-nt&nbsp;--skip-grant-tables</pre><p>&nbsp;</p><p>4，重新打开一个CMD命令行窗口，输入</p><p>mysql -uroot -p，使用空密码的方式登录MySQL（不用输入密码，直接按回车）</p><p>5，输入以下命令开始修改root用户的密码（注意：命令中mysql.user中间有个“点”）</p><p>mysql.user：数据库名.表名<br/>mysql&gt; update mysql.user set password=PASSWORD(&#39;新密码&#39;) where User=&#39;root&#39;;&nbsp;<br/>6，刷新权限表&nbsp;<br/>mysql&gt; flush privileges;&nbsp;<br/>7，退出&nbsp;<br/>mysql&gt; quit</p><p><br/>这样MYSQL超级管理员账号 ROOT已经重新设置好了，接下来 在任务管理器里结束掉 mysql-nt.exe 这个进程，重新启动MYSQL即可！</p><p>（也可以直接重新启动服务器）&nbsp;<br/>MYSQL重新启动后，就可以用新设置的ROOT密码登陆MYSQL了！</p><p>方法二：</p><p>首先在 MySQL的安装目录下 新建一个pwdhf.txt, 输入文本：</p><pre>SET&nbsp;PASSWORD&nbsp;FOR&nbsp;&#39;root&#39;@&#39;localhost&#39;&nbsp;=&nbsp;PASSWORD(&#39;*****&#39;);</pre><p>&nbsp;</p><p>红色部份为 需要设置的新密码&nbsp;<br/>用windows服务管理工具或任务管理器来停止MySQL服务 (任务管理器K掉 mysqld-nt 进程)&nbsp;<br/>Dos命令提示符到 MySQL安装目录下的bin目录 如我的是</p><p>D:Program FilesMySQLMySQL Server 5.1bin&nbsp;<br/>然后运行：</p><pre>mysqld-nt&nbsp;--init-file=../pwdhf.txt</pre><p>&nbsp;</p><p>执行完毕， 停止MySQL数据库服务 (任务管理器K掉 mysqld-nt 进程)，然后再重新以正常模式启动MYSQL 即可</p><hr style=\"color: rgb(51, 51, 51); font-family: Arial; font-size: 14px; line-height: 26px; white-space: normal; background-color: rgb(255, 255, 255);\"/><p>mysql5.1或以上</p><p>1、 首先检查mysql服务是否启动，若已启动则先将其停止服务，可在开始菜单的运行，使用命令：</p><pre>net&nbsp;stop&nbsp;mysql</pre><p>&nbsp;</p><p>2、打开第一个cmd窗口，切换到mysql的bin目录，运行命令：</p><pre>mysqld&nbsp;--defaults-file=&quot;C:Program&nbsp;FilesMySQLMySQL&nbsp;Server&nbsp;5.1my.ini&quot;&nbsp;--console&nbsp;--skip-grant-tables</pre><p>&nbsp;</p><p>注释：</p><p>该命令通过跳过权限安全检查，开启mysql服务，这样连接mysql时，可以不用输入用户密码。&nbsp;<br/>&nbsp;</p><p>&nbsp;</p><p>3、打开第二个cmd窗口，连接mysql：</p><p>输入命令：</p><pre>mysql&nbsp;-uroot&nbsp;-p</pre><p>出现：</p><p>Enter password:</p><p>在这里直接回车，不用输入密码。</p><p>然后就就会出现登录成功的信息，</p><p>&nbsp;</p><p>&nbsp;</p><p>4、使用命令：</p><pre>show&nbsp;databases;</pre><p>&nbsp;</p><p>&nbsp;</p><p>5、使用命令切换到mysql数据库：</p><pre>use&nbsp;mysql;</pre><p>&nbsp;</p><p>6、使用命令更改root密码为123456：</p><pre>UPDATE&nbsp;user&nbsp;SET&nbsp;Password=PASSWORD(&#39;123456&#39;)&nbsp;where&nbsp;USER=&#39;root&#39;;</pre><p>&nbsp;</p><p>&nbsp;</p><p>7、刷新权限：</p><pre>FLUSH&nbsp;PRIVILEGES;</pre><p>&nbsp;</p><p>8、然后退出，重新登录：</p><p>quit</p><p>重新登录：</p><pre>mysql&nbsp;-uroot&nbsp;-p</pre><p>&nbsp;</p><p>9、出现输入密码提示，输入新的密码即可登录：</p><p>Enter password: ***********</p><p>显示登录信息： 成功&nbsp; 就一切ok了</p><p>&nbsp;</p><p>10、重新启动mysql服务</p><pre>net&nbsp;start&nbsp;mysql</pre><p><br/></p>', '1', '0', '0', '0', 'Win 8.1', '轮回', '0.0.0.0', '1450339377', '1492346047');
-INSERT INTO `think_article` VALUES ('48', '禁止网页复制的代码', '1', '20170416\\c3646031ca540e4217d1228eefe99c4c.jpg', '禁止网页复制的代码', '网页复制', '<p>今天做一网站项目时，客户要求让用户不能复制网站内容，网上搜索了一下，总结成以下二几行代码。其实吧，要是懂的人，这些都是浮云来的，客户就是要让一般人不能复制他的内容资料。</p><pre class=\"brush:html;toolbar:false\" style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; padding: 9.5px; list-style: none; border: 1px solid rgb(204, 204, 204); overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; line-height: 1.42857; color: rgb(51, 51, 51); word-break: break-all; word-wrap: break-word; border-radius: 4px; background-color: rgb(245, 245, 245);\">&quot;&nbsp;_ue_custom_node_=&quot;true&quot;&gt;&lt;\ntitle\n&gt;禁止网页复制的代码&nbsp;&nbsp;网页禁止右键、禁止查看源代码、禁止复制的代码，试试你的右键、ctrl+c和ctrl+c吧~\n&nbsp;&nbsp;\n&nbsp;&nbsp;&quot;&nbsp;_ue_custom_node_=&quot;true&quot;&gt;</pre><p><br/></p>', '1', '0', '1', '1', 'Win 8.1', '轮回', '0.0.0.0', '1450340150', '1492346038');
-INSERT INTO `think_article` VALUES ('49', '如何使用谷歌字体', '1', '20170416\\970c587b487610a793857bc161773f2a.jpg', '如何使用谷歌字体', '谷歌字体', '<p style=\"text-align:center\"><img src=\"/Uploads/ueditor/2015-12-28/1451233062718458.png\" title=\"1451233062718458.png\" alt=\"QQ截图20151228001616.png\"/></p><p style=\"padding: 0px; margin-top: 8px; margin-bottom: 8px; line-height: 22.5px; letter-spacing: 0.5px; font-size: 12.5px; white-space: normal; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Verdana, sans-serif, 宋体; background-color: rgb(255, 255, 255);\">国内网站使用谷歌字体是不方便的，解决办法如下<br style=\"padding: 0px; margin: 0px;\"/></p><p style=\"padding: 0px; margin-top: 8px; margin-bottom: 8px; line-height: 22.5px; letter-spacing: 0.5px; font-size: 12.5px; white-space: normal; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Verdana, sans-serif, 宋体; background-color: rgb(255, 255, 255);\">1、将谷歌的地址换成360的</p><p style=\"padding: 0px; margin-top: 8px; margin-bottom: 8px; line-height: 22.5px; letter-spacing: 0.5px; font-size: 12.5px; white-space: normal; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Verdana, sans-serif, 宋体; background-color: rgb(255, 255, 255);\"><a href=\"http://fonts.googleapis.com/\" rel=\"nofollow\" style=\"padding: 0px; margin: 0px; color: rgb(255, 131, 115); outline: 0px; font-size: 12px;\">http://fonts.googleapis.com</a>&nbsp;换成&nbsp;<a href=\"http://fonts.useso.com/\" rel=\"nofollow\" style=\"padding: 0px; margin: 0px; color: rgb(255, 131, 115); outline: 0px; font-size: 12px;\">http://fonts.useso.com</a></p><p style=\"padding: 0px; margin-top: 8px; margin-bottom: 8px; line-height: 22.5px; letter-spacing: 0.5px; font-size: 12.5px; white-space: normal; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Verdana, sans-serif, 宋体; background-color: rgb(255, 255, 255);\">2、只做了第一步还是有问题的，会报错：</p><p style=\"padding: 0px; margin-top: 8px; margin-bottom: 8px; line-height: 22.5px; letter-spacing: 0.5px; font-size: 12.5px; white-space: normal; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Verdana, sans-serif, 宋体; background-color: rgb(255, 255, 255);\">No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource</p><p style=\"padding: 0px; margin-top: 8px; margin-bottom: 8px; line-height: 22.5px; letter-spacing: 0.5px; font-size: 12.5px; white-space: normal; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Verdana, sans-serif, 宋体; background-color: rgb(255, 255, 255);\">解决办法是给html页面添加头信息</p><p style=\"padding: 0px; margin-top: 8px; margin-bottom: 8px; line-height: 22.5px; letter-spacing: 0.5px; font-size: 12.5px; white-space: normal; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Verdana, sans-serif, 宋体; background-color: rgb(255, 255, 255);\"><span style=\"padding: 0px; margin: 0px; color: rgb(70, 70, 70); font-family: Arial，; font-size: 14px; line-height: 21px;\"><meta http-equiv=\"Access-Control-Allow-Origin\" content=\"*\"/></span></p><p><br/></p>', '1', '0', '0', '0', 'Win 8.1', '轮回', '0.0.0.0', '1450764484', '1492346031');
-INSERT INTO `think_article` VALUES ('50', 'winForm窗体关闭按钮实现托盘后台运行（类似QQ托盘区运行）', '4', '20170416\\50929a5bfd0a8ecd4e0883172c9814cc.jpg', '今天遇到了一个需求，如果用户不小心点击了“关闭”按钮，但是他的本意不是想要真的关闭这个窗体。 对这个需求完全可以在单击“关闭”按钮的时候弹出一个对话框，来让用户确定是否真的要退出。这是一个很好的解决方法，并且实现也是很容易的。但是人家不想这样，想要拥有类似QQ在托盘区后台运行的那种效果，没办法，只能想办法来实现了。', 'winForm', '<p>今天遇到了一个需求，如果用户不小心点击了“关闭”按钮，但是他的本意不是想要真的关闭这个窗体。</p><p>&nbsp;</p><p>对这个需求完全可以在单击“关闭”按钮的时候弹出一个对话框，来让用户确定是否真的要退出。这是一个很好的解决方法，并且实现也是很容易的。但是人家不想这样，想要拥有类似QQ在托盘区后台运行的那种效果，没办法，只能想办法来实现了。</p><p>&nbsp;</p><p>其实，这个在网上也有很多的实现方法，但是我试了试有些直接复制过来并不能直接运行，或者能运行的吧又没有注释。今天在这里就给大家贴一下我的代码，也有不足之处，希望大家给出意见.</p><p style=\"text-align:center\"><img src=\"/Uploads/ueditor/2015-12-28/1451309750351569.png\" title=\"1451309750351569.png\" alt=\"1450926662631174.png\"/></p><pre class=\"brush:c#;toolbar:false\">using&nbsp;System;\nusing&nbsp;System.Collections.Generic;\nusing&nbsp;System.ComponentModel;\nusing&nbsp;System.Data;\nusing&nbsp;System.Drawing;\nusing&nbsp;System.Linq;\nusing&nbsp;System.Text;\nusing&nbsp;System.Windows.Forms;\nusing&nbsp;System.Windows;\nnamespace&nbsp;winform窗体托盘后台运行\n{\n&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;partial&nbsp;class&nbsp;Form1&nbsp;:&nbsp;Form&nbsp;\n&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这里在窗体上没有拖拽一个NotifyIcon控件，而是在这里定义了一个变量\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;NotifyIcon&nbsp;notifyIcon&nbsp;=&nbsp;null;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;Form1()\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InitializeComponent();\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//调用初始化托盘显示函数\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InitialTray();\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;void&nbsp;Form1_Load(object&nbsp;sender,&nbsp;EventArgs&nbsp;e)\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这里写其他代码\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;窗体关闭的单击事件\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;void&nbsp;Form1_FormClosing(object&nbsp;sender,&nbsp;FormClosingEventArgs&nbsp;e)\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.Cancel&nbsp;=&nbsp;true;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//通过这里可以看出，这里的关闭其实不是真正意义上的“关闭”，而是将窗体隐藏，实现一个“伪关闭”\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.Hide();\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;void&nbsp;InitialTray()\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//隐藏主窗体\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.Hide();\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//实例化一个NotifyIcon对象\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon&nbsp;=&nbsp;new&nbsp;NotifyIcon();\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//托盘图标气泡显示的内容\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon.BalloonTipText&nbsp;=&nbsp;&quot;正在后台运行&quot;;&nbsp;&nbsp;&nbsp;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//托盘图标显示的内容\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon.Text&nbsp;=&nbsp;&quot;窗体托盘后台运行测试程序&quot;;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//注意：下面的路径可以是绝对路径、相对路径。但是需要注意的是：文件必须是一个.ico格式\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon.Icon&nbsp;=&nbsp;new&nbsp;System.Drawing.Icon(&quot;E:/ASP项目/images/3.5&nbsp;inch&nbsp;Floppy.ico&quot;);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//true表示在托盘区可见，false表示在托盘区不可见\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon.Visible&nbsp;=&nbsp;true;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//气泡显示的时间（单位是毫秒）\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon.ShowBalloonTip(2000);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon.MouseClick&nbsp;+=&nbsp;new&nbsp;System.Windows.Forms.MouseEventHandler(notifyIcon_MouseClick);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////设置二级菜单\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//MenuItem&nbsp;setting1&nbsp;=&nbsp;new&nbsp;MenuItem(&quot;二级菜单1&quot;);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//MenuItem&nbsp;setting2&nbsp;=&nbsp;new&nbsp;MenuItem(&quot;二级菜单2&quot;);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//MenuItem&nbsp;setting&nbsp;=&nbsp;new&nbsp;MenuItem(&quot;一级菜单&quot;,&nbsp;new&nbsp;MenuItem[]{setting1,setting2});\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//帮助选项，这里只是“有名无实”在菜单上只是显示，单击没有效果，可以参照下面的“退出菜单”实现单击事件\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MenuItem&nbsp;help&nbsp;=&nbsp;new&nbsp;MenuItem(&quot;帮助&quot;);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//关于选项\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MenuItem&nbsp;about&nbsp;=&nbsp;new&nbsp;MenuItem(&quot;关于&quot;);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//退出菜单项\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MenuItem&nbsp;exit&nbsp;=&nbsp;new&nbsp;MenuItem(&quot;退出&quot;);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit.Click&nbsp;+=&nbsp;new&nbsp;EventHandler(exit_Click);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////关联托盘控件\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//注释的这一行与下一行的区别就是参数不同，setting这个参数是为了实现二级菜单\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//MenuItem[]&nbsp;childen&nbsp;=&nbsp;new&nbsp;MenuItem[]&nbsp;{&nbsp;setting,&nbsp;help,&nbsp;about,&nbsp;exit&nbsp;};\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MenuItem[]&nbsp;childen&nbsp;=&nbsp;new&nbsp;MenuItem[]&nbsp;{help,about,exit};\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notifyIcon.ContextMenu&nbsp;=&nbsp;new&nbsp;ContextMenu(childen);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//窗体关闭时触发\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.FormClosing&nbsp;+=&nbsp;new&nbsp;System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;鼠标单击\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;void&nbsp;notifyIcon_MouseClick(object&nbsp;sender,&nbsp;System.Windows.Forms.MouseEventArgs&nbsp;e)\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//鼠标左键单击\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(e.Button&nbsp;==&nbsp;MouseButtons.Left)\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//如果窗体是可见的，那么鼠标左击托盘区图标后，窗体为不可见\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(this.Visible&nbsp;==&nbsp;true&nbsp;)\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.Visible&nbsp;=&nbsp;false;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.Visible&nbsp;=&nbsp;true;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.Activate();\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;退出选项\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;void&nbsp;exit_Click(object&nbsp;sender,&nbsp;EventArgs&nbsp;e)\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//退出程序\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.Environment.Exit(0);&nbsp;&nbsp;\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\n&nbsp;&nbsp;&nbsp;&nbsp;}\n}</pre><p><br/></p>', '1', '0', '0', '0', 'Win 8.1', '轮回', '124.152.7.106', '1450926579', '1492346022');
-INSERT INTO `think_article` VALUES ('67', '太难', '2', '20170810\\cd115e0dd64732861ad62ebd75fd5e15.jpg', '', 'PHP', '<p>W 发士大夫但是</p>', '1', '1', '1', '0', '', '', '', '1501597084', '1502341187');
-INSERT INTO `think_article` VALUES ('68', '54254254', '2', '20170824\\dfade61edda20cfd4e10962259466150.png', '5254', '242424', '<p><br/></p><p>2145254254254</p>', '1', '1', '1', '1', '', '', '', '1503569472', '1503569472');
-
--- ----------------------------
--- Table structure for think_article_cate
--- ----------------------------
-DROP TABLE IF EXISTS `think_article_cate`;
-CREATE TABLE `think_article_cate` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL COMMENT '分类名称',
-  `orderby` varchar(10) DEFAULT '100' COMMENT '排序',
-  `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
-  `update_time` int(11) DEFAULT NULL COMMENT '更新时间',
-  `status` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of think_article_cate
--- ----------------------------
-INSERT INTO `think_article_cate` VALUES ('1', '大鼻孔', '1', '1477140627', '1502266891', '1');
-INSERT INTO `think_article_cate` VALUES ('2', '生活随笔', '2', '1477140627', '1477140627', '0');
-INSERT INTO `think_article_cate` VALUES ('3', '热点分享', '3', '1477140604', '1477140627', '0');
-INSERT INTO `think_article_cate` VALUES ('4', '.NET', '4', '1477140627', '1477140627', '1');
-INSERT INTO `think_article_cate` VALUES ('5', 'PHP', '5', '1477140627', '1477140627', '0');
-INSERT INTO `think_article_cate` VALUES ('6', 'Java', '6', '1477140627', '1477140627', '0');
-
--- ----------------------------
--- Table structure for think_auth_group
--- ----------------------------
-DROP TABLE IF EXISTS `think_auth_group`;
-CREATE TABLE `think_auth_group` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `title` char(100) NOT NULL DEFAULT '',
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `rules` text NOT NULL,
-  `create_time` int(11) DEFAULT NULL,
-  `update_time` int(11) DEFAULT NULL,
+  `bianhao` varchar(100) DEFAULT NULL COMMENT '编号',
+  `name` varchar(200) DEFAULT NULL COMMENT '名称',
+  `gongsi_id` int(11) DEFAULT '0' COMMENT '公司ID',
+  `leibie_1_id` int(11) DEFAULT NULL COMMENT '媒体类别ID',
+  `leibie_2_id` int(11) DEFAULT NULL COMMENT '媒体类别ID',
+  `xingshi_id` int(11) DEFAULT NULL COMMENT '媒体形式',
+  `daili_id` int(11) DEFAULT NULL COMMENT '代理形式',
+  `renzheng_id` int(11) DEFAULT NULL COMMENT '是否认证',
+  `jingying_id` int(11) DEFAULT NULL COMMENT '经营方式',
+  `zhouqi_id` int(11) DEFAULT NULL COMMENT '周期ID',
+  `tupian` varchar(250) DEFAULT NULL COMMENT '图片',
+  `liejia` varchar(100) DEFAULT NULL COMMENT '刊例价',
+  `renliuliang` varchar(100) DEFAULT NULL COMMENT '人流量',
+  `cheliuliang` varchar(100) DEFAULT NULL COMMENT '车流量',
+  `guige` varchar(100) DEFAULT NULL COMMENT '规格',
+  `dianhua` varchar(100) DEFAULT NULL COMMENT '联系电话',
+  `huamian` varchar(100) DEFAULT NULL COMMENT '画面形式',
+  `dengguang` varchar(100) DEFAULT NULL COMMENT '灯光形式',
+  `mianji` varchar(100) DEFAULT NULL COMMENT '媒体面积',
+  `hangye` varchar(100) DEFAULT NULL COMMENT '发布行业',
+  `huanjin` varchar(200) DEFAULT NULL COMMENT '环境描述',
+  `area_id` int(11) DEFAULT NULL COMMENT '所在地址',
+  `shangquan` varchar(100) DEFAULT NULL COMMENT '所属商圈',
+  `pinpai` varchar(100) DEFAULT NULL COMMENT '发布品牌',
+  `keshijuli` varchar(100) DEFAULT NULL COMMENT '可视距离',
+  `chanpin` varchar(100) DEFAULT NULL COMMENT '发布产品',
+  `gaodu` varchar(100) DEFAULT NULL COMMENT '离地高度',
+  `jianjie` text COMMENT '简介',
+  `jutiweizhi` varchar(200) DEFAULT NULL COMMENT '具体位置',
+  `keshou` varchar(100) DEFAULT NULL COMMENT '媒体可售日期',
+  `status` int(11) DEFAULT '1' COMMENT '0:关闭 1:开启',
+  `sort` int(11) DEFAULT '0' COMMENT '排序',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of think_auth_group
+-- Records of ad_adverts
 -- ----------------------------
-INSERT INTO `think_auth_group` VALUES ('1', '超级管理员', '1', '', '1446535750', '1446535750');
-INSERT INTO `think_auth_group` VALUES ('4', '系统测试员', '1', '1,2,9,3,30,4,39,61,62,5,6,7,27,29,13,14,22,24,25,40,41,43,26,44,45,47,48,49,50,51,52,53,54,55,56,57,58,70,71,72,73,80,75,76,77,79', '1446535750', '1501581108');
+INSERT INTO `ad_adverts` VALUES ('1', null, '啊实打实大是的', '0', '12', '16', '24', '42', null, '44', '31', null, '12312', '123', '123123', null, '324', '123', 'asc阿斯顿啊', 'asdqwe', 'sad', '啊实打实大', '0', '啊实打实', '撒大声地', '啊实打实大', '啊实打实大', null, '自行车自行车资讯', '啊实打实大', '啊实打实大', '1', '0', '2019-03-12 11:10:10', null);
+INSERT INTO `ad_adverts` VALUES ('2', null, '啊实打实大是的', '0', '12', '16', '24', '42', null, '44', '31', null, '12312', '123', '123123', null, '324', '123', 'asc阿斯顿啊', 'asdqwe', 'sad', '啊实打实大', '0', '啊实打实', '撒大声地', '啊实打实大', '啊实打实大', null, '自行车自行车资讯', '啊实打实大', '啊实打实大', '1', '0', '2019-02-27 11:03:07', null);
+INSERT INTO `ad_adverts` VALUES ('3', null, '啊实打实大是的', '0', '12', '16', '24', '42', null, '44', '31', null, '12312', '123', '123123', null, '324', '123', 'asc阿斯顿啊', 'asdqwe', 'sad', '啊实打实大', '0', '啊实打实', '撒大声地', '啊实打实大', '啊实打实大', null, '自行车自行车资讯', '啊实打实大', '啊实打实大', '1', '0', null, null);
+INSERT INTO `ad_adverts` VALUES ('4', null, '啊实打实大是的', '0', '12', '16', '24', '42', null, '44', '31', null, '12312', '123', '123123', null, '324', '123', 'asc阿斯顿啊', 'asdqwe', 'sad', '啊实打实大', '0', '啊实打实', '撒大声地', '啊实打实大', '啊实打实大', null, '自行车自行车资讯', '啊实打实大', '啊实打实大', '1', '0', null, null);
+INSERT INTO `ad_adverts` VALUES ('5', null, '啊实打实大是的', '0', '12', '16', '24', '42', null, '44', '31', null, '12312', '123', '123123', null, '324', '123', 'asc阿斯顿啊', 'asdqwe', 'sad', '啊实打实大', '0', '啊实打实', '撒大声地', '啊实打实大', '啊实打实大', null, '自行车自行车资讯', '啊实打实大', '啊实打实大', '1', '0', null, null);
+INSERT INTO `ad_adverts` VALUES ('6', '1551171190', '啊实打实大是的', '11', '12', '16', '24', '42', null, '44', '31', null, '12312', '123', '123123', null, '324', '123', 'asc阿斯顿啊', 'asdqwe', 'sad', '啊实打实大', '0', '啊实打实', '撒大声地', '啊实打实大', '啊实打实大', null, '自行车自行车资讯', '啊实打实大', '啊实打实大', '1', '0', '2019-02-27 10:01:36', null);
+INSERT INTO `ad_adverts` VALUES ('7', '1551171271', '啊实打实大是的', '11', '12', '16', '24', '42', null, '44', '31', null, '12312', '123', '123123', null, '324', '123', 'asc阿斯顿啊', 'asdqwe', 'sad', '啊实打实大', '0', '啊实打实', '撒大声地', '啊实打实大', '啊实打实大', null, '自行车自行车资讯', '啊实打实大', '啊实打实大', '1', '0', '2019-02-27 10:01:35', null);
+INSERT INTO `ad_adverts` VALUES ('8', '1551171819', '啊阿萨德自行车', '11', '13', '21', '24', '41', '38', '44', '31', '/static/uploads/20190226/cfc47990156f0da587ac96009e7ad9af.jpg|/static/uploads/20190226/e43628499ed5ad7e4e874fa21dd64859.jpg', '啊阿斯顿', '阿斯顿', '阿斯顿', '阿萨德撒', '阿斯顿', '自行车', '自行车', '自行车', '自行车', '自行车', '0', ' 自行车', '自行车', '自行车', '自行车', '自行车', '自行车自行车自行车自行车', '自行车', '自行车', '1', '0', '2019-02-27 10:59:59', null);
+INSERT INTO `ad_adverts` VALUES ('9', '1551412180', '', '0', '0', '0', '0', '0', '0', '0', '0', null, '', '', '', '', '', '', '', '', '', '', '0', '', '', '', '', '', '', '', '', '1', '0', '2019-03-11 15:15:06', null);
 
 -- ----------------------------
--- Table structure for think_auth_group_access
+-- Table structure for ad_areas
 -- ----------------------------
-DROP TABLE IF EXISTS `think_auth_group_access`;
-CREATE TABLE `think_auth_group_access` (
-  `uid` mediumint(8) unsigned NOT NULL,
-  `group_id` mediumint(8) unsigned NOT NULL,
-  UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
-  KEY `uid` (`uid`),
-  KEY `group_id` (`group_id`)
+DROP TABLE IF EXISTS `ad_areas`;
+CREATE TABLE `ad_areas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名字',
+  `pid` int(11) NOT NULL COMMENT '父级ID',
+  `extends` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '扩展内容',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `areas_name_index` (`name`),
+  KEY `areas_pid_index` (`pid`)
+) ENGINE=MyISAM AUTO_INCREMENT=3517 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of ad_areas
+-- ----------------------------
+INSERT INTO `ad_areas` VALUES ('1', '中国', '0', '3', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('2', '北京市', '1', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('3', '市辖区', '2', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('4', '东城区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('5', '西城区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('6', '朝阳区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('7', '丰台区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('8', '石景山区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('9', '海淀区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('10', '门头沟区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('11', '房山区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('12', '通州区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('13', '顺义区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('14', '昌平区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('15', '大兴区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('16', '怀柔区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('17', '平谷区', '3', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('18', '县', '2', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('19', '密云县', '18', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('20', '延庆县', '18', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('21', '天津市', '1', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('22', '市辖区', '21', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('23', '和平区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('24', '河东区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('25', '河西区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('26', '南开区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('27', '河北区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('28', '红桥区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('29', '东丽区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('30', '西青区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('31', '津南区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('32', '北辰区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('33', '武清区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('34', '宝坻区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('35', '滨海新区', '22', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('36', '县', '21', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('37', '宁河县', '36', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('38', '静海县', '36', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('39', '蓟县', '36', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('40', '河北省', '1', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('41', '石家庄市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('42', '市辖区', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('43', '长安区', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('44', '桥东区', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('45', '桥西区', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('46', '新华区', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('47', '井陉矿区', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('48', '裕华区', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('49', '井陉县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('50', '正定县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('51', '栾城县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('52', '行唐县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('53', '灵寿县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('54', '高邑县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('55', '深泽县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('56', '赞皇县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('57', '无极县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('58', '平山县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('59', '元氏县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('60', '赵县', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('61', '辛集市', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('62', '藁城市', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('63', '晋州市', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('64', '新乐市', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('65', '鹿泉市', '41', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('66', '唐山市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('67', '市辖区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('68', '路南区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('69', '路北区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('70', '古冶区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('71', '开平区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('72', '丰南区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('73', '丰润区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('74', '曹妃甸区', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('75', '滦县', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('76', '滦南县', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('77', '乐亭县', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('78', '迁西县', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('79', '玉田县', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('80', '遵化市', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('81', '迁安市', '66', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('82', '秦皇岛市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('83', '市辖区', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('84', '海港区', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('85', '山海关区', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('86', '北戴河区', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('87', '青龙满族自治县', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('88', '昌黎县', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('89', '抚宁县', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('90', '卢龙县', '82', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('91', '邯郸市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('92', '市辖区', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('93', '邯山区', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('94', '丛台区', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('95', '复兴区', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('96', '峰峰矿区', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('97', '邯郸县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('98', '临漳县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('99', '成安县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('100', '大名县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('101', '涉县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('102', '磁县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('103', '肥乡县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('104', '永年县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('105', '邱县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('106', '鸡泽县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('107', '广平县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('108', '馆陶县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('109', '魏县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('110', '曲周县', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('111', '武安市', '91', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('112', '邢台市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('113', '市辖区', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('114', '桥东区', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('115', '桥西区', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('116', '邢台县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('117', '临城县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('118', '内丘县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('119', '柏乡县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('120', '隆尧县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('121', '任县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('122', '南和县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('123', '宁晋县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('124', '巨鹿县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('125', '新河县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('126', '广宗县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('127', '平乡县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('128', '威县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('129', '清河县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('130', '临西县', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('131', '南宫市', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('132', '沙河市', '112', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('133', '保定市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('134', '市辖区', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('135', '新市区', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('136', '北市区', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('137', '南市区', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('138', '满城县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('139', '清苑县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('140', '涞水县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('141', '阜平县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('142', '徐水县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('143', '定兴县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('144', '唐县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('145', '高阳县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('146', '容城县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('147', '涞源县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('148', '望都县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('149', '安新县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('150', '易县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('151', '曲阳县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('152', '蠡县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('153', '顺平县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('154', '博野县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('155', '雄县', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('156', '涿州市', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('157', '定州市', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('158', '安国市', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('159', '高碑店市', '133', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('160', '张家口市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('161', '市辖区', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('162', '桥东区', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('163', '桥西区', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('164', '宣化区', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('165', '下花园区', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('166', '宣化县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('167', '张北县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('168', '康保县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('169', '沽源县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('170', '尚义县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('171', '蔚县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('172', '阳原县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('173', '怀安县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('174', '万全县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('175', '怀来县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('176', '涿鹿县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('177', '赤城县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('178', '崇礼县', '160', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('179', '承德市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('180', '市辖区', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('181', '双桥区', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('182', '双滦区', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('183', '鹰手营子矿区', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('184', '承德县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('185', '兴隆县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('186', '平泉县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('187', '滦平县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('188', '隆化县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('189', '丰宁满族自治县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('190', '宽城满族自治县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('191', '围场满族蒙古族自治县', '179', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('192', '沧州市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('193', '市辖区', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('194', '新华区', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('195', '运河区', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('196', '沧县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('197', '青县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('198', '东光县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('199', '海兴县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('200', '盐山县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('201', '肃宁县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('202', '南皮县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('203', '吴桥县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('204', '献县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('205', '孟村回族自治县', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('206', '泊头市', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('207', '任丘市', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('208', '黄骅市', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('209', '河间市', '192', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('210', '廊坊市', '40', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('211', '市辖区', '210', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('212', '安次区', '210', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('213', '广阳区', '210', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('214', '固安县', '210', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('215', '永清县', '210', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('216', '香河县', '210', '', '2018-10-30 09:08:00', '2018-10-30 09:08:00');
+INSERT INTO `ad_areas` VALUES ('217', '大城县', '210', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('218', '文安县', '210', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('219', '大厂回族自治县', '210', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('220', '霸州市', '210', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('221', '三河市', '210', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('222', '衡水市', '40', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('223', '市辖区', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('224', '桃城区', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('225', '枣强县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('226', '武邑县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('227', '武强县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('228', '饶阳县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('229', '安平县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('230', '故城县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('231', '景县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('232', '阜城县', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('233', '冀州市', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('234', '深州市', '222', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('235', '山西省', '1', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('236', '太原市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('237', '市辖区', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('238', '小店区', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('239', '迎泽区', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('240', '杏花岭区', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('241', '尖草坪区', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('242', '万柏林区', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('243', '晋源区', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('244', '清徐县', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('245', '阳曲县', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('246', '娄烦县', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('247', '古交市', '236', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('248', '大同市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('249', '市辖区', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('250', '城区', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('251', '矿区', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('252', '南郊区', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('253', '新荣区', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('254', '阳高县', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('255', '天镇县', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('256', '广灵县', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('257', '灵丘县', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('258', '浑源县', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('259', '左云县', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('260', '大同县', '248', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('261', '阳泉市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('262', '市辖区', '261', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('263', '城区', '261', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('264', '矿区', '261', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('265', '郊区', '261', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('266', '平定县', '261', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('267', '盂县', '261', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('268', '长治市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('269', '市辖区', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('270', '城区', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('271', '郊区', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('272', '长治县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('273', '襄垣县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('274', '屯留县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('275', '平顺县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('276', '黎城县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('277', '壶关县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('278', '长子县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('279', '武乡县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('280', '沁县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('281', '沁源县', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('282', '潞城市', '268', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('283', '晋城市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('284', '市辖区', '283', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('285', '城区', '283', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('286', '沁水县', '283', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('287', '阳城县', '283', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('288', '陵川县', '283', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('289', '泽州县', '283', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('290', '高平市', '283', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('291', '朔州市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('292', '市辖区', '291', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('293', '朔城区', '291', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('294', '平鲁区', '291', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('295', '山阴县', '291', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('296', '应县', '291', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('297', '右玉县', '291', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('298', '怀仁县', '291', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('299', '晋中市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('300', '市辖区', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('301', '榆次区', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('302', '榆社县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('303', '左权县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('304', '和顺县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('305', '昔阳县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('306', '寿阳县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('307', '太谷县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('308', '祁县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('309', '平遥县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('310', '灵石县', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('311', '介休市', '299', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('312', '运城市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('313', '市辖区', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('314', '盐湖区', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('315', '临猗县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('316', '万荣县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('317', '闻喜县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('318', '稷山县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('319', '新绛县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('320', '绛县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('321', '垣曲县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('322', '夏县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('323', '平陆县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('324', '芮城县', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('325', '永济市', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('326', '河津市', '312', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('327', '忻州市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('328', '市辖区', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('329', '忻府区', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('330', '定襄县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('331', '五台县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('332', '代县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('333', '繁峙县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('334', '宁武县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('335', '静乐县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('336', '神池县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('337', '五寨县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('338', '岢岚县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('339', '河曲县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('340', '保德县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('341', '偏关县', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('342', '原平市', '327', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('343', '临汾市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('344', '市辖区', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('345', '尧都区', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('346', '曲沃县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('347', '翼城县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('348', '襄汾县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('349', '洪洞县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('350', '古县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('351', '安泽县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('352', '浮山县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('353', '吉县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('354', '乡宁县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('355', '大宁县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('356', '隰县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('357', '永和县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('358', '蒲县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('359', '汾西县', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('360', '侯马市', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('361', '霍州市', '343', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('362', '吕梁市', '235', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('363', '市辖区', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('364', '离石区', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('365', '文水县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('366', '交城县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('367', '兴县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('368', '临县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('369', '柳林县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('370', '石楼县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('371', '岚县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('372', '方山县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('373', '中阳县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('374', '交口县', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('375', '孝义市', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('376', '汾阳市', '362', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('377', '内蒙古自治区', '1', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('378', '呼和浩特市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('379', '市辖区', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('380', '新城区', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('381', '回民区', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('382', '玉泉区', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('383', '赛罕区', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('384', '土默特左旗', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('385', '托克托县', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('386', '和林格尔县', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('387', '清水河县', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('388', '武川县', '378', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('389', '包头市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('390', '市辖区', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('391', '东河区', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('392', '昆都仑区', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('393', '青山区', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('394', '石拐区', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('395', '白云鄂博矿区', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('396', '九原区', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('397', '土默特右旗', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('398', '固阳县', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('399', '达尔罕茂明安联合旗', '389', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('400', '乌海市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('401', '市辖区', '400', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('402', '海勃湾区', '400', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('403', '海南区', '400', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('404', '乌达区', '400', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('405', '赤峰市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('406', '市辖区', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('407', '红山区', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('408', '元宝山区', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('409', '松山区', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('410', '阿鲁科尔沁旗', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('411', '巴林左旗', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('412', '巴林右旗', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('413', '林西县', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('414', '克什克腾旗', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('415', '翁牛特旗', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('416', '喀喇沁旗', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('417', '宁城县', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('418', '敖汉旗', '405', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('419', '通辽市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('420', '市辖区', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('421', '科尔沁区', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('422', '科尔沁左翼中旗', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('423', '科尔沁左翼后旗', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('424', '开鲁县', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('425', '库伦旗', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('426', '奈曼旗', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('427', '扎鲁特旗', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('428', '霍林郭勒市', '419', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('429', '鄂尔多斯市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('430', '市辖区', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('431', '东胜区', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('432', '达拉特旗', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('433', '准格尔旗', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('434', '鄂托克前旗', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('435', '鄂托克旗', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('436', '杭锦旗', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('437', '乌审旗', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('438', '伊金霍洛旗', '429', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('439', '呼伦贝尔市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('440', '市辖区', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('441', '海拉尔区', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('442', '扎赉诺尔区', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('443', '阿荣旗', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('444', '莫力达瓦达斡尔族自治旗', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('445', '鄂伦春自治旗', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('446', '鄂温克族自治旗', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('447', '陈巴尔虎旗', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('448', '新巴尔虎左旗', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('449', '新巴尔虎右旗', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('450', '满洲里市', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('451', '牙克石市', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('452', '扎兰屯市', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('453', '额尔古纳市', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('454', '根河市', '439', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('455', '巴彦淖尔市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('456', '市辖区', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('457', '临河区', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('458', '五原县', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('459', '磴口县', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('460', '乌拉特前旗', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('461', '乌拉特中旗', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('462', '乌拉特后旗', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('463', '杭锦后旗', '455', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('464', '乌兰察布市', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('465', '市辖区', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('466', '集宁区', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('467', '卓资县', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('468', '化德县', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('469', '商都县', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('470', '兴和县', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('471', '凉城县', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('472', '察哈尔右翼前旗', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('473', '察哈尔右翼中旗', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('474', '察哈尔右翼后旗', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('475', '四子王旗', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('476', '丰镇市', '464', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('477', '兴安盟', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('478', '乌兰浩特市', '477', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('479', '阿尔山市', '477', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('480', '科尔沁右翼前旗', '477', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('481', '科尔沁右翼中旗', '477', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('482', '扎赉特旗', '477', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('483', '突泉县', '477', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('484', '锡林郭勒盟', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('485', '二连浩特市', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('486', '锡林浩特市', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('487', '阿巴嘎旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('488', '苏尼特左旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('489', '苏尼特右旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('490', '东乌珠穆沁旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('491', '西乌珠穆沁旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('492', '太仆寺旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('493', '镶黄旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('494', '正镶白旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('495', '正蓝旗', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('496', '多伦县', '484', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('497', '阿拉善盟', '377', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('498', '阿拉善左旗', '497', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('499', '阿拉善右旗', '497', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('500', '额济纳旗', '497', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('501', '辽宁省', '1', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('502', '沈阳市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('503', '市辖区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('504', '和平区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('505', '沈河区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('506', '大东区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('507', '皇姑区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('508', '铁西区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('509', '苏家屯区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('510', '东陵区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('511', '沈北新区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('512', '于洪区', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('513', '辽中县', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('514', '康平县', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('515', '法库县', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('516', '新民市', '502', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('517', '大连市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('518', '市辖区', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('519', '中山区', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('520', '西岗区', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('521', '沙河口区', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('522', '甘井子区', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('523', '旅顺口区', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('524', '金州区', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('525', '长海县', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('526', '瓦房店市', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('527', '普兰店市', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('528', '庄河市', '517', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('529', '鞍山市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('530', '市辖区', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('531', '铁东区', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('532', '铁西区', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('533', '立山区', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('534', '千山区', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('535', '台安县', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('536', '岫岩满族自治县', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('537', '海城市', '529', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('538', '抚顺市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('539', '市辖区', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('540', '新抚区', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('541', '东洲区', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('542', '望花区', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('543', '顺城区', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('544', '抚顺县', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('545', '新宾满族自治县', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('546', '清原满族自治县', '538', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('547', '本溪市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('548', '市辖区', '547', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('549', '平山区', '547', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('550', '溪湖区', '547', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('551', '明山区', '547', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('552', '南芬区', '547', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('553', '本溪满族自治县', '547', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('554', '桓仁满族自治县', '547', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('555', '丹东市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('556', '市辖区', '555', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('557', '元宝区', '555', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('558', '振兴区', '555', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('559', '振安区', '555', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('560', '宽甸满族自治县', '555', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('561', '东港市', '555', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('562', '凤城市', '555', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('563', '锦州市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('564', '市辖区', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('565', '古塔区', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('566', '凌河区', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('567', '太和区', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('568', '黑山县', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('569', '义县', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('570', '凌海市', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('571', '北镇市', '563', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('572', '营口市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('573', '市辖区', '572', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('574', '站前区', '572', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('575', '西市区', '572', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('576', '鲅鱼圈区', '572', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('577', '老边区', '572', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('578', '盖州市', '572', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('579', '大石桥市', '572', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('580', '阜新市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('581', '市辖区', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('582', '海州区', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('583', '新邱区', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('584', '太平区', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('585', '清河门区', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('586', '细河区', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('587', '阜新蒙古族自治县', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('588', '彰武县', '580', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('589', '辽阳市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('590', '市辖区', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('591', '白塔区', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('592', '文圣区', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('593', '宏伟区', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('594', '弓长岭区', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('595', '太子河区', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('596', '辽阳县', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('597', '灯塔市', '589', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('598', '盘锦市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('599', '市辖区', '598', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('600', '双台子区', '598', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('601', '兴隆台区', '598', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('602', '大洼县', '598', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('603', '盘山县', '598', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('604', '铁岭市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('605', '市辖区', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('606', '银州区', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('607', '清河区', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('608', '铁岭县', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('609', '西丰县', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('610', '昌图县', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('611', '调兵山市', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('612', '开原市', '604', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('613', '朝阳市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('614', '市辖区', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('615', '双塔区', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('616', '龙城区', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('617', '朝阳县', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('618', '建平县', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('619', '喀喇沁左翼蒙古族自治县', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('620', '北票市', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('621', '凌源市', '613', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('622', '葫芦岛市', '501', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('623', '市辖区', '622', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('624', '连山区', '622', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('625', '龙港区', '622', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('626', '南票区', '622', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('627', '绥中县', '622', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('628', '建昌县', '622', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('629', '兴城市', '622', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('630', '吉林省', '1', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('631', '长春市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('632', '市辖区', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('633', '南关区', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('634', '宽城区', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('635', '朝阳区', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('636', '二道区', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('637', '绿园区', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('638', '双阳区', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('639', '农安县', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('640', '九台市', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('641', '榆树市', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('642', '德惠市', '631', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('643', '吉林市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('644', '市辖区', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('645', '昌邑区', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('646', '龙潭区', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('647', '船营区', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('648', '丰满区', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('649', '永吉县', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('650', '蛟河市', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('651', '桦甸市', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('652', '舒兰市', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('653', '磐石市', '643', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('654', '四平市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('655', '市辖区', '654', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('656', '铁西区', '654', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('657', '铁东区', '654', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('658', '梨树县', '654', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('659', '伊通满族自治县', '654', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('660', '公主岭市', '654', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('661', '双辽市', '654', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('662', '辽源市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('663', '市辖区', '662', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('664', '龙山区', '662', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('665', '西安区', '662', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('666', '东丰县', '662', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('667', '东辽县', '662', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('668', '通化市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('669', '市辖区', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('670', '东昌区', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('671', '二道江区', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('672', '通化县', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('673', '辉南县', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('674', '柳河县', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('675', '梅河口市', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('676', '集安市', '668', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('677', '白山市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('678', '市辖区', '677', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('679', '浑江区', '677', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('680', '江源区', '677', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('681', '抚松县', '677', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('682', '靖宇县', '677', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('683', '长白朝鲜族自治县', '677', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('684', '临江市', '677', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('685', '松原市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('686', '市辖区', '685', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('687', '宁江区', '685', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('688', '前郭尔罗斯蒙古族自治县', '685', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('689', '长岭县', '685', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('690', '乾安县', '685', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('691', '扶余市', '685', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('692', '白城市', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('693', '市辖区', '692', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('694', '洮北区', '692', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('695', '镇赉县', '692', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('696', '通榆县', '692', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('697', '洮南市', '692', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('698', '大安市', '692', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('699', '延边朝鲜族自治州', '630', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('700', '延吉市', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('701', '图们市', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('702', '敦化市', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('703', '珲春市', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('704', '龙井市', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('705', '和龙市', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('706', '汪清县', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('707', '安图县', '699', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('708', '黑龙江省', '1', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('709', '哈尔滨市', '708', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('710', '市辖区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('711', '道里区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('712', '南岗区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('713', '道外区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('714', '平房区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('715', '松北区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('716', '香坊区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('717', '呼兰区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('718', '阿城区', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('719', '依兰县', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('720', '方正县', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('721', '宾县', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('722', '巴彦县', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('723', '木兰县', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('724', '通河县', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('725', '延寿县', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('726', '双城市', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('727', '尚志市', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('728', '五常市', '709', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('729', '齐齐哈尔市', '708', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('730', '市辖区', '729', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('731', '龙沙区', '729', '', '2018-10-30 09:08:01', '2018-10-30 09:08:01');
+INSERT INTO `ad_areas` VALUES ('732', '建华区', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('733', '铁锋区', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('734', '昂昂溪区', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('735', '富拉尔基区', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('736', '碾子山区', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('737', '梅里斯达斡尔族区', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('738', '龙江县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('739', '依安县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('740', '泰来县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('741', '甘南县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('742', '富裕县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('743', '克山县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('744', '克东县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('745', '拜泉县', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('746', '讷河市', '729', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('747', '鸡西市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('748', '市辖区', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('749', '鸡冠区', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('750', '恒山区', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('751', '滴道区', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('752', '梨树区', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('753', '城子河区', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('754', '麻山区', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('755', '鸡东县', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('756', '虎林市', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('757', '密山市', '747', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('758', '鹤岗市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('759', '市辖区', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('760', '向阳区', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('761', '工农区', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('762', '南山区', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('763', '兴安区', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('764', '东山区', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('765', '兴山区', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('766', '萝北县', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('767', '绥滨县', '758', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('768', '双鸭山市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('769', '市辖区', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('770', '尖山区', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('771', '岭东区', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('772', '四方台区', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('773', '宝山区', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('774', '集贤县', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('775', '友谊县', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('776', '宝清县', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('777', '饶河县', '768', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('778', '大庆市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('779', '市辖区', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('780', '萨尔图区', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('781', '龙凤区', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('782', '让胡路区', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('783', '红岗区', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('784', '大同区', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('785', '肇州县', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('786', '肇源县', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('787', '林甸县', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('788', '杜尔伯特蒙古族自治县', '778', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('789', '伊春市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('790', '市辖区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('791', '伊春区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('792', '南岔区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('793', '友好区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('794', '西林区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('795', '翠峦区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('796', '新青区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('797', '美溪区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('798', '金山屯区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('799', '五营区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('800', '乌马河区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('801', '汤旺河区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('802', '带岭区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('803', '乌伊岭区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('804', '红星区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('805', '上甘岭区', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('806', '嘉荫县', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('807', '铁力市', '789', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('808', '佳木斯市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('809', '市辖区', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('810', '向阳区', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('811', '前进区', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('812', '东风区', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('813', '郊区', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('814', '桦南县', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('815', '桦川县', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('816', '汤原县', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('817', '抚远县', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('818', '同江市', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('819', '富锦市', '808', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('820', '七台河市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('821', '市辖区', '820', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('822', '新兴区', '820', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('823', '桃山区', '820', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('824', '茄子河区', '820', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('825', '勃利县', '820', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('826', '牡丹江市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('827', '市辖区', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('828', '东安区', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('829', '阳明区', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('830', '爱民区', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('831', '西安区', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('832', '东宁县', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('833', '林口县', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('834', '绥芬河市', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('835', '海林市', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('836', '宁安市', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('837', '穆棱市', '826', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('838', '黑河市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('839', '市辖区', '838', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('840', '爱辉区', '838', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('841', '嫩江县', '838', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('842', '逊克县', '838', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('843', '孙吴县', '838', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('844', '北安市', '838', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('845', '五大连池市', '838', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('846', '绥化市', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('847', '市辖区', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('848', '北林区', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('849', '望奎县', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('850', '兰西县', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('851', '青冈县', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('852', '庆安县', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('853', '明水县', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('854', '绥棱县', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('855', '安达市', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('856', '肇东市', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('857', '海伦市', '846', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('858', '大兴安岭地区', '708', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('859', '呼玛县', '858', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('860', '塔河县', '858', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('861', '漠河县', '858', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('862', '上海市', '1', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('863', '市辖区', '862', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('864', '黄浦区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('865', '徐汇区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('866', '长宁区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('867', '静安区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('868', '普陀区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('869', '闸北区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('870', '虹口区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('871', '杨浦区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('872', '闵行区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('873', '宝山区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('874', '嘉定区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('875', '浦东新区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('876', '金山区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('877', '松江区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('878', '青浦区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('879', '奉贤区', '863', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('880', '县', '862', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('881', '崇明县', '880', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('882', '江苏省', '1', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('883', '南京市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('884', '市辖区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('885', '玄武区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('886', '秦淮区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('887', '建邺区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('888', '鼓楼区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('889', '浦口区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('890', '栖霞区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('891', '雨花台区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('892', '江宁区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('893', '六合区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('894', '溧水区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('895', '高淳区', '883', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('896', '无锡市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('897', '市辖区', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('898', '崇安区', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('899', '南长区', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('900', '北塘区', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('901', '锡山区', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('902', '惠山区', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('903', '滨湖区', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('904', '江阴市', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('905', '宜兴市', '896', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('906', '徐州市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('907', '市辖区', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('908', '鼓楼区', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('909', '云龙区', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('910', '贾汪区', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('911', '泉山区', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('912', '铜山区', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('913', '丰县', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('914', '沛县', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('915', '睢宁县', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('916', '新沂市', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('917', '邳州市', '906', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('918', '常州市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('919', '市辖区', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('920', '天宁区', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('921', '钟楼区', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('922', '戚墅堰区', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('923', '新北区', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('924', '武进区', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('925', '溧阳市', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('926', '金坛市', '918', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('927', '苏州市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('928', '市辖区', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('929', '虎丘区', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('930', '吴中区', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('931', '相城区', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('932', '姑苏区', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('933', '吴江区', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('934', '常熟市', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('935', '张家港市', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('936', '昆山市', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('937', '太仓市', '927', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('938', '南通市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('939', '市辖区', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('940', '崇川区', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('941', '港闸区', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('942', '通州区', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('943', '海安县', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('944', '如东县', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('945', '启东市', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('946', '如皋市', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('947', '海门市', '938', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('948', '连云港市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('949', '市辖区', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('950', '连云区', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('951', '新浦区', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('952', '海州区', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('953', '赣榆县', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('954', '东海县', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('955', '灌云县', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('956', '灌南县', '948', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('957', '淮安市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('958', '市辖区', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('959', '清河区', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('960', '淮安区', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('961', '淮阴区', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('962', '清浦区', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('963', '涟水县', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('964', '洪泽县', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('965', '盱眙县', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('966', '金湖县', '957', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('967', '盐城市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('968', '市辖区', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('969', '亭湖区', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('970', '盐都区', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('971', '响水县', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('972', '滨海县', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('973', '阜宁县', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('974', '射阳县', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('975', '建湖县', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('976', '东台市', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('977', '大丰市', '967', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('978', '扬州市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('979', '市辖区', '978', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('980', '广陵区', '978', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('981', '邗江区', '978', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('982', '江都区', '978', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('983', '宝应县', '978', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('984', '仪征市', '978', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('985', '高邮市', '978', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('986', '镇江市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('987', '市辖区', '986', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('988', '京口区', '986', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('989', '润州区', '986', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('990', '丹徒区', '986', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('991', '丹阳市', '986', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('992', '扬中市', '986', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('993', '句容市', '986', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('994', '泰州市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('995', '市辖区', '994', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('996', '海陵区', '994', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('997', '高港区', '994', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('998', '姜堰区', '994', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('999', '兴化市', '994', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1000', '靖江市', '994', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1001', '泰兴市', '994', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1002', '宿迁市', '882', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1003', '市辖区', '1002', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1004', '宿城区', '1002', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1005', '宿豫区', '1002', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1006', '沭阳县', '1002', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1007', '泗阳县', '1002', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1008', '泗洪县', '1002', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1009', '浙江省', '1', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1010', '杭州市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1011', '市辖区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1012', '上城区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1013', '下城区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1014', '江干区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1015', '拱墅区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1016', '西湖区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1017', '滨江区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1018', '萧山区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1019', '余杭区', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1020', '桐庐县', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1021', '淳安县', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1022', '建德市', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1023', '富阳市', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1024', '临安市', '1010', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1025', '宁波市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1026', '市辖区', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1027', '海曙区', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1028', '江东区', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1029', '江北区', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1030', '北仑区', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1031', '镇海区', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1032', '鄞州区', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1033', '象山县', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1034', '宁海县', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1035', '余姚市', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1036', '慈溪市', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1037', '奉化市', '1025', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1038', '温州市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1039', '市辖区', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1040', '鹿城区', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1041', '龙湾区', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1042', '瓯海区', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1043', '洞头县', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1044', '永嘉县', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1045', '平阳县', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1046', '苍南县', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1047', '文成县', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1048', '泰顺县', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1049', '瑞安市', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1050', '乐清市', '1038', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1051', '嘉兴市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1052', '市辖区', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1053', '南湖区', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1054', '秀洲区', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1055', '嘉善县', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1056', '海盐县', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1057', '海宁市', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1058', '平湖市', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1059', '桐乡市', '1051', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1060', '湖州市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1061', '市辖区', '1060', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1062', '吴兴区', '1060', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1063', '南浔区', '1060', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1064', '德清县', '1060', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1065', '长兴县', '1060', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1066', '安吉县', '1060', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1067', '绍兴市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1068', '市辖区', '1067', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1069', '越城区', '1067', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1070', '绍兴县', '1067', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1071', '新昌县', '1067', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1072', '诸暨市', '1067', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1073', '上虞市', '1067', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1074', '嵊州市', '1067', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1075', '金华市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1076', '市辖区', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1077', '婺城区', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1078', '金东区', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1079', '武义县', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1080', '浦江县', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1081', '磐安县', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1082', '兰溪市', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1083', '义乌市', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1084', '东阳市', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1085', '永康市', '1075', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1086', '衢州市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1087', '市辖区', '1086', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1088', '柯城区', '1086', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1089', '衢江区', '1086', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1090', '常山县', '1086', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1091', '开化县', '1086', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1092', '龙游县', '1086', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1093', '江山市', '1086', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1094', '舟山市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1095', '市辖区', '1094', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1096', '定海区', '1094', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1097', '普陀区', '1094', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1098', '岱山县', '1094', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1099', '嵊泗县', '1094', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1100', '台州市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1101', '市辖区', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1102', '椒江区', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1103', '黄岩区', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1104', '路桥区', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1105', '玉环县', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1106', '三门县', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1107', '天台县', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1108', '仙居县', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1109', '温岭市', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1110', '临海市', '1100', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1111', '丽水市', '1009', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1112', '市辖区', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1113', '莲都区', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1114', '青田县', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1115', '缙云县', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1116', '遂昌县', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1117', '松阳县', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1118', '云和县', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1119', '庆元县', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1120', '景宁畲族自治县', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1121', '龙泉市', '1111', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1122', '安徽省', '1', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1123', '合肥市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1124', '市辖区', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1125', '瑶海区', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1126', '庐阳区', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1127', '蜀山区', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1128', '包河区', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1129', '长丰县', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1130', '肥东县', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1131', '肥西县', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1132', '庐江县', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1133', '巢湖市', '1123', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1134', '芜湖市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1135', '市辖区', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1136', '镜湖区', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1137', '弋江区', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1138', '鸠江区', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1139', '三山区', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1140', '芜湖县', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1141', '繁昌县', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1142', '南陵县', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1143', '无为县', '1134', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1144', '蚌埠市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1145', '市辖区', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1146', '龙子湖区', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1147', '蚌山区', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1148', '禹会区', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1149', '淮上区', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1150', '怀远县', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1151', '五河县', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1152', '固镇县', '1144', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1153', '淮南市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1154', '市辖区', '1153', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1155', '大通区', '1153', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1156', '田家庵区', '1153', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1157', '谢家集区', '1153', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1158', '八公山区', '1153', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1159', '潘集区', '1153', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1160', '凤台县', '1153', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1161', '马鞍山市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1162', '市辖区', '1161', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1163', '花山区', '1161', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1164', '雨山区', '1161', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1165', '博望区', '1161', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1166', '当涂县', '1161', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1167', '含山县', '1161', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1168', '和县', '1161', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1169', '淮北市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1170', '市辖区', '1169', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1171', '杜集区', '1169', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1172', '相山区', '1169', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1173', '烈山区', '1169', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1174', '濉溪县', '1169', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1175', '铜陵市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1176', '市辖区', '1175', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1177', '铜官山区', '1175', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1178', '狮子山区', '1175', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1179', '郊区', '1175', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1180', '铜陵县', '1175', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1181', '安庆市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1182', '市辖区', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1183', '迎江区', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1184', '大观区', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1185', '宜秀区', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1186', '怀宁县', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1187', '枞阳县', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1188', '潜山县', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1189', '太湖县', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1190', '宿松县', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1191', '望江县', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1192', '岳西县', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1193', '桐城市', '1181', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1194', '黄山市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1195', '市辖区', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1196', '屯溪区', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1197', '黄山区', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1198', '徽州区', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1199', '歙县', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1200', '休宁县', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1201', '黟县', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1202', '祁门县', '1194', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1203', '滁州市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1204', '市辖区', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1205', '琅琊区', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1206', '南谯区', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1207', '来安县', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1208', '全椒县', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1209', '定远县', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1210', '凤阳县', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1211', '天长市', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1212', '明光市', '1203', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1213', '阜阳市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1214', '市辖区', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1215', '颍州区', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1216', '颍东区', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1217', '颍泉区', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1218', '临泉县', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1219', '太和县', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1220', '阜南县', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1221', '颍上县', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1222', '界首市', '1213', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1223', '宿州市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1224', '市辖区', '1223', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1225', '埇桥区', '1223', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1226', '砀山县', '1223', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1227', '萧县', '1223', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1228', '灵璧县', '1223', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1229', '泗县', '1223', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1230', '六安市', '1122', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1231', '市辖区', '1230', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1232', '金安区', '1230', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1233', '裕安区', '1230', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1234', '寿县', '1230', '', '2018-10-30 09:08:02', '2018-10-30 09:08:02');
+INSERT INTO `ad_areas` VALUES ('1235', '霍邱县', '1230', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1236', '舒城县', '1230', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1237', '金寨县', '1230', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1238', '霍山县', '1230', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1239', '亳州市', '1122', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1240', '市辖区', '1239', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1241', '谯城区', '1239', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1242', '涡阳县', '1239', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1243', '蒙城县', '1239', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1244', '利辛县', '1239', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1245', '池州市', '1122', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1246', '市辖区', '1245', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1247', '贵池区', '1245', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1248', '东至县', '1245', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1249', '石台县', '1245', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1250', '青阳县', '1245', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1251', '宣城市', '1122', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1252', '市辖区', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1253', '宣州区', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1254', '郎溪县', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1255', '广德县', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1256', '泾县', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1257', '绩溪县', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1258', '旌德县', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1259', '宁国市', '1251', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1260', '福建省', '1', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1261', '福州市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1262', '市辖区', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1263', '鼓楼区', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1264', '台江区', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1265', '仓山区', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1266', '马尾区', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1267', '晋安区', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1268', '闽侯县', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1269', '连江县', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1270', '罗源县', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1271', '闽清县', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1272', '永泰县', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1273', '平潭县', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1274', '福清市', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1275', '长乐市', '1261', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1276', '厦门市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1277', '市辖区', '1276', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1278', '思明区', '1276', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1279', '海沧区', '1276', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1280', '湖里区', '1276', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1281', '集美区', '1276', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1282', '同安区', '1276', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1283', '翔安区', '1276', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1284', '莆田市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1285', '市辖区', '1284', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1286', '城厢区', '1284', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1287', '涵江区', '1284', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1288', '荔城区', '1284', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1289', '秀屿区', '1284', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1290', '仙游县', '1284', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1291', '三明市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1292', '市辖区', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1293', '梅列区', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1294', '三元区', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1295', '明溪县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1296', '清流县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1297', '宁化县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1298', '大田县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1299', '尤溪县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1300', '沙县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1301', '将乐县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1302', '泰宁县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1303', '建宁县', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1304', '永安市', '1291', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1305', '泉州市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1306', '市辖区', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1307', '鲤城区', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1308', '丰泽区', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1309', '洛江区', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1310', '泉港区', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1311', '惠安县', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1312', '安溪县', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1313', '永春县', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1314', '德化县', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1315', '金门县', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1316', '石狮市', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1317', '晋江市', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1318', '南安市', '1305', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1319', '漳州市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1320', '市辖区', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1321', '芗城区', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1322', '龙文区', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1323', '云霄县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1324', '漳浦县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1325', '诏安县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1326', '长泰县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1327', '东山县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1328', '南靖县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1329', '平和县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1330', '华安县', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1331', '龙海市', '1319', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1332', '南平市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1333', '市辖区', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1334', '延平区', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1335', '顺昌县', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1336', '浦城县', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1337', '光泽县', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1338', '松溪县', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1339', '政和县', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1340', '邵武市', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1341', '武夷山市', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1342', '建瓯市', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1343', '建阳市', '1332', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1344', '龙岩市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1345', '市辖区', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1346', '新罗区', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1347', '长汀县', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1348', '永定县', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1349', '上杭县', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1350', '武平县', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1351', '连城县', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1352', '漳平市', '1344', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1353', '宁德市', '1260', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1354', '市辖区', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1355', '蕉城区', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1356', '霞浦县', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1357', '古田县', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1358', '屏南县', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1359', '寿宁县', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1360', '周宁县', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1361', '柘荣县', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1362', '福安市', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1363', '福鼎市', '1353', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1364', '江西省', '1', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1365', '南昌市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1366', '市辖区', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1367', '东湖区', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1368', '西湖区', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1369', '青云谱区', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1370', '湾里区', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1371', '青山湖区', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1372', '南昌县', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1373', '新建县', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1374', '安义县', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1375', '进贤县', '1365', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1376', '景德镇市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1377', '市辖区', '1376', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1378', '昌江区', '1376', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1379', '珠山区', '1376', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1380', '浮梁县', '1376', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1381', '乐平市', '1376', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1382', '萍乡市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1383', '市辖区', '1382', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1384', '安源区', '1382', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1385', '湘东区', '1382', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1386', '莲花县', '1382', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1387', '上栗县', '1382', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1388', '芦溪县', '1382', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1389', '九江市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1390', '市辖区', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1391', '庐山区', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1392', '浔阳区', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1393', '九江县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1394', '武宁县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1395', '修水县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1396', '永修县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1397', '德安县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1398', '星子县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1399', '都昌县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1400', '湖口县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1401', '彭泽县', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1402', '瑞昌市', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1403', '共青城市', '1389', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1404', '新余市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1405', '市辖区', '1404', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1406', '渝水区', '1404', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1407', '分宜县', '1404', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1408', '鹰潭市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1409', '市辖区', '1408', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1410', '月湖区', '1408', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1411', '余江县', '1408', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1412', '贵溪市', '1408', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1413', '赣州市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1414', '市辖区', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1415', '章贡区', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1416', '赣县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1417', '信丰县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1418', '大余县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1419', '上犹县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1420', '崇义县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1421', '安远县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1422', '龙南县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1423', '定南县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1424', '全南县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1425', '宁都县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1426', '于都县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1427', '兴国县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1428', '会昌县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1429', '寻乌县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1430', '石城县', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1431', '瑞金市', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1432', '南康市', '1413', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1433', '吉安市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1434', '市辖区', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1435', '吉州区', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1436', '青原区', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1437', '吉安县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1438', '吉水县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1439', '峡江县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1440', '新干县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1441', '永丰县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1442', '泰和县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1443', '遂川县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1444', '万安县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1445', '安福县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1446', '永新县', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1447', '井冈山市', '1433', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1448', '宜春市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1449', '市辖区', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1450', '袁州区', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1451', '奉新县', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1452', '万载县', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1453', '上高县', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1454', '宜丰县', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1455', '靖安县', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1456', '铜鼓县', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1457', '丰城市', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1458', '樟树市', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1459', '高安市', '1448', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1460', '抚州市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1461', '市辖区', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1462', '临川区', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1463', '南城县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1464', '黎川县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1465', '南丰县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1466', '崇仁县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1467', '乐安县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1468', '宜黄县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1469', '金溪县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1470', '资溪县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1471', '东乡县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1472', '广昌县', '1460', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1473', '上饶市', '1364', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1474', '市辖区', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1475', '信州区', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1476', '上饶县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1477', '广丰县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1478', '玉山县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1479', '铅山县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1480', '横峰县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1481', '弋阳县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1482', '余干县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1483', '鄱阳县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1484', '万年县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1485', '婺源县', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1486', '德兴市', '1473', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1487', '山东省', '1', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1488', '济南市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1489', '市辖区', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1490', '历下区', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1491', '市中区', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1492', '槐荫区', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1493', '天桥区', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1494', '历城区', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1495', '长清区', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1496', '平阴县', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1497', '济阳县', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1498', '商河县', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1499', '章丘市', '1488', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1500', '青岛市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1501', '市辖区', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1502', '市南区', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1503', '市北区', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1504', '黄岛区', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1505', '崂山区', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1506', '李沧区', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1507', '城阳区', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1508', '胶州市', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1509', '即墨市', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1510', '平度市', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1511', '莱西市', '1500', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1512', '淄博市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1513', '市辖区', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1514', '淄川区', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1515', '张店区', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1516', '博山区', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1517', '临淄区', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1518', '周村区', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1519', '桓台县', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1520', '高青县', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1521', '沂源县', '1512', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1522', '枣庄市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1523', '市辖区', '1522', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1524', '市中区', '1522', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1525', '薛城区', '1522', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1526', '峄城区', '1522', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1527', '台儿庄区', '1522', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1528', '山亭区', '1522', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1529', '滕州市', '1522', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1530', '东营市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1531', '市辖区', '1530', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1532', '东营区', '1530', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1533', '河口区', '1530', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1534', '垦利县', '1530', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1535', '利津县', '1530', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1536', '广饶县', '1530', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1537', '烟台市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1538', '市辖区', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1539', '芝罘区', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1540', '福山区', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1541', '牟平区', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1542', '莱山区', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1543', '长岛县', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1544', '龙口市', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1545', '莱阳市', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1546', '莱州市', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1547', '蓬莱市', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1548', '招远市', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1549', '栖霞市', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1550', '海阳市', '1537', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1551', '潍坊市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1552', '市辖区', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1553', '潍城区', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1554', '寒亭区', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1555', '坊子区', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1556', '奎文区', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1557', '临朐县', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1558', '昌乐县', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1559', '青州市', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1560', '诸城市', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1561', '寿光市', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1562', '安丘市', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1563', '高密市', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1564', '昌邑市', '1551', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1565', '济宁市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1566', '市辖区', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1567', '市中区', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1568', '任城区', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1569', '微山县', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1570', '鱼台县', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1571', '金乡县', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1572', '嘉祥县', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1573', '汶上县', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1574', '泗水县', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1575', '梁山县', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1576', '曲阜市', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1577', '兖州市', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1578', '邹城市', '1565', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1579', '泰安市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1580', '市辖区', '1579', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1581', '泰山区', '1579', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1582', '岱岳区', '1579', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1583', '宁阳县', '1579', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1584', '东平县', '1579', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1585', '新泰市', '1579', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1586', '肥城市', '1579', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1587', '威海市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1588', '市辖区', '1587', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1589', '环翠区', '1587', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1590', '文登市', '1587', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1591', '荣成市', '1587', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1592', '乳山市', '1587', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1593', '日照市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1594', '市辖区', '1593', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1595', '东港区', '1593', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1596', '岚山区', '1593', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1597', '五莲县', '1593', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1598', '莒县', '1593', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1599', '莱芜市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1600', '市辖区', '1599', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1601', '莱城区', '1599', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1602', '钢城区', '1599', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1603', '临沂市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1604', '市辖区', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1605', '兰山区', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1606', '罗庄区', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1607', '河东区', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1608', '沂南县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1609', '郯城县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1610', '沂水县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1611', '苍山县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1612', '费县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1613', '平邑县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1614', '莒南县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1615', '蒙阴县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1616', '临沭县', '1603', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1617', '德州市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1618', '市辖区', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1619', '德城区', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1620', '陵县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1621', '宁津县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1622', '庆云县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1623', '临邑县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1624', '齐河县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1625', '平原县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1626', '夏津县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1627', '武城县', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1628', '乐陵市', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1629', '禹城市', '1617', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1630', '聊城市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1631', '市辖区', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1632', '东昌府区', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1633', '阳谷县', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1634', '莘县', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1635', '茌平县', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1636', '东阿县', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1637', '冠县', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1638', '高唐县', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1639', '临清市', '1630', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1640', '滨州市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1641', '市辖区', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1642', '滨城区', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1643', '惠民县', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1644', '阳信县', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1645', '无棣县', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1646', '沾化县', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1647', '博兴县', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1648', '邹平县', '1640', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1649', '菏泽市', '1487', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1650', '市辖区', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1651', '牡丹区', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1652', '曹县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1653', '单县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1654', '成武县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1655', '巨野县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1656', '郓城县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1657', '鄄城县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1658', '定陶县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1659', '东明县', '1649', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1660', '河南省', '1', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1661', '郑州市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1662', '市辖区', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1663', '中原区', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1664', '二七区', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1665', '管城回族区', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1666', '金水区', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1667', '上街区', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1668', '惠济区', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1669', '中牟县', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1670', '巩义市', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1671', '荥阳市', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1672', '新密市', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1673', '新郑市', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1674', '登封市', '1661', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1675', '开封市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1676', '市辖区', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1677', '龙亭区', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1678', '顺河回族区', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1679', '鼓楼区', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1680', '禹王台区', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1681', '金明区', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1682', '杞县', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1683', '通许县', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1684', '尉氏县', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1685', '开封县', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1686', '兰考县', '1675', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1687', '洛阳市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1688', '市辖区', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1689', '老城区', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1690', '西工区', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1691', '瀍河回族区', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1692', '涧西区', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1693', '吉利区', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1694', '洛龙区', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1695', '孟津县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1696', '新安县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1697', '栾川县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1698', '嵩县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1699', '汝阳县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1700', '宜阳县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1701', '洛宁县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1702', '伊川县', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1703', '偃师市', '1687', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1704', '平顶山市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1705', '市辖区', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1706', '新华区', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1707', '卫东区', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1708', '石龙区', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1709', '湛河区', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1710', '宝丰县', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1711', '叶县', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1712', '鲁山县', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1713', '郏县', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1714', '舞钢市', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1715', '汝州市', '1704', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1716', '安阳市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1717', '市辖区', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1718', '文峰区', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1719', '北关区', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1720', '殷都区', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1721', '龙安区', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1722', '安阳县', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1723', '汤阴县', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1724', '滑县', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1725', '内黄县', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1726', '林州市', '1716', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1727', '鹤壁市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1728', '市辖区', '1727', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1729', '鹤山区', '1727', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1730', '山城区', '1727', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1731', '淇滨区', '1727', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1732', '浚县', '1727', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1733', '淇县', '1727', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1734', '新乡市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1735', '市辖区', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1736', '红旗区', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1737', '卫滨区', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1738', '凤泉区', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1739', '牧野区', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1740', '新乡县', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1741', '获嘉县', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1742', '原阳县', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1743', '延津县', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1744', '封丘县', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1745', '长垣县', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1746', '卫辉市', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1747', '辉县市', '1734', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1748', '焦作市', '1660', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1749', '市辖区', '1748', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1750', '解放区', '1748', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1751', '中站区', '1748', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1752', '马村区', '1748', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1753', '山阳区', '1748', '', '2018-10-30 09:08:03', '2018-10-30 09:08:03');
+INSERT INTO `ad_areas` VALUES ('1754', '修武县', '1748', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1755', '博爱县', '1748', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1756', '武陟县', '1748', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1757', '温县', '1748', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1758', '沁阳市', '1748', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1759', '孟州市', '1748', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1760', '濮阳市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1761', '市辖区', '1760', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1762', '华龙区', '1760', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1763', '清丰县', '1760', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1764', '南乐县', '1760', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1765', '范县', '1760', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1766', '台前县', '1760', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1767', '濮阳县', '1760', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1768', '许昌市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1769', '市辖区', '1768', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1770', '魏都区', '1768', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1771', '许昌县', '1768', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1772', '鄢陵县', '1768', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1773', '襄城县', '1768', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1774', '禹州市', '1768', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1775', '长葛市', '1768', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1776', '漯河市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1777', '市辖区', '1776', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1778', '源汇区', '1776', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1779', '郾城区', '1776', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1780', '召陵区', '1776', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1781', '舞阳县', '1776', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1782', '临颍县', '1776', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1783', '三门峡市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1784', '市辖区', '1783', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1785', '湖滨区', '1783', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1786', '渑池县', '1783', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1787', '陕县', '1783', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1788', '卢氏县', '1783', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1789', '义马市', '1783', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1790', '灵宝市', '1783', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1791', '南阳市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1792', '市辖区', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1793', '宛城区', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1794', '卧龙区', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1795', '南召县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1796', '方城县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1797', '西峡县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1798', '镇平县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1799', '内乡县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1800', '淅川县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1801', '社旗县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1802', '唐河县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1803', '新野县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1804', '桐柏县', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1805', '邓州市', '1791', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1806', '商丘市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1807', '市辖区', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1808', '梁园区', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1809', '睢阳区', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1810', '民权县', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1811', '睢县', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1812', '宁陵县', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1813', '柘城县', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1814', '虞城县', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1815', '夏邑县', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1816', '永城市', '1806', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1817', '信阳市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1818', '市辖区', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1819', '浉河区', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1820', '平桥区', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1821', '罗山县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1822', '光山县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1823', '新县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1824', '商城县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1825', '固始县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1826', '潢川县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1827', '淮滨县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1828', '息县', '1817', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1829', '周口市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1830', '市辖区', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1831', '川汇区', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1832', '扶沟县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1833', '西华县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1834', '商水县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1835', '沈丘县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1836', '郸城县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1837', '淮阳县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1838', '太康县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1839', '鹿邑县', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1840', '项城市', '1829', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1841', '驻马店市', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1842', '市辖区', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1843', '驿城区', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1844', '西平县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1845', '上蔡县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1846', '平舆县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1847', '正阳县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1848', '确山县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1849', '泌阳县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1850', '汝南县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1851', '遂平县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1852', '新蔡县', '1841', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1853', '省直辖县级行政区划', '1660', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1854', '济源市', '1853', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1855', '湖北省', '1', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1856', '武汉市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1857', '市辖区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1858', '江岸区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1859', '江汉区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1860', '硚口区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1861', '汉阳区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1862', '武昌区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1863', '青山区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1864', '洪山区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1865', '东西湖区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1866', '汉南区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1867', '蔡甸区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1868', '江夏区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1869', '黄陂区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1870', '新洲区', '1856', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1871', '黄石市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1872', '市辖区', '1871', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1873', '黄石港区', '1871', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1874', '西塞山区', '1871', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1875', '下陆区', '1871', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1876', '铁山区', '1871', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1877', '阳新县', '1871', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1878', '大冶市', '1871', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1879', '十堰市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1880', '市辖区', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1881', '茅箭区', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1882', '张湾区', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1883', '郧县', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1884', '郧西县', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1885', '竹山县', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1886', '竹溪县', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1887', '房县', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1888', '丹江口市', '1879', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1889', '宜昌市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1890', '市辖区', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1891', '西陵区', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1892', '伍家岗区', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1893', '点军区', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1894', '猇亭区', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1895', '夷陵区', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1896', '远安县', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1897', '兴山县', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1898', '秭归县', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1899', '长阳土家族自治县', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1900', '五峰土家族自治县', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1901', '宜都市', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1902', '当阳市', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1903', '枝江市', '1889', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1904', '襄阳市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1905', '市辖区', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1906', '襄城区', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1907', '樊城区', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1908', '襄州区', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1909', '南漳县', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1910', '谷城县', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1911', '保康县', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1912', '老河口市', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1913', '枣阳市', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1914', '宜城市', '1904', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1915', '鄂州市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1916', '市辖区', '1915', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1917', '梁子湖区', '1915', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1918', '华容区', '1915', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1919', '鄂城区', '1915', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1920', '荆门市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1921', '市辖区', '1920', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1922', '东宝区', '1920', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1923', '掇刀区', '1920', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1924', '京山县', '1920', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1925', '沙洋县', '1920', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1926', '钟祥市', '1920', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1927', '孝感市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1928', '市辖区', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1929', '孝南区', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1930', '孝昌县', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1931', '大悟县', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1932', '云梦县', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1933', '应城市', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1934', '安陆市', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1935', '汉川市', '1927', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1936', '荆州市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1937', '市辖区', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1938', '沙市区', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1939', '荆州区', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1940', '公安县', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1941', '监利县', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1942', '江陵县', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1943', '石首市', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1944', '洪湖市', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1945', '松滋市', '1936', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1946', '黄冈市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1947', '市辖区', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1948', '黄州区', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1949', '团风县', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1950', '红安县', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1951', '罗田县', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1952', '英山县', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1953', '浠水县', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1954', '蕲春县', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1955', '黄梅县', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1956', '麻城市', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1957', '武穴市', '1946', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1958', '咸宁市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1959', '市辖区', '1958', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1960', '咸安区', '1958', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1961', '嘉鱼县', '1958', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1962', '通城县', '1958', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1963', '崇阳县', '1958', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1964', '通山县', '1958', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1965', '赤壁市', '1958', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1966', '随州市', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1967', '市辖区', '1966', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1968', '曾都区', '1966', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1969', '随县', '1966', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1970', '广水市', '1966', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1971', '恩施土家族苗族自治州', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1972', '恩施市', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1973', '利川市', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1974', '建始县', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1975', '巴东县', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1976', '宣恩县', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1977', '咸丰县', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1978', '来凤县', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1979', '鹤峰县', '1971', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1980', '省直辖县级行政区划', '1855', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1981', '仙桃市', '1980', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1982', '潜江市', '1980', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1983', '天门市', '1980', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1984', '神农架林区', '1980', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1985', '湖南省', '1', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1986', '长沙市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1987', '市辖区', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1988', '芙蓉区', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1989', '天心区', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1990', '岳麓区', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1991', '开福区', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1992', '雨花区', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1993', '望城区', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1994', '长沙县', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1995', '宁乡县', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1996', '浏阳市', '1986', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1997', '株洲市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1998', '市辖区', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('1999', '荷塘区', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2000', '芦淞区', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2001', '石峰区', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2002', '天元区', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2003', '株洲县', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2004', '攸县', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2005', '茶陵县', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2006', '炎陵县', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2007', '醴陵市', '1997', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2008', '湘潭市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2009', '市辖区', '2008', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2010', '雨湖区', '2008', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2011', '岳塘区', '2008', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2012', '湘潭县', '2008', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2013', '湘乡市', '2008', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2014', '韶山市', '2008', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2015', '衡阳市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2016', '市辖区', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2017', '珠晖区', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2018', '雁峰区', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2019', '石鼓区', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2020', '蒸湘区', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2021', '南岳区', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2022', '衡阳县', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2023', '衡南县', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2024', '衡山县', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2025', '衡东县', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2026', '祁东县', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2027', '耒阳市', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2028', '常宁市', '2015', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2029', '邵阳市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2030', '市辖区', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2031', '双清区', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2032', '大祥区', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2033', '北塔区', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2034', '邵东县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2035', '新邵县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2036', '邵阳县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2037', '隆回县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2038', '洞口县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2039', '绥宁县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2040', '新宁县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2041', '城步苗族自治县', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2042', '武冈市', '2029', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2043', '岳阳市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2044', '市辖区', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2045', '岳阳楼区', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2046', '云溪区', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2047', '君山区', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2048', '岳阳县', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2049', '华容县', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2050', '湘阴县', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2051', '平江县', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2052', '汨罗市', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2053', '临湘市', '2043', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2054', '常德市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2055', '市辖区', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2056', '武陵区', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2057', '鼎城区', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2058', '安乡县', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2059', '汉寿县', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2060', '澧县', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2061', '临澧县', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2062', '桃源县', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2063', '石门县', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2064', '津市市', '2054', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2065', '张家界市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2066', '市辖区', '2065', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2067', '永定区', '2065', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2068', '武陵源区', '2065', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2069', '慈利县', '2065', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2070', '桑植县', '2065', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2071', '益阳市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2072', '市辖区', '2071', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2073', '资阳区', '2071', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2074', '赫山区', '2071', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2075', '南县', '2071', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2076', '桃江县', '2071', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2077', '安化县', '2071', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2078', '沅江市', '2071', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2079', '郴州市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2080', '市辖区', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2081', '北湖区', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2082', '苏仙区', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2083', '桂阳县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2084', '宜章县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2085', '永兴县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2086', '嘉禾县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2087', '临武县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2088', '汝城县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2089', '桂东县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2090', '安仁县', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2091', '资兴市', '2079', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2092', '永州市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2093', '市辖区', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2094', '零陵区', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2095', '冷水滩区', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2096', '祁阳县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2097', '东安县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2098', '双牌县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2099', '道县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2100', '江永县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2101', '宁远县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2102', '蓝山县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2103', '新田县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2104', '江华瑶族自治县', '2092', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2105', '怀化市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2106', '市辖区', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2107', '鹤城区', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2108', '中方县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2109', '沅陵县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2110', '辰溪县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2111', '溆浦县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2112', '会同县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2113', '麻阳苗族自治县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2114', '新晃侗族自治县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2115', '芷江侗族自治县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2116', '靖州苗族侗族自治县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2117', '通道侗族自治县', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2118', '洪江市', '2105', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2119', '娄底市', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2120', '市辖区', '2119', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2121', '娄星区', '2119', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2122', '双峰县', '2119', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2123', '新化县', '2119', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2124', '冷水江市', '2119', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2125', '涟源市', '2119', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2126', '湘西土家族苗族自治州', '1985', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2127', '吉首市', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2128', '泸溪县', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2129', '凤凰县', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2130', '花垣县', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2131', '保靖县', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2132', '古丈县', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2133', '永顺县', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2134', '龙山县', '2126', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2135', '广东省', '1', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2136', '广州市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2137', '市辖区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2138', '荔湾区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2139', '越秀区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2140', '海珠区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2141', '天河区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2142', '白云区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2143', '黄埔区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2144', '番禺区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2145', '花都区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2146', '南沙区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2147', '萝岗区', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2148', '增城市', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2149', '从化市', '2136', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2150', '韶关市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2151', '市辖区', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2152', '武江区', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2153', '浈江区', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2154', '曲江区', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2155', '始兴县', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2156', '仁化县', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2157', '翁源县', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2158', '乳源瑶族自治县', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2159', '新丰县', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2160', '乐昌市', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2161', '南雄市', '2150', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2162', '深圳市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2163', '市辖区', '2162', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2164', '罗湖区', '2162', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2165', '福田区', '2162', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2166', '南山区', '2162', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2167', '宝安区', '2162', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2168', '龙岗区', '2162', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2169', '盐田区', '2162', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2170', '珠海市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2171', '市辖区', '2170', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2172', '香洲区', '2170', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2173', '斗门区', '2170', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2174', '金湾区', '2170', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2175', '汕头市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2176', '市辖区', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2177', '龙湖区', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2178', '金平区', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2179', '濠江区', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2180', '潮阳区', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2181', '潮南区', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2182', '澄海区', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2183', '南澳县', '2175', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2184', '佛山市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2185', '市辖区', '2184', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2186', '禅城区', '2184', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2187', '南海区', '2184', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2188', '顺德区', '2184', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2189', '三水区', '2184', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2190', '高明区', '2184', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2191', '江门市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2192', '市辖区', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2193', '蓬江区', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2194', '江海区', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2195', '新会区', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2196', '台山市', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2197', '开平市', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2198', '鹤山市', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2199', '恩平市', '2191', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2200', '湛江市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2201', '市辖区', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2202', '赤坎区', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2203', '霞山区', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2204', '坡头区', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2205', '麻章区', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2206', '遂溪县', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2207', '徐闻县', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2208', '廉江市', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2209', '雷州市', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2210', '吴川市', '2200', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2211', '茂名市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2212', '市辖区', '2211', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2213', '茂南区', '2211', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2214', '茂港区', '2211', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2215', '电白县', '2211', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2216', '高州市', '2211', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2217', '化州市', '2211', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2218', '信宜市', '2211', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2219', '肇庆市', '2135', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2220', '市辖区', '2219', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2221', '端州区', '2219', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2222', '鼎湖区', '2219', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2223', '广宁县', '2219', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2224', '怀集县', '2219', '', '2018-10-30 09:08:04', '2018-10-30 09:08:04');
+INSERT INTO `ad_areas` VALUES ('2225', '封开县', '2219', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2226', '德庆县', '2219', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2227', '高要市', '2219', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2228', '四会市', '2219', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2229', '惠州市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2230', '市辖区', '2229', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2231', '惠城区', '2229', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2232', '惠阳区', '2229', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2233', '博罗县', '2229', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2234', '惠东县', '2229', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2235', '龙门县', '2229', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2236', '梅州市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2237', '市辖区', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2238', '梅江区', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2239', '梅县', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2240', '大埔县', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2241', '丰顺县', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2242', '五华县', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2243', '平远县', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2244', '蕉岭县', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2245', '兴宁市', '2236', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2246', '汕尾市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2247', '市辖区', '2246', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2248', '城区', '2246', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2249', '海丰县', '2246', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2250', '陆河县', '2246', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2251', '陆丰市', '2246', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2252', '河源市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2253', '市辖区', '2252', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2254', '源城区', '2252', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2255', '紫金县', '2252', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2256', '龙川县', '2252', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2257', '连平县', '2252', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2258', '和平县', '2252', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2259', '东源县', '2252', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2260', '阳江市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2261', '市辖区', '2260', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2262', '江城区', '2260', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2263', '阳西县', '2260', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2264', '阳东县', '2260', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2265', '阳春市', '2260', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2266', '清远市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2267', '市辖区', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2268', '清城区', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2269', '清新区', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2270', '佛冈县', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2271', '阳山县', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2272', '连山壮族瑶族自治县', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2273', '连南瑶族自治县', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2274', '英德市', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2275', '连州市', '2266', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2276', '东莞市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2277', '中山市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2278', '潮州市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2279', '市辖区', '2278', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2280', '湘桥区', '2278', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2281', '潮安区', '2278', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2282', '饶平县', '2278', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2283', '揭阳市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2284', '市辖区', '2283', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2285', '榕城区', '2283', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2286', '揭东区', '2283', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2287', '揭西县', '2283', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2288', '惠来县', '2283', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2289', '普宁市', '2283', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2290', '云浮市', '2135', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2291', '市辖区', '2290', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2292', '云城区', '2290', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2293', '新兴县', '2290', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2294', '郁南县', '2290', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2295', '云安县', '2290', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2296', '罗定市', '2290', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2297', '广西壮族自治区', '1', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2298', '南宁市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2299', '市辖区', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2300', '兴宁区', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2301', '青秀区', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2302', '江南区', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2303', '西乡塘区', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2304', '良庆区', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2305', '邕宁区', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2306', '武鸣县', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2307', '隆安县', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2308', '马山县', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2309', '上林县', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2310', '宾阳县', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2311', '横县', '2298', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2312', '柳州市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2313', '市辖区', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2314', '城中区', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2315', '鱼峰区', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2316', '柳南区', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2317', '柳北区', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2318', '柳江县', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2319', '柳城县', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2320', '鹿寨县', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2321', '融安县', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2322', '融水苗族自治县', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2323', '三江侗族自治县', '2312', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2324', '桂林市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2325', '市辖区', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2326', '秀峰区', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2327', '叠彩区', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2328', '象山区', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2329', '七星区', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2330', '雁山区', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2331', '临桂区', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2332', '阳朔县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2333', '灵川县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2334', '全州县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2335', '兴安县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2336', '永福县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2337', '灌阳县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2338', '龙胜各族自治县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2339', '资源县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2340', '平乐县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2341', '荔浦县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2342', '恭城瑶族自治县', '2324', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2343', '梧州市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2344', '市辖区', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2345', '万秀区', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2346', '长洲区', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2347', '龙圩区', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2348', '苍梧县', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2349', '藤县', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2350', '蒙山县', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2351', '岑溪市', '2343', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2352', '北海市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2353', '市辖区', '2352', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2354', '海城区', '2352', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2355', '银海区', '2352', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2356', '铁山港区', '2352', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2357', '合浦县', '2352', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2358', '防城港市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2359', '市辖区', '2358', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2360', '港口区', '2358', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2361', '防城区', '2358', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2362', '上思县', '2358', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2363', '东兴市', '2358', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2364', '钦州市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2365', '市辖区', '2364', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2366', '钦南区', '2364', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2367', '钦北区', '2364', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2368', '灵山县', '2364', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2369', '浦北县', '2364', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2370', '贵港市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2371', '市辖区', '2370', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2372', '港北区', '2370', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2373', '港南区', '2370', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2374', '覃塘区', '2370', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2375', '平南县', '2370', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2376', '桂平市', '2370', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2377', '玉林市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2378', '市辖区', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2379', '玉州区', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2380', '福绵区', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2381', '容县', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2382', '陆川县', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2383', '博白县', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2384', '兴业县', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2385', '北流市', '2377', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2386', '百色市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2387', '市辖区', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2388', '右江区', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2389', '田阳县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2390', '田东县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2391', '平果县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2392', '德保县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2393', '靖西县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2394', '那坡县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2395', '凌云县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2396', '乐业县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2397', '田林县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2398', '西林县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2399', '隆林各族自治县', '2386', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2400', '贺州市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2401', '市辖区', '2400', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2402', '八步区', '2400', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2403', '昭平县', '2400', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2404', '钟山县', '2400', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2405', '富川瑶族自治县', '2400', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2406', '河池市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2407', '市辖区', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2408', '金城江区', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2409', '南丹县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2410', '天峨县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2411', '凤山县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2412', '东兰县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2413', '罗城仫佬族自治县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2414', '环江毛南族自治县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2415', '巴马瑶族自治县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2416', '都安瑶族自治县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2417', '大化瑶族自治县', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2418', '宜州市', '2406', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2419', '来宾市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2420', '市辖区', '2419', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2421', '兴宾区', '2419', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2422', '忻城县', '2419', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2423', '象州县', '2419', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2424', '武宣县', '2419', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2425', '金秀瑶族自治县', '2419', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2426', '合山市', '2419', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2427', '崇左市', '2297', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2428', '市辖区', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2429', '江州区', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2430', '扶绥县', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2431', '宁明县', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2432', '龙州县', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2433', '大新县', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2434', '天等县', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2435', '凭祥市', '2427', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2436', '海南省', '1', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2437', '海口市', '2436', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2438', '市辖区', '2437', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2439', '秀英区', '2437', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2440', '龙华区', '2437', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2441', '琼山区', '2437', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2442', '美兰区', '2437', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2443', '三亚市', '2436', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2444', '市辖区', '2443', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2445', '三沙市', '2436', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2446', '西沙群岛', '2445', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2447', '南沙群岛', '2445', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2448', '中沙群岛的岛礁及其海域', '2445', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2449', '省直辖县级行政区划', '2436', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2450', '五指山市', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2451', '琼海市', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2452', '儋州市', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2453', '文昌市', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2454', '万宁市', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2455', '东方市', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2456', '定安县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2457', '屯昌县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2458', '澄迈县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2459', '临高县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2460', '白沙黎族自治县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2461', '昌江黎族自治县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2462', '乐东黎族自治县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2463', '陵水黎族自治县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2464', '保亭黎族苗族自治县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2465', '琼中黎族苗族自治县', '2449', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2466', '重庆市', '1', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2467', '市辖区', '2466', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2468', '万州区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2469', '涪陵区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2470', '渝中区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2471', '大渡口区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2472', '江北区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2473', '沙坪坝区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2474', '九龙坡区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2475', '南岸区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2476', '北碚区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2477', '綦江区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2478', '大足区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2479', '渝北区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2480', '巴南区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2481', '黔江区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2482', '长寿区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2483', '江津区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2484', '合川区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2485', '永川区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2486', '南川区', '2467', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2487', '县', '2466', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2488', '潼南县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2489', '铜梁县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2490', '荣昌县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2491', '璧山县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2492', '梁平县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2493', '城口县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2494', '丰都县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2495', '垫江县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2496', '武隆县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2497', '忠县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2498', '开县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2499', '云阳县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2500', '奉节县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2501', '巫山县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2502', '巫溪县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2503', '石柱土家族自治县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2504', '秀山土家族苗族自治县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2505', '酉阳土家族苗族自治县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2506', '彭水苗族土家族自治县', '2487', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2507', '四川省', '1', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2508', '成都市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2509', '市辖区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2510', '锦江区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2511', '青羊区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2512', '金牛区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2513', '武侯区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2514', '成华区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2515', '龙泉驿区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2516', '青白江区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2517', '新都区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2518', '温江区', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2519', '金堂县', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2520', '双流县', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2521', '郫县', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2522', '大邑县', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2523', '蒲江县', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2524', '新津县', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2525', '都江堰市', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2526', '彭州市', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2527', '邛崃市', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2528', '崇州市', '2508', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2529', '自贡市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2530', '市辖区', '2529', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2531', '自流井区', '2529', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2532', '贡井区', '2529', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2533', '大安区', '2529', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2534', '沿滩区', '2529', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2535', '荣县', '2529', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2536', '富顺县', '2529', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2537', '攀枝花市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2538', '市辖区', '2537', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2539', '东区', '2537', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2540', '西区', '2537', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2541', '仁和区', '2537', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2542', '米易县', '2537', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2543', '盐边县', '2537', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2544', '泸州市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2545', '市辖区', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2546', '江阳区', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2547', '纳溪区', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2548', '龙马潭区', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2549', '泸县', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2550', '合江县', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2551', '叙永县', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2552', '古蔺县', '2544', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2553', '德阳市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2554', '市辖区', '2553', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2555', '旌阳区', '2553', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2556', '中江县', '2553', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2557', '罗江县', '2553', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2558', '广汉市', '2553', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2559', '什邡市', '2553', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2560', '绵竹市', '2553', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2561', '绵阳市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2562', '市辖区', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2563', '涪城区', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2564', '游仙区', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2565', '三台县', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2566', '盐亭县', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2567', '安县', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2568', '梓潼县', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2569', '北川羌族自治县', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2570', '平武县', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2571', '江油市', '2561', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2572', '广元市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2573', '市辖区', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2574', '利州区', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2575', '元坝区', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2576', '朝天区', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2577', '旺苍县', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2578', '青川县', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2579', '剑阁县', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2580', '苍溪县', '2572', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2581', '遂宁市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2582', '市辖区', '2581', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2583', '船山区', '2581', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2584', '安居区', '2581', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2585', '蓬溪县', '2581', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2586', '射洪县', '2581', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2587', '大英县', '2581', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2588', '内江市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2589', '市辖区', '2588', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2590', '市中区', '2588', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2591', '东兴区', '2588', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2592', '威远县', '2588', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2593', '资中县', '2588', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2594', '隆昌县', '2588', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2595', '乐山市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2596', '市辖区', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2597', '市中区', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2598', '沙湾区', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2599', '五通桥区', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2600', '金口河区', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2601', '犍为县', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2602', '井研县', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2603', '夹江县', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2604', '沐川县', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2605', '峨边彝族自治县', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2606', '马边彝族自治县', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2607', '峨眉山市', '2595', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2608', '南充市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2609', '市辖区', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2610', '顺庆区', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2611', '高坪区', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2612', '嘉陵区', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2613', '南部县', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2614', '营山县', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2615', '蓬安县', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2616', '仪陇县', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2617', '西充县', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2618', '阆中市', '2608', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2619', '眉山市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2620', '市辖区', '2619', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2621', '东坡区', '2619', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2622', '仁寿县', '2619', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2623', '彭山县', '2619', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2624', '洪雅县', '2619', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2625', '丹棱县', '2619', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2626', '青神县', '2619', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2627', '宜宾市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2628', '市辖区', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2629', '翠屏区', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2630', '南溪区', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2631', '宜宾县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2632', '江安县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2633', '长宁县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2634', '高县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2635', '珙县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2636', '筠连县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2637', '兴文县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2638', '屏山县', '2627', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2639', '广安市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2640', '市辖区', '2639', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2641', '广安区', '2639', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2642', '前锋区', '2639', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2643', '岳池县', '2639', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2644', '武胜县', '2639', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2645', '邻水县', '2639', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2646', '华蓥市', '2639', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2647', '达州市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2648', '市辖区', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2649', '通川区', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2650', '达川区', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2651', '宣汉县', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2652', '开江县', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2653', '大竹县', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2654', '渠县', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2655', '万源市', '2647', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2656', '雅安市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2657', '市辖区', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2658', '雨城区', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2659', '名山区', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2660', '荥经县', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2661', '汉源县', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2662', '石棉县', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2663', '天全县', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2664', '芦山县', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2665', '宝兴县', '2656', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2666', '巴中市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2667', '市辖区', '2666', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2668', '巴州区', '2666', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2669', '恩阳区', '2666', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2670', '通江县', '2666', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2671', '南江县', '2666', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2672', '平昌县', '2666', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2673', '资阳市', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2674', '市辖区', '2673', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2675', '雁江区', '2673', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2676', '安岳县', '2673', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2677', '乐至县', '2673', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2678', '简阳市', '2673', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2679', '阿坝藏族羌族自治州', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2680', '汶川县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2681', '理县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2682', '茂县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2683', '松潘县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2684', '九寨沟县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2685', '金川县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2686', '小金县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2687', '黑水县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2688', '马尔康县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2689', '壤塘县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2690', '阿坝县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2691', '若尔盖县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2692', '红原县', '2679', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2693', '甘孜藏族自治州', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2694', '康定县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2695', '泸定县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2696', '丹巴县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2697', '九龙县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2698', '雅江县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2699', '道孚县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2700', '炉霍县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2701', '甘孜县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2702', '新龙县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2703', '德格县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2704', '白玉县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2705', '石渠县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2706', '色达县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2707', '理塘县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2708', '巴塘县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2709', '乡城县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2710', '稻城县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2711', '得荣县', '2693', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2712', '凉山彝族自治州', '2507', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2713', '西昌市', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2714', '木里藏族自治县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2715', '盐源县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2716', '德昌县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2717', '会理县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2718', '会东县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2719', '宁南县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2720', '普格县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2721', '布拖县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2722', '金阳县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2723', '昭觉县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2724', '喜德县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2725', '冕宁县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2726', '越西县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2727', '甘洛县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2728', '美姑县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2729', '雷波县', '2712', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2730', '贵州省', '1', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2731', '贵阳市', '2730', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2732', '市辖区', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2733', '南明区', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2734', '云岩区', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2735', '花溪区', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2736', '乌当区', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2737', '白云区', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2738', '观山湖区', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2739', '开阳县', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2740', '息烽县', '2731', '', '2018-10-30 09:08:05', '2018-10-30 09:08:05');
+INSERT INTO `ad_areas` VALUES ('2741', '修文县', '2731', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2742', '清镇市', '2731', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2743', '六盘水市', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2744', '钟山区', '2743', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2745', '六枝特区', '2743', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2746', '水城县', '2743', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2747', '盘县', '2743', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2748', '遵义市', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2749', '市辖区', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2750', '红花岗区', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2751', '汇川区', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2752', '遵义县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2753', '桐梓县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2754', '绥阳县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2755', '正安县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2756', '道真仡佬族苗族自治县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2757', '务川仡佬族苗族自治县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2758', '凤冈县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2759', '湄潭县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2760', '余庆县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2761', '习水县', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2762', '赤水市', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2763', '仁怀市', '2748', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2764', '安顺市', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2765', '市辖区', '2764', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2766', '西秀区', '2764', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2767', '平坝县', '2764', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2768', '普定县', '2764', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2769', '镇宁布依族苗族自治县', '2764', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2770', '关岭布依族苗族自治县', '2764', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2771', '紫云苗族布依族自治县', '2764', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2772', '毕节市', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2773', '市辖区', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2774', '七星关区', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2775', '大方县', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2776', '黔西县', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2777', '金沙县', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2778', '织金县', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2779', '纳雍县', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2780', '威宁彝族回族苗族自治县', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2781', '赫章县', '2772', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2782', '铜仁市', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2783', '市辖区', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2784', '碧江区', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2785', '万山区', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2786', '江口县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2787', '玉屏侗族自治县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2788', '石阡县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2789', '思南县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2790', '印江土家族苗族自治县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2791', '德江县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2792', '沿河土家族自治县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2793', '松桃苗族自治县', '2782', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2794', '黔西南布依族苗族自治州', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2795', '兴义市', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2796', '兴仁县', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2797', '普安县', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2798', '晴隆县', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2799', '贞丰县', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2800', '望谟县', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2801', '册亨县', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2802', '安龙县', '2794', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2803', '黔东南苗族侗族自治州', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2804', '凯里市', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2805', '黄平县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2806', '施秉县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2807', '三穗县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2808', '镇远县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2809', '岑巩县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2810', '天柱县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2811', '锦屏县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2812', '剑河县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2813', '台江县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2814', '黎平县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2815', '榕江县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2816', '从江县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2817', '雷山县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2818', '麻江县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2819', '丹寨县', '2803', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2820', '黔南布依族苗族自治州', '2730', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2821', '都匀市', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2822', '福泉市', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2823', '荔波县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2824', '贵定县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2825', '瓮安县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2826', '独山县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2827', '平塘县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2828', '罗甸县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2829', '长顺县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2830', '龙里县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2831', '惠水县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2832', '三都水族自治县', '2820', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2833', '云南省', '1', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2834', '昆明市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2835', '市辖区', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2836', '五华区', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2837', '盘龙区', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2838', '官渡区', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2839', '西山区', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2840', '东川区', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2841', '呈贡区', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2842', '晋宁县', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2843', '富民县', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2844', '宜良县', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2845', '石林彝族自治县', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2846', '嵩明县', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2847', '禄劝彝族苗族自治县', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2848', '寻甸回族彝族自治县', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2849', '安宁市', '2834', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2850', '曲靖市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2851', '市辖区', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2852', '麒麟区', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2853', '马龙县', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2854', '陆良县', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2855', '师宗县', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2856', '罗平县', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2857', '富源县', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2858', '会泽县', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2859', '沾益县', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2860', '宣威市', '2850', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2861', '玉溪市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2862', '市辖区', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2863', '红塔区', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2864', '江川县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2865', '澄江县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2866', '通海县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2867', '华宁县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2868', '易门县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2869', '峨山彝族自治县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2870', '新平彝族傣族自治县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2871', '元江哈尼族彝族傣族自治县', '2861', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2872', '保山市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2873', '市辖区', '2872', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2874', '隆阳区', '2872', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2875', '施甸县', '2872', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2876', '腾冲县', '2872', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2877', '龙陵县', '2872', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2878', '昌宁县', '2872', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2879', '昭通市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2880', '市辖区', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2881', '昭阳区', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2882', '鲁甸县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2883', '巧家县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2884', '盐津县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2885', '大关县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2886', '永善县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2887', '绥江县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2888', '镇雄县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2889', '彝良县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2890', '威信县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2891', '水富县', '2879', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2892', '丽江市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2893', '市辖区', '2892', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2894', '古城区', '2892', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2895', '玉龙纳西族自治县', '2892', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2896', '永胜县', '2892', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2897', '华坪县', '2892', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2898', '宁蒗彝族自治县', '2892', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2899', '普洱市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2900', '市辖区', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2901', '思茅区', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2902', '宁洱哈尼族彝族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2903', '墨江哈尼族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2904', '景东彝族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2905', '景谷傣族彝族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2906', '镇沅彝族哈尼族拉祜族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2907', '江城哈尼族彝族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2908', '孟连傣族拉祜族佤族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2909', '澜沧拉祜族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2910', '西盟佤族自治县', '2899', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2911', '临沧市', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2912', '市辖区', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2913', '临翔区', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2914', '凤庆县', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2915', '云县', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2916', '永德县', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2917', '镇康县', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2918', '双江拉祜族佤族布朗族傣族自治县', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2919', '耿马傣族佤族自治县', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2920', '沧源佤族自治县', '2911', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2921', '楚雄彝族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2922', '楚雄市', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2923', '双柏县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2924', '牟定县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2925', '南华县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2926', '姚安县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2927', '大姚县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2928', '永仁县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2929', '元谋县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2930', '武定县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2931', '禄丰县', '2921', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2932', '红河哈尼族彝族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2933', '个旧市', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2934', '开远市', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2935', '蒙自市', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2936', '弥勒市', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2937', '屏边苗族自治县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2938', '建水县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2939', '石屏县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2940', '泸西县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2941', '元阳县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2942', '红河县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2943', '金平苗族瑶族傣族自治县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2944', '绿春县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2945', '河口瑶族自治县', '2932', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2946', '文山壮族苗族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2947', '文山市', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2948', '砚山县', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2949', '西畴县', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2950', '麻栗坡县', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2951', '马关县', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2952', '丘北县', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2953', '广南县', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2954', '富宁县', '2946', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2955', '西双版纳傣族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2956', '景洪市', '2955', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2957', '勐海县', '2955', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2958', '勐腊县', '2955', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2959', '大理白族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2960', '大理市', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2961', '漾濞彝族自治县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2962', '祥云县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2963', '宾川县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2964', '弥渡县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2965', '南涧彝族自治县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2966', '巍山彝族回族自治县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2967', '永平县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2968', '云龙县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2969', '洱源县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2970', '剑川县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2971', '鹤庆县', '2959', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2972', '德宏傣族景颇族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2973', '瑞丽市', '2972', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2974', '芒市', '2972', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2975', '梁河县', '2972', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2976', '盈江县', '2972', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2977', '陇川县', '2972', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2978', '怒江傈僳族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2979', '泸水县', '2978', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2980', '福贡县', '2978', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2981', '贡山独龙族怒族自治县', '2978', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2982', '兰坪白族普米族自治县', '2978', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2983', '迪庆藏族自治州', '2833', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2984', '香格里拉县', '2983', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2985', '德钦县', '2983', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2986', '维西傈僳族自治县', '2983', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2987', '西藏自治区', '1', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2988', '拉萨市', '2987', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2989', '市辖区', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2990', '城关区', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2991', '林周县', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2992', '当雄县', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2993', '尼木县', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2994', '曲水县', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2995', '堆龙德庆县', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2996', '达孜县', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2997', '墨竹工卡县', '2988', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2998', '昌都地区', '2987', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('2999', '昌都县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3000', '江达县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3001', '贡觉县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3002', '类乌齐县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3003', '丁青县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3004', '察雅县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3005', '八宿县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3006', '左贡县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3007', '芒康县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3008', '洛隆县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3009', '边坝县', '2998', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3010', '山南地区', '2987', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3011', '乃东县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3012', '扎囊县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3013', '贡嘎县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3014', '桑日县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3015', '琼结县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3016', '曲松县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3017', '措美县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3018', '洛扎县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3019', '加查县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3020', '隆子县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3021', '错那县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3022', '浪卡子县', '3010', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3023', '日喀则地区', '2987', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3024', '日喀则市', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3025', '南木林县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3026', '江孜县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3027', '定日县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3028', '萨迦县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3029', '拉孜县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3030', '昂仁县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3031', '谢通门县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3032', '白朗县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3033', '仁布县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3034', '康马县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3035', '定结县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3036', '仲巴县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3037', '亚东县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3038', '吉隆县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3039', '聂拉木县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3040', '萨嘎县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3041', '岗巴县', '3023', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3042', '那曲地区', '2987', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3043', '那曲县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3044', '嘉黎县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3045', '比如县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3046', '聂荣县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3047', '安多县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3048', '申扎县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3049', '索县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3050', '班戈县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3051', '巴青县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3052', '尼玛县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3053', '双湖县', '3042', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3054', '阿里地区', '2987', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3055', '普兰县', '3054', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3056', '札达县', '3054', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3057', '噶尔县', '3054', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3058', '日土县', '3054', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3059', '革吉县', '3054', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3060', '改则县', '3054', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3061', '措勤县', '3054', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3062', '林芝地区', '2987', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3063', '林芝县', '3062', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3064', '工布江达县', '3062', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3065', '米林县', '3062', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3066', '墨脱县', '3062', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3067', '波密县', '3062', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3068', '察隅县', '3062', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3069', '朗县', '3062', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3070', '陕西省', '1', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3071', '西安市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3072', '市辖区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3073', '新城区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3074', '碑林区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3075', '莲湖区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3076', '灞桥区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3077', '未央区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3078', '雁塔区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3079', '阎良区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3080', '临潼区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3081', '长安区', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3082', '蓝田县', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3083', '周至县', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3084', '户县', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3085', '高陵县', '3071', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3086', '铜川市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3087', '市辖区', '3086', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3088', '王益区', '3086', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3089', '印台区', '3086', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3090', '耀州区', '3086', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3091', '宜君县', '3086', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3092', '宝鸡市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3093', '市辖区', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3094', '渭滨区', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3095', '金台区', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3096', '陈仓区', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3097', '凤翔县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3098', '岐山县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3099', '扶风县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3100', '眉县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3101', '陇县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3102', '千阳县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3103', '麟游县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3104', '凤县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3105', '太白县', '3092', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3106', '咸阳市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3107', '市辖区', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3108', '秦都区', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3109', '杨陵区', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3110', '渭城区', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3111', '三原县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3112', '泾阳县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3113', '乾县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3114', '礼泉县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3115', '永寿县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3116', '彬县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3117', '长武县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3118', '旬邑县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3119', '淳化县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3120', '武功县', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3121', '兴平市', '3106', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3122', '渭南市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3123', '市辖区', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3124', '临渭区', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3125', '华县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3126', '潼关县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3127', '大荔县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3128', '合阳县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3129', '澄城县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3130', '蒲城县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3131', '白水县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3132', '富平县', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3133', '韩城市', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3134', '华阴市', '3122', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3135', '延安市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3136', '市辖区', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3137', '宝塔区', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3138', '延长县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3139', '延川县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3140', '子长县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3141', '安塞县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3142', '志丹县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3143', '吴起县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3144', '甘泉县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3145', '富县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3146', '洛川县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3147', '宜川县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3148', '黄龙县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3149', '黄陵县', '3135', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3150', '汉中市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3151', '市辖区', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3152', '汉台区', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3153', '南郑县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3154', '城固县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3155', '洋县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3156', '西乡县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3157', '勉县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3158', '宁强县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3159', '略阳县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3160', '镇巴县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3161', '留坝县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3162', '佛坪县', '3150', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3163', '榆林市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3164', '市辖区', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3165', '榆阳区', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3166', '神木县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3167', '府谷县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3168', '横山县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3169', '靖边县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3170', '定边县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3171', '绥德县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3172', '米脂县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3173', '佳县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3174', '吴堡县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3175', '清涧县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3176', '子洲县', '3163', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3177', '安康市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3178', '市辖区', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3179', '汉滨区', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3180', '汉阴县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3181', '石泉县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3182', '宁陕县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3183', '紫阳县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3184', '岚皋县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3185', '平利县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3186', '镇坪县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3187', '旬阳县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3188', '白河县', '3177', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3189', '商洛市', '3070', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3190', '市辖区', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3191', '商州区', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3192', '洛南县', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3193', '丹凤县', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3194', '商南县', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3195', '山阳县', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3196', '镇安县', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3197', '柞水县', '3189', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3198', '甘肃省', '1', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3199', '兰州市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3200', '市辖区', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3201', '城关区', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3202', '七里河区', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3203', '西固区', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3204', '安宁区', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3205', '红古区', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3206', '永登县', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3207', '皋兰县', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3208', '榆中县', '3199', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3209', '嘉峪关市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3210', '市辖区', '3209', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3211', '金昌市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3212', '市辖区', '3211', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3213', '金川区', '3211', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3214', '永昌县', '3211', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3215', '白银市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3216', '市辖区', '3215', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3217', '白银区', '3215', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3218', '平川区', '3215', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3219', '靖远县', '3215', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3220', '会宁县', '3215', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3221', '景泰县', '3215', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3222', '天水市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3223', '市辖区', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3224', '秦州区', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3225', '麦积区', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3226', '清水县', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3227', '秦安县', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3228', '甘谷县', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3229', '武山县', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3230', '张家川回族自治县', '3222', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3231', '武威市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3232', '市辖区', '3231', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3233', '凉州区', '3231', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3234', '民勤县', '3231', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3235', '古浪县', '3231', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3236', '天祝藏族自治县', '3231', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3237', '张掖市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3238', '市辖区', '3237', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3239', '甘州区', '3237', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3240', '肃南裕固族自治县', '3237', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3241', '民乐县', '3237', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3242', '临泽县', '3237', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3243', '高台县', '3237', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3244', '山丹县', '3237', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3245', '平凉市', '3198', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3246', '市辖区', '3245', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3247', '崆峒区', '3245', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3248', '泾川县', '3245', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3249', '灵台县', '3245', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3250', '崇信县', '3245', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3251', '华亭县', '3245', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3252', '庄浪县', '3245', '', '2018-10-30 09:08:06', '2018-10-30 09:08:06');
+INSERT INTO `ad_areas` VALUES ('3253', '静宁县', '3245', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3254', '酒泉市', '3198', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3255', '市辖区', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3256', '肃州区', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3257', '金塔县', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3258', '瓜州县', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3259', '肃北蒙古族自治县', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3260', '阿克塞哈萨克族自治县', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3261', '玉门市', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3262', '敦煌市', '3254', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3263', '庆阳市', '3198', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3264', '市辖区', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3265', '西峰区', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3266', '庆城县', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3267', '环县', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3268', '华池县', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3269', '合水县', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3270', '正宁县', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3271', '宁县', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3272', '镇原县', '3263', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3273', '定西市', '3198', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3274', '市辖区', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3275', '安定区', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3276', '通渭县', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3277', '陇西县', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3278', '渭源县', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3279', '临洮县', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3280', '漳县', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3281', '岷县', '3273', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3282', '陇南市', '3198', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3283', '市辖区', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3284', '武都区', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3285', '成县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3286', '文县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3287', '宕昌县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3288', '康县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3289', '西和县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3290', '礼县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3291', '徽县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3292', '两当县', '3282', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3293', '临夏回族自治州', '3198', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3294', '临夏市', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3295', '临夏县', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3296', '康乐县', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3297', '永靖县', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3298', '广河县', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3299', '和政县', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3300', '东乡族自治县', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3301', '积石山保安族东乡族撒拉族自治县', '3293', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3302', '甘南藏族自治州', '3198', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3303', '合作市', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3304', '临潭县', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3305', '卓尼县', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3306', '舟曲县', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3307', '迭部县', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3308', '玛曲县', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3309', '碌曲县', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3310', '夏河县', '3302', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3311', '青海省', '1', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3312', '西宁市', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3313', '市辖区', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3314', '城东区', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3315', '城中区', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3316', '城西区', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3317', '城北区', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3318', '大通回族土族自治县', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3319', '湟中县', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3320', '湟源县', '3312', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3321', '海东市', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3322', '乐都区', '3321', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3323', '平安县', '3321', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3324', '民和回族土族自治县', '3321', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3325', '互助土族自治县', '3321', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3326', '化隆回族自治县', '3321', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3327', '循化撒拉族自治县', '3321', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3328', '海北藏族自治州', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3329', '门源回族自治县', '3328', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3330', '祁连县', '3328', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3331', '海晏县', '3328', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3332', '刚察县', '3328', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3333', '黄南藏族自治州', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3334', '同仁县', '3333', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3335', '尖扎县', '3333', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3336', '泽库县', '3333', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3337', '河南蒙古族自治县', '3333', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3338', '海南藏族自治州', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3339', '共和县', '3338', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3340', '同德县', '3338', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3341', '贵德县', '3338', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3342', '兴海县', '3338', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3343', '贵南县', '3338', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3344', '果洛藏族自治州', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3345', '玛沁县', '3344', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3346', '班玛县', '3344', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3347', '甘德县', '3344', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3348', '达日县', '3344', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3349', '久治县', '3344', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3350', '玛多县', '3344', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3351', '玉树藏族自治州', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3352', '玉树市', '3351', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3353', '杂多县', '3351', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3354', '称多县', '3351', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3355', '治多县', '3351', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3356', '囊谦县', '3351', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3357', '曲麻莱县', '3351', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3358', '海西蒙古族藏族自治州', '3311', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3359', '格尔木市', '3358', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3360', '德令哈市', '3358', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3361', '乌兰县', '3358', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3362', '都兰县', '3358', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3363', '天峻县', '3358', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3364', '宁夏回族自治区', '1', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3365', '银川市', '3364', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3366', '市辖区', '3365', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3367', '兴庆区', '3365', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3368', '西夏区', '3365', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3369', '金凤区', '3365', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3370', '永宁县', '3365', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3371', '贺兰县', '3365', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3372', '灵武市', '3365', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3373', '石嘴山市', '3364', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3374', '市辖区', '3373', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3375', '大武口区', '3373', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3376', '惠农区', '3373', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3377', '平罗县', '3373', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3378', '吴忠市', '3364', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3379', '市辖区', '3378', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3380', '利通区', '3378', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3381', '红寺堡区', '3378', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3382', '盐池县', '3378', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3383', '同心县', '3378', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3384', '青铜峡市', '3378', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3385', '固原市', '3364', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3386', '市辖区', '3385', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3387', '原州区', '3385', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3388', '西吉县', '3385', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3389', '隆德县', '3385', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3390', '泾源县', '3385', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3391', '彭阳县', '3385', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3392', '中卫市', '3364', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3393', '市辖区', '3392', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3394', '沙坡头区', '3392', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3395', '中宁县', '3392', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3396', '海原县', '3392', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3397', '新疆维吾尔自治区', '1', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3398', '乌鲁木齐市', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3399', '市辖区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3400', '天山区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3401', '沙依巴克区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3402', '新市区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3403', '水磨沟区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3404', '头屯河区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3405', '达坂城区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3406', '米东区', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3407', '乌鲁木齐县', '3398', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3408', '克拉玛依市', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3409', '市辖区', '3408', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3410', '独山子区', '3408', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3411', '克拉玛依区', '3408', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3412', '白碱滩区', '3408', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3413', '乌尔禾区', '3408', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3414', '吐鲁番地区', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3415', '吐鲁番市', '3414', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3416', '鄯善县', '3414', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3417', '托克逊县', '3414', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3418', '哈密地区', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3419', '哈密市', '3418', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3420', '巴里坤哈萨克自治县', '3418', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3421', '伊吾县', '3418', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3422', '昌吉回族自治州', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3423', '昌吉市', '3422', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3424', '阜康市', '3422', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3425', '呼图壁县', '3422', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3426', '玛纳斯县', '3422', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3427', '奇台县', '3422', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3428', '吉木萨尔县', '3422', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3429', '木垒哈萨克自治县', '3422', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3430', '博尔塔拉蒙古自治州', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3431', '博乐市', '3430', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3432', '阿拉山口市', '3430', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3433', '精河县', '3430', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3434', '温泉县', '3430', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3435', '巴音郭楞蒙古自治州', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3436', '库尔勒市', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3437', '轮台县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3438', '尉犁县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3439', '若羌县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3440', '且末县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3441', '焉耆回族自治县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3442', '和静县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3443', '和硕县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3444', '博湖县', '3435', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3445', '阿克苏地区', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3446', '阿克苏市', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3447', '温宿县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3448', '库车县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3449', '沙雅县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3450', '新和县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3451', '拜城县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3452', '乌什县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3453', '阿瓦提县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3454', '柯坪县', '3445', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3455', '克孜勒苏柯尔克孜自治州', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3456', '阿图什市', '3455', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3457', '阿克陶县', '3455', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3458', '阿合奇县', '3455', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3459', '乌恰县', '3455', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3460', '喀什地区', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3461', '喀什市', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3462', '疏附县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3463', '疏勒县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3464', '英吉沙县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3465', '泽普县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3466', '莎车县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3467', '叶城县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3468', '麦盖提县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3469', '岳普湖县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3470', '伽师县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3471', '巴楚县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3472', '塔什库尔干塔吉克自治县', '3460', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3473', '和田地区', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3474', '和田市', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3475', '和田县', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3476', '墨玉县', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3477', '皮山县', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3478', '洛浦县', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3479', '策勒县', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3480', '于田县', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3481', '民丰县', '3473', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3482', '伊犁哈萨克自治州', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3483', '伊宁市', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3484', '奎屯市', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3485', '伊宁县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3486', '察布查尔锡伯自治县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3487', '霍城县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3488', '巩留县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3489', '新源县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3490', '昭苏县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3491', '特克斯县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3492', '尼勒克县', '3482', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3493', '塔城地区', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3494', '塔城市', '3493', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3495', '乌苏市', '3493', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3496', '额敏县', '3493', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3497', '沙湾县', '3493', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3498', '托里县', '3493', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3499', '裕民县', '3493', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3500', '和布克赛尔蒙古自治县', '3493', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3501', '阿勒泰地区', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3502', '阿勒泰市', '3501', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3503', '布尔津县', '3501', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3504', '富蕴县', '3501', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3505', '福海县', '3501', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3506', '哈巴河县', '3501', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3507', '青河县', '3501', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3508', '吉木乃县', '3501', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3509', '自治区直辖县级行政区划', '3397', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3510', '石河子市', '3509', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3511', '阿拉尔市', '3509', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3512', '图木舒克市', '3509', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3513', '五家渠市', '3509', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3514', '台湾省', '1', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3515', '香港特别行政区', '1', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+INSERT INTO `ad_areas` VALUES ('3516', '澳门特别行政区', '1', '', '2018-10-30 09:08:07', '2018-10-30 09:08:07');
+
+-- ----------------------------
+-- Table structure for ad_category
+-- ----------------------------
+DROP TABLE IF EXISTS `ad_category`;
+CREATE TABLE `ad_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `pid` int(11) DEFAULT '0',
+  `status` int(11) DEFAULT '1' COMMENT '0：关闭1：开启',
+  `sort` int(11) DEFAULT '0',
+  `create_at` timestamp NULL DEFAULT NULL,
+  `update_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=196 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ad_category
+-- ----------------------------
+INSERT INTO `ad_category` VALUES ('11', '媒体分类', '0', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('12', '机场媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('13', '公交媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('14', '交通路网媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('15', '高速公路', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('16', '机场内广告', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('17', 'LED大屏', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('18', '登机通道', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('19', '机场收费站', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('20', '长途汽车站', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('21', '其他', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('22', '公交站台', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('23', '媒体形式', '0', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('24', '大牌', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('25', '公交车身', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('26', '喷绘', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('27', '刷屏机', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('28', '道闸', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('29', '投放周期', '0', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('30', '天', '29', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('31', '周', '29', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('32', '半月', '29', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('33', '月', '29', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('34', '季', '29', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('35', '半年', '29', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('36', '年', '29', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('37', '是否认证', '0', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('38', '已认证', '37', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('39', '未认证', '37', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('40', '代理形式', '0', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('41', '代理', '40', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('42', '自有', '40', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('43', '是否精品', '0', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('44', '精品', '43', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('45', '非精品', '43', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('46', '广告机', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('47', '看板', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('48', '电梯框架', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('49', '墙体喷漆', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('50', '平面媒体', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('51', '门贴', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('52', '窗贴', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('53', '车内媒体', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('54', '椅套', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('55', '飞机机身', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('56', '车身喷绘', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('57', '海报', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('58', '刷屏', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('59', '灯旗', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('60', '车贴', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('61', '包柱', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('62', '电梯看板', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('63', '车拉手', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('64', '投光灯', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('65', '宣传栏', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('66', '墙体大牌', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('67', '指路牌', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('68', '其他', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('69', '楼顶媒体', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('70', '公交站台', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('71', '三面翻', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('72', '墙体媒体', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('73', '机票广告', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('74', '公交车内', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('75', 'LED显示屏', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('76', '灯箱', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('77', '椅背', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('78', '单立柱', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('79', '天桥', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('80', '液晶屏', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('81', '电视', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('82', '展架', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('83', '霓虹灯', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('84', '多面翻', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('85', '拉手', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('86', '道旗', '23', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('129', '楼体广告', '88', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('88', '商超媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('89', '商住楼宇媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('90', '地铁媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('91', '火车媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('92', '社区楼宇媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('93', '公共场所媒体', '11', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('94', '机场大牌', '12', '1', '1', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('95', '机票广告', '12', '1', '2', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('96', '机场高速', '12', '1', '3', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('97', '数码刷屏机', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('98', '飞机内电视', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('99', '飞机内广告', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('100', '其他', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('101', '机场吊旗', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('102', '展架', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('103', '机场电视', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('104', '机场包柱', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('105', '机场灯箱', '12', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('106', '公交车身', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('107', '公交车内广告', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('108', '候车亭', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('109', '公交电视', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('110', '公交站牌', '13', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('111', '墙体', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('112', '楼顶', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('113', '立柱', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('114', '立地大牌', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('115', '包楼广告', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('116', '桥体广告', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('117', '围挡', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('118', '其他', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('119', 'LED大屏', '14', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('120', 'LED大屏', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('121', '指路牌', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('122', '桥体广告', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('123', '立柱', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('124', '收费站', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('125', '楼体广告', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('126', '楼顶广告', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('127', '服务区', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('128', '其他', '15', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('130', '楼顶广告', '88', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('131', 'LED大屏', '88', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('132', '电视', '88', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('133', '商超灯箱海报', '88', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('134', '商超电梯', '88', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('135', '其他', '88', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('136', '电梯门贴', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('137', '地下停车场', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('138', '墙体大牌', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('139', '楼顶大牌', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('140', 'LED大屏', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('141', '楼宇液晶电视', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('142', '大厅灯箱海报', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('143', '楼梯广告', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('144', '电梯看板', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('145', '其他', '89', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('146', '地铁LED', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('147', '地铁扶梯', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('148', '地铁墙体', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('149', '安全门广告', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('150', '地铁车内广告', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('151', '地铁电视', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('152', '地铁车身', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('153', '地铁海报', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('154', '地铁包柱', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('155', '地铁站灯箱', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('156', '其他', '90', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('157', '火车电视', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('158', '火车站灯箱', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('159', '火车站电视', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('160', '火车内广告', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('161', '火车站LED', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('162', '火车车身', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('163', '火车站大牌', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('164', '火车站三面翻', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('165', '其他', '91', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('166', '小LED信息屏', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('167', '商住社区', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('168', '别墅区住宅', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('169', '中档住宅', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('170', '高档住宅', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('171', '普通住宅', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('172', '公寓住宅', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('173', '其他', '92', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('174', '医院', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('175', '艺术中心', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('176', '酒店', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('177', '健身会所', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('178', '高尔夫球场', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('179', '广场', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('180', '体育中心', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('181', 'LED大屏', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('182', '电影院', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('183', '娱乐场', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('184', '卫生间', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('185', '学校', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('186', '公园', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('187', '景区', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('188', '加油站', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+INSERT INTO `ad_category` VALUES ('189', '其他', '93', '1', '0', '2019-02-22 07:13:45', '2019-02-22 07:13:45');
+
+-- ----------------------------
+-- Table structure for blog_article
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_article`;
+CREATE TABLE `blog_article` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` tinyint(1) NOT NULL DEFAULT '0' COMMENT '文章类型',
+  `member_id` int(11) NOT NULL DEFAULT '0' COMMENT '博客用户',
+  `title` varchar(255) NOT NULL COMMENT '文章标题',
+  `cover_img` varchar(255) DEFAULT NULL COMMENT '文章封面',
+  `describe` varchar(255) DEFAULT NULL COMMENT '文章描述',
+  `content` mediumtext NOT NULL COMMENT '文章内容',
+  `recommend` int(10) DEFAULT '0' COMMENT '推荐级别',
+  `praise` int(11) DEFAULT '0' COMMENT '点赞量',
+  `clicks` int(10) DEFAULT '0' COMMENT '点击量',
+  `sort` int(10) DEFAULT '0' COMMENT '排序',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `is_open` tinyint(1) DEFAULT '1' COMMENT '是否公开 (0：否，1：是）',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` int(10) DEFAULT '0' COMMENT '创建人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` int(10) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_article_title` (`title`) USING BTREE,
+  KEY `index_blog_article_sort` (`sort`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客文章表';
+
+-- ----------------------------
+-- Records of blog_article
+-- ----------------------------
+INSERT INTO `blog_article` VALUES ('4', '6', '0', ' mysql性能的检查和优化方法', '/static/temp/blog/art.jpg', '不论搭建什么样的网站，选择一个好的域名都是很有必要的，选择一个好的域名对网站的意义也是不言而喻的。每一个网站都有之对应的域名，就像人的名字一样。每个人都想自己有个好听的名字，网站也是一样。一个网站可以有多个域名，但是一个域名只能对应', '不论搭建什么样的网站，选择一个好的域名都是很有必要的，选择一个好的域名对网站的意义也是不言而喻的。每一个网站都有之对应的域名，就像人的名字一样。每个人都想自己有个好听的名字，网站也是一样。一个网站可以有多个域名，但是一个域名只能对应', '19', '0', '0', '0', null, '0', '1', '0', '2018-08-10 16:59:53', '0', null, null);
+INSERT INTO `blog_article` VALUES ('5', '1', '0', '个人博客应该选择什么样的域名和域名后缀', '/static/temp/blog/art.jpg', '不论搭建什么样的网站，选择一个好的域名都是很有必要的，选择一个好的域名对网站的意义也是不言而喻的。每一个网站都有之对应的域名，就像人的名字一样。每个人都想自己有个好听的名字，网站也是一样。一个网站可以有多个域名，但是一个域名只能对应', '不论搭建什么样的网站，选择一个好的域名都是很有必要的，选择一个好的域名对网站的意义也是不言而喻的。每一个网站都有之对应的域名，就像人的名字一样。每个人都想自己有个好听的名字，网站也是一样。一个网站可以有多个域名，但是一个域名只能对应', '0', '0', '70', '26', null, '0', '1', '0', '2018-08-10 16:59:53', '0', null, null);
+
+-- ----------------------------
+-- Table structure for blog_article_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_article_tag`;
+CREATE TABLE `blog_article_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '文章编号',
+  `tag_id` int(11) NOT NULL COMMENT '标签编号',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_article_tag_article_id` (`article_id`) USING BTREE,
+  KEY `index_blog_article_tag_tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='文章标签关联表';
+
+-- ----------------------------
+-- Records of blog_article_tag
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for blog_category
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_category`;
+CREATE TABLE `blog_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL COMMENT '栏目标题',
+  `image` varchar(20) DEFAULT NULL COMMENT '栏目图片',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `sort` int(11) DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态(0：正常，1：禁用)',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` int(10) DEFAULT '0' COMMENT '创建人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` int(10) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_nav_title` (`title`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客文章栏目表';
+
+-- ----------------------------
+-- Records of blog_category
+-- ----------------------------
+INSERT INTO `blog_category` VALUES ('1', '技术杂谈', null, null, '6', '0', '2018-08-10 16:58:32', '0', null, null);
+INSERT INTO `blog_category` VALUES ('2', 'PHP开发', null, null, '4', '0', '2018-08-10 16:58:43', '0', null, null);
+INSERT INTO `blog_category` VALUES ('3', 'JAVA开发', null, null, '0', '0', '2018-08-10 16:58:49', '0', null, null);
+INSERT INTO `blog_category` VALUES ('4', 'Linux运维', null, null, '0', '0', '2018-08-10 16:58:56', '0', null, null);
+INSERT INTO `blog_category` VALUES ('5', 'Python开发', null, null, '0', '0', '2018-08-11 01:42:41', '0', null, null);
+INSERT INTO `blog_category` VALUES ('6', 'Mysql数据库', null, '', '0', '0', '2018-08-11 01:43:09', '0', null, null);
+
+-- ----------------------------
+-- Table structure for blog_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_comment`;
+CREATE TABLE `blog_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(10) NOT NULL COMMENT '文章编号',
+  `member_id` int(11) NOT NULL COMMENT '会员标号',
+  `content` varchar(1000) NOT NULL COMMENT '评论内容',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_comment_article_id` (`article_id`) USING BTREE,
+  KEY `index_blog_comment_member_id` (`member_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='文章评论表';
+
+-- ----------------------------
+-- Records of blog_comment
+-- ----------------------------
+INSERT INTO `blog_comment` VALUES ('67', '25', '1', '<p>哈哈</p>', null, '0', '0', '2018-09-06 02:59:26');
+INSERT INTO `blog_comment` VALUES ('71', '38', '1', '<p>我就评论了</p>', null, '0', '0', '2018-10-11 20:59:06');
+
+-- ----------------------------
+-- Table structure for blog_config
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_config`;
+CREATE TABLE `blog_config` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '变量名',
+  `group` varchar(30) NOT NULL DEFAULT '' COMMENT '分组',
+  `type` varchar(30) NOT NULL DEFAULT 'string' COMMENT '类型:string,text,int,bool,array,datetime,date,file',
+  `value` text NOT NULL COMMENT '变量值',
+  `remark` varchar(100) NOT NULL DEFAULT '' COMMENT '备注信息',
+  `sort` int(10) DEFAULT '0',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` bigint(20) DEFAULT '0' COMMENT '创建人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `group` (`group`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客配置';
+
+-- ----------------------------
+-- Records of blog_config
+-- ----------------------------
+INSERT INTO `blog_config` VALUES ('1', 'LoginDuration', 'blog', 'time', '3600', '博客登录有效时长', '0', '2018-07-17 17:27:27', '0', '2018-07-17 22:10:33', null);
+INSERT INTO `blog_config` VALUES ('36', 'ScanFollow', 'blog', 'string', '/static/temp/blog/gg.jpg', '扫我关注', '0', '2018-08-29 12:58:10', '0', null, null);
+INSERT INTO `blog_config` VALUES ('37', 'SiteName', 'blog', 'string', '99PHP社区 - 国内专业IT技术社区', '站点名称', '0', '2019-01-02 17:11:57', '0', null, null);
+INSERT INTO `blog_config` VALUES ('38', 'SiteKeywords', 'blog', 'string', '开发者,99PHP,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,技术社区', '站点关键词', '0', '2019-01-02 17:13:09', '0', null, null);
+INSERT INTO `blog_config` VALUES ('39', 'SiteDescription', 'blog', 'string', '99PHP社区是一个面向开发者的知识分享社区。自创建以来，99PHP社区一直致力并专注于为开发者打造一个纯净的技术交流社区，推动并帮助开发者通过互联网分享知识，从而让更多开发者从中受益。99PHP社区的使命是帮助开发者用代码改变世界。', '站点描述', '0', '2019-01-02 17:13:25', '0', null, null);
+INSERT INTO `blog_config` VALUES ('40', 'SiteUsername', 'blog', 'string', 'Mr.Chung', '站长姓名', '0', '2019-01-02 17:38:39', '0', null, null);
+INSERT INTO `blog_config` VALUES ('41', 'SiteJob', 'blog', 'string', 'PHP程序员', '站长职业', '0', '2019-01-02 17:38:49', '0', null, null);
+INSERT INTO `blog_config` VALUES ('42', 'SiteEmail', 'blog', 'string', 'chung@99php.cn', '站长邮箱', '0', '2019-01-02 17:39:00', '0', null, null);
+INSERT INTO `blog_config` VALUES ('43', 'SiteLocation', 'blog', 'string', '广州 天河', '工作地址', '0', '2019-01-02 17:39:20', '0', null, null);
+
+-- ----------------------------
+-- Table structure for blog_follow
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_follow`;
+CREATE TABLE `blog_follow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_pid` int(11) DEFAULT NULL COMMENT '被关注人',
+  `member_id` int(11) DEFAULT NULL COMMENT '关注人',
+  `status` tinyint(1) DEFAULT '0' COMMENT '状态(0：已关注，1：取消关注）',
+  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '是否删除',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+
+-- ----------------------------
+-- Records of blog_follow
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for blog_login_record
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_login_record`;
+CREATE TABLE `blog_login_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '1' COMMENT '登录类型（0：退出，1：登录）',
+  `member_id` int(11) DEFAULT NULL COMMENT '会员ID',
+  `ip` varchar(255) DEFAULT NULL COMMENT '登录IP地址',
+  `country` varchar(50) DEFAULT NULL COMMENT '国家',
+  `region` varchar(50) DEFAULT NULL COMMENT '省份',
+  `city` varchar(50) DEFAULT NULL COMMENT '城市',
+  `isp` varchar(50) DEFAULT NULL COMMENT '网络类型',
+  `location` varchar(100) DEFAULT NULL COMMENT '地址',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客会员登录记录';
+
+-- ----------------------------
+-- Records of blog_login_record
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for blog_member
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_member`;
+CREATE TABLE `blog_member` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(100) DEFAULT '' COMMENT '用户的标识，对当前网站唯一',
+  `nickname` varchar(255) DEFAULT NULL COMMENT '别称',
+  `username` varchar(20) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(40) DEFAULT NULL COMMENT '密码',
+  `head_img` varchar(100) DEFAULT '/static/image/blog/face_default.jpg' COMMENT '用户头像',
+  `phone` varchar(15) DEFAULT NULL COMMENT '手机号',
+  `email` varchar(30) DEFAULT NULL COMMENT '邮箱',
+  `job` varchar(20) DEFAULT NULL COMMENT '职位',
+  `sex` tinyint(1) DEFAULT '0' COMMENT '性别（0：男，1：女）',
+  `year` int(20) DEFAULT NULL COMMENT '出生年份',
+  `sign` varchar(255) DEFAULT NULL COMMENT '个性签名',
+  `province` varchar(100) DEFAULT '' COMMENT '所在省份',
+  `city` varchar(100) DEFAULT '' COMMENT '所在城市',
+  `location` varchar(255) DEFAULT NULL COMMENT '工作位置',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `source` tinyint(1) DEFAULT '0' COMMENT '注册来源',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '是否有删除',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` int(10) DEFAULT '0' COMMENT '创建人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` int(10) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_member_nickname` (`nickname`) USING BTREE,
+  KEY `index_blog_member_username` (`username`) USING BTREE,
+  KEY `index_blog_member_phone` (`phone`),
+  KEY `index_blog_member_email` (`email`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客用户表';
+
+-- ----------------------------
+-- Records of blog_member
+-- ----------------------------
+INSERT INTO `blog_member` VALUES ('11', '', '测试1', 'ceshi1', 'ed696eb5bba1f7460585cc6975e6cf9bf24903dd', '/static/image/blog/face_default.jpg', '13659797499', '223@qq.com', null, '0', null, null, '', '', null, '', '0', '0', '1', '2018-10-10 15:54:35', '0', null, null);
+INSERT INTO `blog_member` VALUES ('12', '', '测试2', 'ceshi2', 'ed696eb5bba1f7460585cc6975e6cf9bf24903dd', 'https://static.99php.cn/817665ed87824a76af9b997081d87cf7.jpg', '15521045869', '', null, '0', null, null, '', '', null, '', '0', '0', '0', '2018-10-17 01:47:35', '0', null, null);
+INSERT INTO `blog_member` VALUES ('13', '', null, '18040363559', 'ed696eb5bba1f7460585cc6975e6cf9bf24903dd', '/static/image/blog/face_default.jpg', '18040363559', null, null, '0', null, null, '', '', null, null, '0', '0', '0', '2019-02-21 11:31:51', '0', '2019-02-21 11:31:51', null);
+
+-- ----------------------------
+-- Table structure for blog_member_follow
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_member_follow`;
+CREATE TABLE `blog_member_follow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) DEFAULT NULL COMMENT '会员编号',
+  `follow_num` int(11) DEFAULT '0' COMMENT '关注数量',
+  `fans_num` int(11) DEFAULT '0' COMMENT '粉丝数量',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+
+-- ----------------------------
+-- Records of blog_member_follow
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for blog_member_info
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_member_info`;
+CREATE TABLE `blog_member_info` (
+  `member_id` int(11) NOT NULL,
+  `company_name` varchar(100) DEFAULT NULL COMMENT '公司名称',
+  `area_id` int(11) DEFAULT NULL COMMENT '地区ID',
+  `address` varchar(150) DEFAULT NULL COMMENT '详细地址',
+  `introduction` varchar(200) DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `business_name` varchar(150) DEFAULT NULL COMMENT '工商注册企业名称',
+  `business_person` varchar(150) DEFAULT NULL COMMENT '法人',
+  `business_license` varchar(150) DEFAULT NULL COMMENT '营业执照',
+  `card_id` varchar(150) DEFAULT NULL COMMENT '身份证件',
+  `org_code` varchar(150) DEFAULT NULL COMMENT '组织机构代码',
+  `tax_cert` varchar(150) DEFAULT NULL COMMENT '税务登记证',
+  `status` int(11) DEFAULT '0' COMMENT '0:待审核 1:成功 2:失败',
+  `remark` varchar(200) DEFAULT NULL COMMENT '备注',
+  `create_at` timestamp NULL DEFAULT NULL,
+  `update_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`member_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of think_auth_group_access
+-- Records of blog_member_info
 -- ----------------------------
-INSERT INTO `think_auth_group_access` VALUES ('1', '1');
-INSERT INTO `think_auth_group_access` VALUES ('13', '4');
+INSERT INTO `blog_member_info` VALUES ('11', '测试', '13', '四川', '啊实打实大飒飒的', '18040363559', '18040363559', '阿萨德自行车', '的所发生的发展', '阿萨德自行车', '654654984964', '65148548541', '阿萨德自行车资讯', '0', null, '2019-02-20 16:21:58', null);
 
 -- ----------------------------
--- Table structure for think_auth_rule
+-- Table structure for blog_msg_record
 -- ----------------------------
-DROP TABLE IF EXISTS `think_auth_rule`;
-CREATE TABLE `think_auth_rule` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` char(80) NOT NULL DEFAULT '',
-  `title` char(20) NOT NULL DEFAULT '',
-  `type` tinyint(1) NOT NULL DEFAULT '1',
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `css` varchar(20) NOT NULL COMMENT '样式',
-  `condition` char(100) NOT NULL DEFAULT '',
-  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父栏目ID',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of think_auth_rule
--- ----------------------------
-INSERT INTO `think_auth_rule` VALUES ('1', '#', '系统管理', '1', '1', 'fa fa-gear', '', '0', '1', '1446535750', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('2', 'admin/user/index', '用户管理', '1', '1', '', '', '1', '10', '1446535750', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('3', 'admin/role/index', '角色管理', '1', '1', '', '', '1', '20', '1446535750', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('4', 'admin/menu/index', '菜单管理', '1', '1', '', '', '1', '30', '1446535750', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('5', '#', '数据库管理', '1', '1', 'fa fa-database', '', '0', '2', '1446535750', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('6', 'admin/data/index', '数据库备份', '1', '1', '', '', '5', '50', '1446535750', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('7', 'admin/data/optimize', '优化表', '1', '1', '', '', '6', '50', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('8', 'admin/data/repair', '修复表', '1', '1', '', '', '6', '50', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('9', 'admin/user/useradd', '添加用户', '1', '1', '', '', '2', '50', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('10', 'admin/user/useredit', '编辑用户', '1', '1', '', '', '2', '50', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('11', 'admin/user/userdel', '删除用户', '1', '1', '', '', '2', '50', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('12', 'admin/user/user_state', '用户状态', '1', '1', '', '', '2', '50', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('13', '#', '日志管理', '1', '1', 'fa fa-tasks', '', '0', '6', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('14', 'admin/log/operate_log', '行为日志', '1', '1', '', '', '13', '50', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('22', 'admin/log/del_log', '删除日志', '1', '1', '', '', '14', '50', '1477312169', '1477316778');
-INSERT INTO `think_auth_rule` VALUES ('24', '#', '文章管理', '1', '1', 'fa fa-paste', '', '0', '4', '1477312169', '1477312169');
-INSERT INTO `think_auth_rule` VALUES ('25', 'admin/article/index_cate', '文章分类', '1', '1', '', '', '24', '10', '1477312260', '1477312260');
-INSERT INTO `think_auth_rule` VALUES ('26', 'admin/article/index', '文章列表', '1', '1', '', '', '24', '20', '1477312333', '1477312333');
-INSERT INTO `think_auth_rule` VALUES ('27', 'admin/data/import', '数据库还原', '1', '1', '', '', '5', '50', '1477639870', '1477639870');
-INSERT INTO `think_auth_rule` VALUES ('28', 'admin/data/revert', '还原', '1', '1', '', '', '27', '50', '1477639972', '1477639972');
-INSERT INTO `think_auth_rule` VALUES ('29', 'admin/data/del', '删除', '1', '1', '', '', '27', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('30', 'admin/role/roleAdd', '添加角色', '1', '1', '', '', '3', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('31', 'admin/role/roleEdit', '编辑角色', '1', '1', '', '', '3', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('32', 'admin/role/roleDel', '删除角色', '1', '1', '', '', '3', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('33', 'admin/role/role_state', '角色状态', '1', '1', '', '', '3', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('34', 'admin/role/giveAccess', '权限分配', '1', '1', '', '', '3', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('35', 'admin/menu/add_rule', '添加菜单', '1', '1', '', '', '4', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('36', 'admin/menu/edit_rule', '编辑菜单', '1', '1', '', '', '4', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('37', 'admin/menu/del_rule', '删除菜单', '1', '1', '', '', '4', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('38', 'admin/menu/rule_state', '菜单状态', '1', '1', '', '', '4', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('39', 'admin/menu/ruleorder', '菜单排序', '1', '1', '', '', '4', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('40', 'admin/article/add_cate', '添加分类', '1', '1', '', '', '25', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('41', 'admin/article/edit_cate', '编辑分类', '1', '1', '', '', '25', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('42', 'admin/article/del_cate', '删除分类', '1', '1', '', '', '25', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('43', 'admin/article/cate_state', '分类状态', '1', '1', '', '', '25', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('44', 'admin/article/add_article', '添加文章', '1', '1', '', '', '26', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('45', 'admin/article/edit_article', '编辑文章', '1', '1', '', '', '26', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('46', 'admin/article/del_article', '删除文章', '1', '1', '', '', '26', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('47', 'admin/article/article_state', '文章状态', '1', '1', '', '', '26', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('48', '#', '广告管理', '1', '1', 'fa fa-image', '', '0', '5', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('49', 'admin/ad/index_position', '广告位', '1', '1', '', '', '48', '10', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('50', 'admin/ad/add_position', '添加广告位', '1', '1', '', '', '49', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('51', 'admin/ad/edit_position', '编辑广告位', '1', '1', '', '', '49', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('52', 'admin/ad/del_position', '删除广告位', '1', '1', '', '', '49', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('53', 'admin/ad/position_state', '广告位状态', '1', '1', '', '', '49', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('54', 'admin/ad/index', '广告列表', '1', '1', '', '', '48', '20', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('55', 'admin/ad/add_ad', '添加广告', '1', '1', '', '', '54', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('56', 'admin/ad/edit_ad', '编辑广告', '1', '1', '', '', '54', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('57', 'admin/ad/del_ad', '删除广告', '1', '1', '', '', '54', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('58', 'admin/ad/ad_state', '广告状态', '1', '1', '', '', '54', '50', '1477640011', '1477640011');
-INSERT INTO `think_auth_rule` VALUES ('83', '#', '示例', '1', '1', 'fa fa-paper-plane', '', '0', '50', '1505281878', '1505281878');
-INSERT INTO `think_auth_rule` VALUES ('84', 'admin/demo/sms', '发送短信', '1', '1', '', '', '83', '50', '1505281944', '1505281944');
-INSERT INTO `think_auth_rule` VALUES ('61', 'admin/config/index', '配置管理', '1', '1', '', '', '1', '50', '1479908607', '1479908607');
-INSERT INTO `think_auth_rule` VALUES ('62', 'admin/config/index', '配置列表', '1', '1', '', '', '61', '50', '1479908607', '1487943813');
-INSERT INTO `think_auth_rule` VALUES ('63', 'admin/config/save', '保存配置', '1', '1', '', '', '61', '50', '1479908607', '1487943831');
-INSERT INTO `think_auth_rule` VALUES ('70', '#', '会员管理', '1', '1', 'fa fa-users', '', '0', '3', '1484103066', '1484103066');
-INSERT INTO `think_auth_rule` VALUES ('72', 'admin/member/add_group', '添加会员组', '1', '1', '', '', '71', '50', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('71', 'admin/member/group', '会员组', '1', '1', '', '', '70', '10', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('73', 'admin/member/edit_group', '编辑会员组', '1', '1', '', '', '71', '50', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('74', 'admin/member/del_group', '删除会员组', '1', '1', '', '', '71', '50', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('75', 'admin/member/index', '会员列表', '1', '1', '', '', '70', '20', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('76', 'admin/member/add_member', '添加会员', '1', '1', '', '', '75', '50', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('77', 'admin/member/edit_member', '编辑会员', '1', '1', '', '', '75', '50', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('78', 'admin/member/del_member', '删除会员', '1', '1', '', '', '75', '50', '1484103304', '1484103304');
-INSERT INTO `think_auth_rule` VALUES ('79', 'admin/member/member_status', '会员状态', '1', '1', '', '', '75', '50', '1484103304', '1487937671');
-INSERT INTO `think_auth_rule` VALUES ('80', 'admin/member/group_status', '会员组状态', '1', '1', '', '', '71', '50', '1484103304', '1484103304');
-
--- ----------------------------
--- Table structure for think_config
--- ----------------------------
-DROP TABLE IF EXISTS `think_config`;
-CREATE TABLE `think_config` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
-  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
-  `value` text COMMENT '配置值',
+DROP TABLE IF EXISTS `blog_msg_record`;
+CREATE TABLE `blog_msg_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '0' COMMENT '信息类型(0：验证码）',
+  `send_type` tinyint(1) DEFAULT '1' COMMENT '联系方式类型（0：手机号，1：邮箱）',
+  `send` varchar(30) DEFAULT NULL COMMENT '联系方式',
+  `message` varchar(255) NOT NULL COMMENT '信息内容',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  KEY `index_blog_msg_record_send` (`send`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='短信发送记录表';
 
 -- ----------------------------
--- Records of think_config
+-- Records of blog_msg_record
 -- ----------------------------
-INSERT INTO `think_config` VALUES ('1', 'web_site_title', '轮回后台管理系统');
-INSERT INTO `think_config` VALUES ('2', 'web_site_description', '轮回后台管理系统');
-INSERT INTO `think_config` VALUES ('3', 'web_site_keyword', '轮回后台管理系统');
-INSERT INTO `think_config` VALUES ('4', 'web_site_icp', '陇ICP备15002349号-1');
-INSERT INTO `think_config` VALUES ('5', 'web_site_cnzz', '');
-INSERT INTO `think_config` VALUES ('6', 'web_site_copy', 'Copyright © 2017 轮回后台管理系统 All rights reserved.');
-INSERT INTO `think_config` VALUES ('7', 'web_site_close', '1');
-INSERT INTO `think_config` VALUES ('8', 'list_rows', '10');
-INSERT INTO `think_config` VALUES ('9', 'admin_allow_ip', null);
-INSERT INTO `think_config` VALUES ('10', 'alisms_appkey', '');
-INSERT INTO `think_config` VALUES ('11', 'alisms_appsecret', '');
-INSERT INTO `think_config` VALUES ('12', 'alisms_signname', '');
+INSERT INTO `blog_msg_record` VALUES ('1', '0', '0', '18040363559', '您正在申请手机注册，验证码为：126899，5分钟内有效！', null, '2019-02-20 15:22:04');
+INSERT INTO `blog_msg_record` VALUES ('2', '0', '0', '18040363559', '您正在申请手机注册，验证码为：602154，5分钟内有效！', null, '2019-02-21 11:29:47');
+INSERT INTO `blog_msg_record` VALUES ('3', '0', '0', '18040363559', '您正在申请手机注册，验证码为：739411，5分钟内有效！', null, '2019-02-21 11:31:35');
+INSERT INTO `blog_msg_record` VALUES ('4', '0', '0', '18040363559', '您正在申请手机注册，验证码为：534498，5分钟内有效！', null, '2019-02-21 16:32:20');
 
 -- ----------------------------
--- Table structure for think_log
+-- Table structure for blog_notice
 -- ----------------------------
-DROP TABLE IF EXISTS `think_log`;
-CREATE TABLE `think_log` (
-  `log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `admin_id` int(11) DEFAULT NULL COMMENT '用户ID',
-  `admin_name` varchar(50) DEFAULT NULL COMMENT '用户姓名',
-  `description` varchar(300) DEFAULT NULL COMMENT '描述',
-  `ip` char(60) DEFAULT NULL COMMENT 'IP地址',
-  `status` tinyint(1) DEFAULT NULL COMMENT '1 成功 2 失败',
-  `add_time` int(11) DEFAULT NULL COMMENT '添加时间',
-  PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4355 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `blog_notice`;
+CREATE TABLE `blog_notice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL COMMENT '标题',
+  `content` varchar(255) DEFAULT NULL COMMENT '内容',
+  `href` varchar(100) DEFAULT NULL COMMENT '链接',
+  `target` varchar(10) DEFAULT '_blank' COMMENT '弹出方式',
+  `sort` int(10) DEFAULT '0' COMMENT '排序',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` int(10) DEFAULT '0' COMMENT '创建人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` int(10) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_notice_title` (`title`) USING BTREE,
+  KEY `idex_blog_notice_sort` (`sort`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客公告表';
 
 -- ----------------------------
--- Records of think_log
+-- Records of blog_notice
 -- ----------------------------
-INSERT INTO `think_log` VALUES ('4337', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503469529');
-INSERT INTO `think_log` VALUES ('4338', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503469560');
-INSERT INTO `think_log` VALUES ('4339', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503469632');
-INSERT INTO `think_log` VALUES ('4340', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503469748');
-INSERT INTO `think_log` VALUES ('4341', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503469749');
-INSERT INTO `think_log` VALUES ('4342', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503469801');
-INSERT INTO `think_log` VALUES ('4343', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503469853');
-INSERT INTO `think_log` VALUES ('4344', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503470004');
-INSERT INTO `think_log` VALUES ('4345', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503470488');
-INSERT INTO `think_log` VALUES ('4346', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503473610');
-INSERT INTO `think_log` VALUES ('4347', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1503569426');
-INSERT INTO `think_log` VALUES ('4348', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1505098116');
-INSERT INTO `think_log` VALUES ('4349', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1505281421');
-INSERT INTO `think_log` VALUES ('4350', '1', 'admin', '用户【admin】添加菜单成功', '0.0.0.0', '1', '1505281878');
-INSERT INTO `think_log` VALUES ('4351', '1', 'admin', '用户【admin】添加菜单成功', '0.0.0.0', '1', '1505281944');
-INSERT INTO `think_log` VALUES ('4352', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1505283850');
-INSERT INTO `think_log` VALUES ('4354', '1', 'admin', '用户【admin】登录成功', '0.0.0.0', '1', '1505291620');
+INSERT INTO `blog_notice` VALUES ('1', '本站内容仅供学习和参阅，不做任何商业用途！', null, 'http://www.baidu.com', '_blank', '0', null, '0', '2018-08-10 21:25:23', '0', null, null);
+INSERT INTO `blog_notice` VALUES ('2', '99Admin测试版上线，欢迎访问！', null, 'admin/blog.slider/index', '_blank', '0', '', '0', '2018-08-10 21:25:44', '0', null, null);
+INSERT INTO `blog_notice` VALUES ('3', '99PHP社区测试版上线，欢迎访问内容如有侵犯，请立即联系管理员删除！', null, 'admin/blog.slider/index', '_blank', '0', '', '0', '2018-08-10 21:26:31', '0', null, null);
 
 -- ----------------------------
--- Table structure for think_member
+-- Table structure for blog_search
 -- ----------------------------
-DROP TABLE IF EXISTS `think_member`;
-CREATE TABLE `think_member` (
+DROP TABLE IF EXISTS `blog_search`;
+CREATE TABLE `blog_search` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `word` varchar(255) DEFAULT NULL COMMENT '搜索关键词',
+  `total` int(11) DEFAULT '0' COMMENT '搜索总次数',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='搜索统计表';
+
+-- ----------------------------
+-- Records of blog_search
+-- ----------------------------
+INSERT INTO `blog_search` VALUES ('14', 'git', '4', '2018-10-22 18:23:05', '2018-08-30 13:29:53');
+INSERT INTO `blog_search` VALUES ('15', 'php', '37', '2018-10-29 22:21:17', '2018-08-30 13:38:35');
+INSERT INTO `blog_search` VALUES ('16', 'css', '2', '2018-08-30 13:37:40', '2018-08-30 13:39:11');
+INSERT INTO `blog_search` VALUES ('17', 'mysql', '1', null, '2018-08-30 13:39:20');
+INSERT INTO `blog_search` VALUES ('18', '索引', '1', null, '2018-08-30 13:39:27');
+INSERT INTO `blog_search` VALUES ('19', '索引用法', '2', '2018-08-30 13:43:11', '2018-08-30 13:39:35');
+INSERT INTO `blog_search` VALUES ('20', 'sdsd', '1', null, '2018-09-21 00:01:07');
+INSERT INTO `blog_search` VALUES ('21', '646', '20', '2018-10-29 22:15:38', '2018-10-29 22:13:01');
+
+-- ----------------------------
+-- Table structure for blog_search_record
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_search_record`;
+CREATE TABLE `blog_search_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '0' COMMENT '搜索类型（0：未知，1：标题，2：标签）',
+  `word` varchar(255) DEFAULT NULL COMMENT '搜索关键词',
+  `member_id` int(11) DEFAULT '0' COMMENT '登录会员编号（0：游客）',
+  `ip` varchar(255) DEFAULT '' COMMENT 'ip地址',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='搜索记录表';
+
+-- ----------------------------
+-- Records of blog_search_record
+-- ----------------------------
+INSERT INTO `blog_search_record` VALUES ('6', '2', 'php', '0', '127.0.0.1', '正在搜索文章！', '2018-08-30 12:59:43');
+INSERT INTO `blog_search_record` VALUES ('7', '2', 'mysql', '0', '127.0.0.1', '正在搜索文章！', '2018-08-30 13:00:05');
+INSERT INTO `blog_search_record` VALUES ('8', '2', 'redis', '0', '127.0.0.1', '正在搜索文章！', '2018-08-30 13:01:04');
+
+-- ----------------------------
+-- Table structure for blog_slider
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_slider`;
+CREATE TABLE `blog_slider` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) DEFAULT NULL COMMENT '标题',
+  `image` text NOT NULL COMMENT '轮播图片',
+  `href` varchar(100) DEFAULT NULL COMMENT '轮播图片链接',
+  `target` varchar(10) DEFAULT '_blank' COMMENT '弹出方式',
+  `sort` int(10) DEFAULT '0' COMMENT '排序',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` int(10) DEFAULT '0' COMMENT '创建人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` int(10) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_slider_title` (`title`) USING BTREE,
+  KEY `index_blog_slider_sort` (`sort`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客轮播图';
+
+-- ----------------------------
+-- Records of blog_slider
+-- ----------------------------
+INSERT INTO `blog_slider` VALUES ('1', '轮播图1', 'https://static.99php.cn/slide1.jpg', 'https://www.baidu.com', '_blank', '3', null, '0', '2018-08-10 16:17:20', null, null, null);
+INSERT INTO `blog_slider` VALUES ('2', '轮播图2', 'https://static.99php.cn/slide2.jpg', 'https://www.99php.cn', '_blank', '2', null, '0', '2018-08-10 16:17:42', null, null, null);
+INSERT INTO `blog_slider` VALUES ('3', '轮播图3', 'https://static.99php.cn/slide3.jpg', 'admin/auth/index', '_blank', '0', '', '0', '2018-08-10 16:53:18', '0', null, null);
+
+-- ----------------------------
+-- Table structure for blog_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_tag`;
+CREATE TABLE `blog_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag_title` varchar(20) NOT NULL COMMENT '标签标题',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(1) DEFAULT '0' COMMENT '状态',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` int(10) DEFAULT '0' COMMENT '创建人',
+  PRIMARY KEY (`id`),
+  KEY `index_blog_tag_title` (`tag_title`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客标签表';
+
+-- ----------------------------
+-- Records of blog_tag
+-- ----------------------------
+INSERT INTO `blog_tag` VALUES ('4', 'PHP', null, '0', '2018-08-11 03:09:16', '0');
+INSERT INTO `blog_tag` VALUES ('15', 'Compare4', null, '0', '2018-09-03 15:23:04', '0');
+INSERT INTO `blog_tag` VALUES ('16', '七牛云', null, '0', '2018-09-20 03:27:23', '0');
+
+-- ----------------------------
+-- Table structure for blog_website_link
+-- ----------------------------
+DROP TABLE IF EXISTS `blog_website_link`;
+CREATE TABLE `blog_website_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `website_name` varchar(255) DEFAULT NULL COMMENT '站点名称',
+  `website_logo` varchar(500) DEFAULT NULL COMMENT '网站LOGO',
+  `href` varchar(500) DEFAULT '#' COMMENT '链接地址',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `sort` int(255) DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) DEFAULT '0' COMMENT '状态',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='站点友链';
+
+-- ----------------------------
+-- Records of blog_website_link
+-- ----------------------------
+INSERT INTO `blog_website_link` VALUES ('1', '百度一下', null, 'https://www.baidu.com', null, '2', '0', '2018-08-29 12:30:32');
+INSERT INTO `blog_website_link` VALUES ('2', 'hao123', null, 'https://www.hao123.com', '', '1', '0', '2018-08-29 12:31:44');
+
+-- ----------------------------
+-- Table structure for download_config
+-- ----------------------------
+DROP TABLE IF EXISTS `download_config`;
+CREATE TABLE `download_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` varchar(255) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='下载信息配置表';
+
+-- ----------------------------
+-- Records of download_config
+-- ----------------------------
+INSERT INTO `download_config` VALUES ('1', 'DownloadUrl', 'https://static.99php.cn/99Admin_V1.0.3.zip', '下载地址', '2018-08-04 19:32:17', '0');
+INSERT INTO `download_config` VALUES ('2', 'GitHub', 'https://github.com/zhongshaofa/99Admin', 'GitHub地址', '2018-08-04 19:33:48', '0');
+INSERT INTO `download_config` VALUES ('3', 'Gitee', 'https://gitee.com/zhongshaofa/99Admin', '码云地址', '2018-08-04 19:34:40', '0');
+INSERT INTO `download_config` VALUES ('4', 'QQUrl', 'https://jq.qq.com/?_wv=1027&k=5IHJawE', 'QQ群链接', '2018-08-04 19:35:04', '0');
+INSERT INTO `download_config` VALUES ('5', 'Version', 'V1.0.3', '版本信息', '2018-08-04 19:36:41', '0');
+INSERT INTO `download_config` VALUES ('6', 'WelcomeWord', '99Admin权限控制系统', '欢迎词', '2018-08-04 20:04:01', '0');
+INSERT INTO `download_config` VALUES ('7', 'Introduce', '关键词：ThinkPHP5.1、layui、layuicms。', null, '2018-08-04 20:13:17', '0');
+INSERT INTO `download_config` VALUES ('8', 'Describe1', '此项目旨在学习后台权限控制的实现，项目更适合初学者来进行学习。项目还是并不是特别完善，只实现基本的权限控制！', null, '2018-08-04 20:36:32', '0');
+INSERT INTO `download_config` VALUES ('9', 'Describe2', '项目还在持续完善中，尽请期待！项目中有使用或者借鉴优秀开源代码，感谢ThinkPHP团队、Layui团队、Layuicms作者、thinkadmin作者、layui-xtree作者！', null, '2018-08-04 20:36:36', '0');
+
+-- ----------------------------
+-- Table structure for download_record
+-- ----------------------------
+DROP TABLE IF EXISTS `download_record`;
+CREATE TABLE `download_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(255) DEFAULT NULL COMMENT 'ip地址',
+  `country` varchar(50) DEFAULT NULL COMMENT '国家',
+  `region` varchar(50) DEFAULT NULL COMMENT '省份',
+  `city` varchar(50) DEFAULT NULL COMMENT '城市',
+  `isp` varchar(50) DEFAULT NULL COMMENT '网络服务商',
+  `location` varchar(100) DEFAULT NULL COMMENT '地理位置',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='下载记录表';
+
+-- ----------------------------
+-- Records of download_record
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for email_template
+-- ----------------------------
+DROP TABLE IF EXISTS `email_template`;
+CREATE TABLE `email_template` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '0' COMMENT '类型 (1：注册，2：找回密码）',
+  `name` varchar(255) DEFAULT NULL COMMENT '模板名称',
+  `value` varchar(255) DEFAULT NULL COMMENT '模板内容',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='短信模板';
+
+-- ----------------------------
+-- Records of email_template
+-- ----------------------------
+INSERT INTO `email_template` VALUES ('2', '1', '注册验证码', '您正在申请手机注册，验证码为：${code}，5分钟内有效！', null, '2018-09-04 17:39:28');
+
+-- ----------------------------
+-- Table structure for sms_template
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_template`;
+CREATE TABLE `sms_template` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '0' COMMENT '类型 (1：注册，2：找回密码）',
+  `name` varchar(255) DEFAULT NULL COMMENT '模板名称',
+  `value` varchar(255) DEFAULT NULL COMMENT '模板内容',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='短信模板';
+
+-- ----------------------------
+-- Records of sms_template
+-- ----------------------------
+INSERT INTO `sms_template` VALUES ('1', '1', 'SMS_153660429', '您正在申请手机注册，验证码为：${code}，5分钟内有效！', null, '2018-09-01 00:18:10');
+
+-- ----------------------------
+-- Table structure for system_auth
+-- ----------------------------
+DROP TABLE IF EXISTS `system_auth`;
+CREATE TABLE `system_auth` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL COMMENT '权限名称',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(1:禁用,2:启用)',
+  `sort` smallint(6) unsigned DEFAULT '0' COMMENT '排序权重',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注说明',
+  `create_by` bigint(11) unsigned DEFAULT '0' COMMENT '创建人',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_at` timestamp NULL DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_system_auth_title` (`title`) USING BTREE,
+  KEY `index_system_auth_status` (`status`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统权限表';
+
+-- ----------------------------
+-- Records of system_auth
+-- ----------------------------
+INSERT INTO `system_auth` VALUES ('1', '管理员', '1', '4', '测试管理员', '0', '2018-03-17 15:59:46', '2018-08-07 10:26:57', null);
+INSERT INTO `system_auth` VALUES ('4', '超级管理员', '0', '1', '不受权限控制', '0', '2018-01-23 13:28:14', null, null);
+INSERT INTO `system_auth` VALUES ('6', '媒体主', '1', '0', '媒体', '0', '2018-09-22 18:15:31', null, null);
+
+-- ----------------------------
+-- Table structure for system_auth_node
+-- ----------------------------
+DROP TABLE IF EXISTS `system_auth_node`;
+CREATE TABLE `system_auth_node` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `auth` bigint(20) unsigned DEFAULT NULL COMMENT '角色ID',
+  `node` varchar(200) DEFAULT NULL COMMENT '节点路径',
+  PRIMARY KEY (`id`),
+  KEY `index_system_auth_auth` (`auth`) USING BTREE,
+  KEY `index_system_auth_node` (`node`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=514 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色与节点关系表';
+
+-- ----------------------------
+-- Records of system_auth_node
+-- ----------------------------
+INSERT INTO `system_auth_node` VALUES ('381', '6', '1042');
+INSERT INTO `system_auth_node` VALUES ('382', '6', '1046');
+INSERT INTO `system_auth_node` VALUES ('383', '6', '1044');
+INSERT INTO `system_auth_node` VALUES ('384', '6', '1043');
+INSERT INTO `system_auth_node` VALUES ('385', '6', '1041');
+INSERT INTO `system_auth_node` VALUES ('386', '6', '1045');
+INSERT INTO `system_auth_node` VALUES ('387', '6', '1048');
+INSERT INTO `system_auth_node` VALUES ('388', '6', '1054');
+INSERT INTO `system_auth_node` VALUES ('389', '6', '1056');
+INSERT INTO `system_auth_node` VALUES ('390', '6', '1055');
+INSERT INTO `system_auth_node` VALUES ('391', '6', '1053');
+INSERT INTO `system_auth_node` VALUES ('392', '6', '1057');
+INSERT INTO `system_auth_node` VALUES ('393', '6', '1059');
+INSERT INTO `system_auth_node` VALUES ('394', '6', '1063');
+INSERT INTO `system_auth_node` VALUES ('395', '6', '1109');
+INSERT INTO `system_auth_node` VALUES ('396', '6', '1065');
+INSERT INTO `system_auth_node` VALUES ('397', '6', '1066');
+INSERT INTO `system_auth_node` VALUES ('398', '6', '1071');
+INSERT INTO `system_auth_node` VALUES ('399', '6', '1073');
+INSERT INTO `system_auth_node` VALUES ('400', '6', '1072');
+INSERT INTO `system_auth_node` VALUES ('401', '6', '1074');
+INSERT INTO `system_auth_node` VALUES ('402', '6', '1070');
+INSERT INTO `system_auth_node` VALUES ('403', '6', '1075');
+INSERT INTO `system_auth_node` VALUES ('404', '6', '1114');
+INSERT INTO `system_auth_node` VALUES ('405', '6', '1351');
+INSERT INTO `system_auth_node` VALUES ('406', '6', '1353');
+INSERT INTO `system_auth_node` VALUES ('407', '6', '1352');
+INSERT INTO `system_auth_node` VALUES ('408', '6', '1350');
+INSERT INTO `system_auth_node` VALUES ('409', '6', '1354');
+INSERT INTO `system_auth_node` VALUES ('410', '6', '1383');
+INSERT INTO `system_auth_node` VALUES ('411', '6', '1385');
+INSERT INTO `system_auth_node` VALUES ('412', '6', '1384');
+INSERT INTO `system_auth_node` VALUES ('413', '6', '1358');
+INSERT INTO `system_auth_node` VALUES ('414', '6', '1386');
+INSERT INTO `system_auth_node` VALUES ('415', '6', '1363');
+INSERT INTO `system_auth_node` VALUES ('416', '6', '1362');
+INSERT INTO `system_auth_node` VALUES ('417', '6', '1368');
+INSERT INTO `system_auth_node` VALUES ('418', '6', '1371');
+INSERT INTO `system_auth_node` VALUES ('419', '6', '1373');
+INSERT INTO `system_auth_node` VALUES ('420', '6', '1369');
+INSERT INTO `system_auth_node` VALUES ('421', '6', '1367');
+INSERT INTO `system_auth_node` VALUES ('422', '6', '1387');
+INSERT INTO `system_auth_node` VALUES ('423', '6', '1372');
+INSERT INTO `system_auth_node` VALUES ('424', '6', '1378');
+INSERT INTO `system_auth_node` VALUES ('425', '6', '1380');
+INSERT INTO `system_auth_node` VALUES ('426', '6', '1379');
+INSERT INTO `system_auth_node` VALUES ('427', '6', '1377');
+INSERT INTO `system_auth_node` VALUES ('428', '6', '1390');
+INSERT INTO `system_auth_node` VALUES ('429', '6', '1392');
+INSERT INTO `system_auth_node` VALUES ('430', '6', '1391');
+INSERT INTO `system_auth_node` VALUES ('431', '6', '1389');
+INSERT INTO `system_auth_node` VALUES ('432', '6', '1393');
+INSERT INTO `system_auth_node` VALUES ('433', '1', '1042');
+INSERT INTO `system_auth_node` VALUES ('434', '1', '1046');
+INSERT INTO `system_auth_node` VALUES ('435', '1', '1044');
+INSERT INTO `system_auth_node` VALUES ('436', '1', '1043');
+INSERT INTO `system_auth_node` VALUES ('437', '1', '1041');
+INSERT INTO `system_auth_node` VALUES ('438', '1', '1045');
+INSERT INTO `system_auth_node` VALUES ('439', '1', '1396');
+INSERT INTO `system_auth_node` VALUES ('440', '1', '1048');
+INSERT INTO `system_auth_node` VALUES ('441', '1', '1054');
+INSERT INTO `system_auth_node` VALUES ('442', '1', '1056');
+INSERT INTO `system_auth_node` VALUES ('443', '1', '1055');
+INSERT INTO `system_auth_node` VALUES ('444', '1', '1053');
+INSERT INTO `system_auth_node` VALUES ('445', '1', '1057');
+INSERT INTO `system_auth_node` VALUES ('446', '1', '1059');
+INSERT INTO `system_auth_node` VALUES ('447', '1', '1063');
+INSERT INTO `system_auth_node` VALUES ('448', '1', '1109');
+INSERT INTO `system_auth_node` VALUES ('449', '1', '1065');
+INSERT INTO `system_auth_node` VALUES ('450', '1', '1066');
+INSERT INTO `system_auth_node` VALUES ('451', '1', '1071');
+INSERT INTO `system_auth_node` VALUES ('452', '1', '1073');
+INSERT INTO `system_auth_node` VALUES ('453', '1', '1072');
+INSERT INTO `system_auth_node` VALUES ('454', '1', '1074');
+INSERT INTO `system_auth_node` VALUES ('455', '1', '1404');
+INSERT INTO `system_auth_node` VALUES ('456', '1', '1070');
+INSERT INTO `system_auth_node` VALUES ('457', '1', '1075');
+INSERT INTO `system_auth_node` VALUES ('458', '1', '1114');
+INSERT INTO `system_auth_node` VALUES ('459', '1', '1351');
+INSERT INTO `system_auth_node` VALUES ('460', '1', '1353');
+INSERT INTO `system_auth_node` VALUES ('461', '1', '1352');
+INSERT INTO `system_auth_node` VALUES ('462', '1', '1350');
+INSERT INTO `system_auth_node` VALUES ('463', '1', '1354');
+INSERT INTO `system_auth_node` VALUES ('464', '1', '1383');
+INSERT INTO `system_auth_node` VALUES ('465', '1', '1385');
+INSERT INTO `system_auth_node` VALUES ('466', '1', '1384');
+INSERT INTO `system_auth_node` VALUES ('467', '1', '1358');
+INSERT INTO `system_auth_node` VALUES ('468', '1', '1386');
+INSERT INTO `system_auth_node` VALUES ('469', '1', '1363');
+INSERT INTO `system_auth_node` VALUES ('470', '1', '1362');
+INSERT INTO `system_auth_node` VALUES ('471', '1', '1368');
+INSERT INTO `system_auth_node` VALUES ('472', '1', '1371');
+INSERT INTO `system_auth_node` VALUES ('473', '1', '1373');
+INSERT INTO `system_auth_node` VALUES ('474', '1', '1369');
+INSERT INTO `system_auth_node` VALUES ('475', '1', '1367');
+INSERT INTO `system_auth_node` VALUES ('476', '1', '1387');
+INSERT INTO `system_auth_node` VALUES ('477', '1', '1372');
+INSERT INTO `system_auth_node` VALUES ('478', '1', '1378');
+INSERT INTO `system_auth_node` VALUES ('479', '1', '1380');
+INSERT INTO `system_auth_node` VALUES ('480', '1', '1379');
+INSERT INTO `system_auth_node` VALUES ('481', '1', '1377');
+INSERT INTO `system_auth_node` VALUES ('482', '1', '1390');
+INSERT INTO `system_auth_node` VALUES ('483', '1', '1392');
+INSERT INTO `system_auth_node` VALUES ('484', '1', '1391');
+INSERT INTO `system_auth_node` VALUES ('485', '1', '1389');
+INSERT INTO `system_auth_node` VALUES ('486', '1', '1393');
+INSERT INTO `system_auth_node` VALUES ('487', '1', '1403');
+INSERT INTO `system_auth_node` VALUES ('488', '1', '1402');
+INSERT INTO `system_auth_node` VALUES ('489', '1', '1398');
+INSERT INTO `system_auth_node` VALUES ('490', '1', '1400');
+INSERT INTO `system_auth_node` VALUES ('491', '1', '1399');
+INSERT INTO `system_auth_node` VALUES ('492', '1', '1401');
+INSERT INTO `system_auth_node` VALUES ('493', '1', '1407');
+INSERT INTO `system_auth_node` VALUES ('494', '1', '1410');
+INSERT INTO `system_auth_node` VALUES ('495', '1', '1409');
+INSERT INTO `system_auth_node` VALUES ('496', '1', '1412');
+INSERT INTO `system_auth_node` VALUES ('497', '1', '1415');
+INSERT INTO `system_auth_node` VALUES ('498', '1', '1417');
+INSERT INTO `system_auth_node` VALUES ('499', '1', '1416');
+INSERT INTO `system_auth_node` VALUES ('500', '1', '1414');
+INSERT INTO `system_auth_node` VALUES ('501', '1', '1418');
+INSERT INTO `system_auth_node` VALUES ('502', '1', '1421');
+INSERT INTO `system_auth_node` VALUES ('503', '1', '1420');
+INSERT INTO `system_auth_node` VALUES ('504', '1', '1424');
+INSERT INTO `system_auth_node` VALUES ('505', '1', '1423');
+INSERT INTO `system_auth_node` VALUES ('506', '1', '1427');
+INSERT INTO `system_auth_node` VALUES ('507', '1', '1429');
+INSERT INTO `system_auth_node` VALUES ('508', '1', '1428');
+INSERT INTO `system_auth_node` VALUES ('509', '1', '1426');
+INSERT INTO `system_auth_node` VALUES ('510', '1', '1430');
+INSERT INTO `system_auth_node` VALUES ('511', '1', '1433');
+INSERT INTO `system_auth_node` VALUES ('512', '1', '1432');
+INSERT INTO `system_auth_node` VALUES ('513', '1', '1435');
+
+-- ----------------------------
+-- Table structure for system_config
+-- ----------------------------
+DROP TABLE IF EXISTS `system_config`;
+CREATE TABLE `system_config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `account` varchar(64) DEFAULT NULL COMMENT '邮件或者手机',
-  `nickname` varchar(32) DEFAULT NULL COMMENT '昵称',
-  `sex` int(10) DEFAULT NULL COMMENT '1男2女',
-  `password` char(32) DEFAULT NULL,
-  `group_id` int(11) DEFAULT NULL,
-  `head_img` varchar(128) DEFAULT NULL COMMENT '头像',
-  `integral` int(11) DEFAULT '0' COMMENT '积分',
-  `money` int(11) DEFAULT '0' COMMENT '账户余额',
-  `mobile` varchar(11) DEFAULT NULL COMMENT '认证的手机号码',
-  `create_time` int(11) DEFAULT '0' COMMENT '注册时间',
-  `update_time` int(11) DEFAULT NULL COMMENT '最后一次登录',
-  `login_num` varchar(15) DEFAULT NULL COMMENT '登录次数',
-  `status` tinyint(1) DEFAULT NULL COMMENT '1正常  0 禁用',
-  `closed` tinyint(1) DEFAULT '0' COMMENT '0正常，1删除',
-  `token` char(32) DEFAULT '0' COMMENT '令牌',
-  `session_id` varchar(20) DEFAULT NULL,
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '变量名',
+  `group` varchar(30) NOT NULL DEFAULT '' COMMENT '分组',
+  `type` varchar(30) NOT NULL DEFAULT '' COMMENT '类型:string,text,int,bool,array,datetime,date,file',
+  `value` text NOT NULL COMMENT '变量值',
+  `remark` varchar(100) NOT NULL DEFAULT '' COMMENT '备注信息',
+  `sort` int(10) DEFAULT '0',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` bigint(20) DEFAULT '0' COMMENT '创建人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统配置';
+
+-- ----------------------------
+-- Records of system_config
+-- ----------------------------
+INSERT INTO `system_config` VALUES ('1', 'ManageName', 'basic', 'string', 'XX广告管理系统', '后台名称', '0', '2018-07-17 17:27:27', '0', '2018-07-17 22:10:33', null);
+INSERT INTO `system_config` VALUES ('2', 'Beian', 'basic', 'string', '粤ICP备18074801号-1', '备案号', '4', '2018-07-17 17:27:27', '0', '2018-07-17 22:10:39', null);
+INSERT INTO `system_config` VALUES ('18', 'FooterName', 'basic', 'string', 'Copyright © 2018-2019 广告联盟', '底部网站标识', '5', '2018-07-17 17:27:27', '0', '2018-07-17 18:40:16', null);
+INSERT INTO `system_config` VALUES ('19', 'BeianUrl', 'basic', 'string', 'http://www.miitbeian.gov.cn', '备案查询链接', '2', '2018-07-17 17:30:39', '0', '2018-07-17 17:31:22', null);
+INSERT INTO `system_config` VALUES ('20', 'HomeUrl', 'basic', 'string', 'https://www.99php.cn', '网站首页', '0', '2018-07-17 18:45:59', '0', '2018-07-17 18:46:12', null);
+INSERT INTO `system_config` VALUES ('21', 'VercodeType', 'basic', 'tinyint', '0', '验证码登录开关（0：不开启，1：开启）', '3', '2018-07-17 21:52:00', '0', '2018-07-18 02:38:10', null);
+INSERT INTO `system_config` VALUES ('32', 'Describe', 'basic', 'string', 'RBAC后台权限控制系统', '网站描述', '9', '2018-07-30 23:01:34', '0', null, null);
+INSERT INTO `system_config` VALUES ('33', 'Author', 'basic', 'string', 'Mr.Chung', '作者', '15', '2018-07-30 23:02:41', '0', null, null);
+INSERT INTO `system_config` VALUES ('34', 'Email', 'basic', 'string', 'chung@99php.cn', '联系邮箱', '8', '2018-07-30 23:03:15', '0', null, null);
+INSERT INTO `system_config` VALUES ('35', 'BlogFooterName', 'basic', 'string', 'Copyright © 2018-2019 九九PHP社区', '博客底部', '0', '2018-08-13 00:32:50', '0', null, null);
+INSERT INTO `system_config` VALUES ('36', 'MailHost', 'mail', 'string', 'smtp.163.com', '发送方的SMTP服务器地址', '0', '2018-08-31 15:39:04', '0', null, null);
+INSERT INTO `system_config` VALUES ('37', 'MailUsername', 'mail', 'string', '', '发送方的QQ邮箱用户名', '0', '2018-08-31 15:39:43', '0', null, null);
+INSERT INTO `system_config` VALUES ('38', 'MailPassword', 'mail', 'string', '', '第三方授权登录码', '0', '2018-08-31 15:39:53', '0', null, null);
+INSERT INTO `system_config` VALUES ('39', 'MailNickname', 'mail', 'string', '久久PHP社区', '设置发件人昵称', '0', '2018-08-31 15:40:44', '0', null, null);
+INSERT INTO `system_config` VALUES ('40', 'MailReplyTo', 'mail', 'string', 'www99php@163.com', '回复邮件地址', '0', '2018-08-31 15:41:03', '0', null, null);
+INSERT INTO `system_config` VALUES ('41', 'AccessKeyId', 'sms', 'string', 'LTAITkyBiHi8CWCa', '阿里大于公钥', '0', '2018-08-31 23:58:34', '0', null, null);
+INSERT INTO `system_config` VALUES ('42', 'AccessKeySecret', 'sms', 'string', 'eiYCv9p0iXgEsZUff4wfrsRvMhbr5E', '阿里大鱼私钥', '0', '2018-08-31 23:58:45', '0', null, null);
+INSERT INTO `system_config` VALUES ('43', 'SignName', 'sms', 'string', '水门财经', '短信注册模板', '0', '2018-09-01 00:08:55', '0', null, null);
+INSERT INTO `system_config` VALUES ('44', 'CodeTime', 'code', 'int', '60', '验证码发送间隔时间', '0', '2018-09-04 18:03:52', '0', null, null);
+INSERT INTO `system_config` VALUES ('45', 'CodeDieTime', 'code', 'int', '300', '验证码有效期', '0', '2018-09-04 18:17:26', '0', null, null);
+INSERT INTO `system_config` VALUES ('46', 'FileType', 'file', 'int', '1', '文件保存方法（1：本地，2：七牛云）', '0', '2018-09-17 11:44:12', '0', null, null);
+INSERT INTO `system_config` VALUES ('47', 'FileKey', 'file', 'string', '690c7175d2b4439646b437b8b48f92fb147eccf0', '文件路径加密秘钥（www.99php.cn）', '0', '2018-09-17 16:51:29', '0', null, null);
+INSERT INTO `system_config` VALUES ('48', 'LoginDuration', 'basic', 'int', '7200', '后台登录有效时间', '0', '2018-09-30 01:02:53', '0', null, null);
+INSERT INTO `system_config` VALUES ('49', 'AdminModuleName', 'basic', 'int', 'admin', '后台登录模块名', '0', '2018-10-01 01:22:05', '0', null, null);
+INSERT INTO `system_config` VALUES ('50', 'CleanCachePassword', 'basic', 'string', 'chung951222', '刷新缓存的密码', '0', '2018-10-01 01:42:16', '0', null, null);
+INSERT INTO `system_config` VALUES ('51', 'spider_access_key', 'spider', 'string', 'asdfmigshjogsn', '采集接口公钥', '0', '2018-11-19 10:46:26', '0', null, null);
+INSERT INTO `system_config` VALUES ('52', 'spider_secret_key', 'spider', 'string', 'twjtrowmlca', '采集接口私钥', '0', '2018-11-19 10:46:36', '0', null, null);
+INSERT INTO `system_config` VALUES ('53', 'spider_url', 'spider', 'string', 'http://spider.99php.cn/api/article/index.html', '采集接口地址', '0', '2018-11-19 10:46:46', '0', null, null);
+
+-- ----------------------------
+-- Table structure for system_login_record
+-- ----------------------------
+DROP TABLE IF EXISTS `system_login_record`;
+CREATE TABLE `system_login_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '1' COMMENT '登录类型（0：退出，1：登录）',
+  `user_id` int(11) DEFAULT NULL COMMENT '系统用户ID（0：账户不存在）',
+  `ip` varchar(255) DEFAULT NULL COMMENT '登录IP地址',
+  `country` varchar(50) DEFAULT NULL COMMENT '国家',
+  `region` varchar(50) DEFAULT NULL COMMENT '省份',
+  `city` varchar(50) DEFAULT NULL COMMENT '城市',
+  `isp` varchar(50) DEFAULT NULL COMMENT '网络类型',
+  `location` varchar(100) DEFAULT NULL COMMENT '地址',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `status` tinyint(1) DEFAULT '0' COMMENT '状态（0：失败，1：成功）',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=212066 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=488 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='博客会员登录记录';
 
 -- ----------------------------
--- Records of think_member
+-- Records of system_login_record
 -- ----------------------------
-INSERT INTO `think_member` VALUES ('2', '1217037610', 'XiMi丶momo', '2', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\ab9f9c492871857e1a6c5bc1c658ef7f.jpg', '300', '200', '18809321956', '1476779394', '1476779394', '0', '1', '1', '0', '');
-INSERT INTO `think_member` VALUES ('1', '18809321929', '醉凡尘丶Wordly', '1', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\admin.jpg', '92960', '73', '18809321929', '1476762875', '1476762875', '0', '1', '0', '0', '');
-INSERT INTO `think_member` VALUES ('3', '1217037610', '紫陌轩尘', '1', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\293c8cd05478b029a378ac4e5a880303.jpg', '400', '434', '49494', '1476676516', '1476676516', '0', '1', '1', '0', '');
-INSERT INTO `think_member` VALUES ('4', '', 'fag', '1', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\8a69f4c962e26265fd9f12efbff65013.jpg', '24', '424', '242', '1476425833', '1476425833', '0', '0', '1', '0', '');
-INSERT INTO `think_member` VALUES ('5', '18809321928', '空谷幽兰', '2', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\admin.jpg', '53', '3636', '3636', '1476676464', '1476676464', '0', '1', '0', '0', '');
-INSERT INTO `think_member` VALUES ('6', '', '787367373', '1', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\ab9f9c492871857e1a6c5bc1c658ef7f.jpg', '414', '9', '73737373', '1476425750', '1476425750', '0', '0', '1', '0', '');
-INSERT INTO `think_member` VALUES ('7', '18809321929', 'XMi丶呵呵', '2', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\293c8cd05478b029a378ac4e5a880303.jpg', '373373', '33', '73', '1476692255', '1476692255', '0', '0', '0', '0', '');
-INSERT INTO `think_member` VALUES ('8', '1246470984', 'XY', '1', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\8a69f4c962e26265fd9f12efbff65013.jpg', '7383', '73737373', '7373', '1476692123', '1476692123', '0', '1', '1', '0', '');
-INSERT INTO `think_member` VALUES ('9', '18793189097', '25773', '1', 'd41d8cd98f00b204e9800998ecf8427e', '1', '20161122\\admin.jpg', '7373737', '77', '7373733', '1476433452', '1476433452', '0', '1', '1', '0', '');
-INSERT INTO `think_member` VALUES ('10', '1246470984', 'XiYu', '2', 'e10adc3949ba59abbe56e057f20f883e', '1', '20161122\\ab9f9c492871857e1a6c5bc1c658ef7f.jpg', '100', '100', '18793189091', '1476694831', '1476694831', '0', '1', '1', '0', '');
-INSERT INTO `think_member` VALUES ('11', '', '烟勤话少脾气好', '0', '', '1', '20161122\\293c8cd05478b029a378ac4e5a880303.jpg', '0', '0', '', '1488030906', '0', '0', '0', '0', '0', '');
-INSERT INTO `think_member` VALUES ('12', '1246470984', 'XiYu', '2', 'e10adc3949ba59abbe56e057f20f883e', '1', '20161122\\8a69f4c962e26265fd9f12efbff65013.jpg', '100', '100', '18793189091', '1488030906', '1476694831', '0', '1', '1', '0', '');
-INSERT INTO `think_member` VALUES ('212065', '111', '111', '0', 'deb2a3420354e40d55a1b0cb3a947cd0', '121', '<!doctype html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n    <title>跳转提示</title>\n', '0', '0', '', '1502341127', '1502341127', null, null, '0', '0', null);
+INSERT INTO `system_login_record` VALUES ('444', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-14 09:43:04');
+INSERT INTO `system_login_record` VALUES ('445', '0', '1', '127.0.0.1', '', '', '', '', '', '【主动退出】正在退出后台系统！', '1', '2019-02-14 09:57:17');
+INSERT INTO `system_login_record` VALUES ('446', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-14 09:57:21');
+INSERT INTO `system_login_record` VALUES ('447', '0', '1', '127.0.0.1', '', '', '', '', '', '【主动退出】正在退出后台系统！', '1', '2019-02-14 09:58:27');
+INSERT INTO `system_login_record` VALUES ('448', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-14 09:58:33');
+INSERT INTO `system_login_record` VALUES ('449', '0', '1', '127.0.0.1', '', '', '', '', '', '【主动退出】正在退出后台系统！', '1', '2019-02-14 10:02:06');
+INSERT INTO `system_login_record` VALUES ('450', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-14 10:02:15');
+INSERT INTO `system_login_record` VALUES ('451', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-15 10:03:56');
+INSERT INTO `system_login_record` VALUES ('452', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-15 14:49:27');
+INSERT INTO `system_login_record` VALUES ('453', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-15 14:49:40');
+INSERT INTO `system_login_record` VALUES ('454', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-15 17:23:21');
+INSERT INTO `system_login_record` VALUES ('455', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-15 17:23:24');
+INSERT INTO `system_login_record` VALUES ('456', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-18 15:51:24');
+INSERT INTO `system_login_record` VALUES ('457', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-19 15:43:13');
+INSERT INTO `system_login_record` VALUES ('458', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-19 15:43:17');
+INSERT INTO `system_login_record` VALUES ('459', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-20 10:15:45');
+INSERT INTO `system_login_record` VALUES ('460', '0', '1', '127.0.0.1', '', '', '', '', '', '【主动退出】正在退出后台系统！', '1', '2019-02-20 10:56:13');
+INSERT INTO `system_login_record` VALUES ('461', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-20 10:56:22');
+INSERT INTO `system_login_record` VALUES ('462', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-20 14:41:52');
+INSERT INTO `system_login_record` VALUES ('463', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-20 14:41:59');
+INSERT INTO `system_login_record` VALUES ('464', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-20 16:44:01');
+INSERT INTO `system_login_record` VALUES ('465', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-20 16:45:04');
+INSERT INTO `system_login_record` VALUES ('466', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-21 16:32:59');
+INSERT INTO `system_login_record` VALUES ('467', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-22 10:26:01');
+INSERT INTO `system_login_record` VALUES ('468', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-22 10:26:05');
+INSERT INTO `system_login_record` VALUES ('469', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-22 15:19:31');
+INSERT INTO `system_login_record` VALUES ('470', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-22 17:33:02');
+INSERT INTO `system_login_record` VALUES ('471', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-22 17:33:51');
+INSERT INTO `system_login_record` VALUES ('472', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-25 09:53:05');
+INSERT INTO `system_login_record` VALUES ('473', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-26 14:08:52');
+INSERT INTO `system_login_record` VALUES ('474', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-26 16:08:53');
+INSERT INTO `system_login_record` VALUES ('475', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-26 16:08:56');
+INSERT INTO `system_login_record` VALUES ('476', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-02-27 09:55:52');
+INSERT INTO `system_login_record` VALUES ('477', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-27 09:55:56');
+INSERT INTO `system_login_record` VALUES ('478', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-02-28 16:16:58');
+INSERT INTO `system_login_record` VALUES ('479', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-03-01 11:49:31');
+INSERT INTO `system_login_record` VALUES ('480', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-03-01 11:49:34');
+INSERT INTO `system_login_record` VALUES ('481', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-03-01 14:02:02');
+INSERT INTO `system_login_record` VALUES ('482', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-03-01 14:02:05');
+INSERT INTO `system_login_record` VALUES ('483', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-03-05 17:11:12');
+INSERT INTO `system_login_record` VALUES ('484', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-03-11 09:41:24');
+INSERT INTO `system_login_record` VALUES ('485', '0', '1', '127.0.0.1', '', '', '', '', '', '【登录过期】正在退出后台系统！', '1', '2019-03-11 15:13:25');
+INSERT INTO `system_login_record` VALUES ('486', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-03-11 15:13:29');
+INSERT INTO `system_login_record` VALUES ('487', '1', '1', '127.0.0.1', '', '', '', '', '', '【账号登录】登录成功，正在进入系统！', '1', '2019-03-12 11:03:51');
 
 -- ----------------------------
--- Table structure for think_member_group
+-- Table structure for system_menu
 -- ----------------------------
-DROP TABLE IF EXISTS `think_member_group`;
-CREATE TABLE `think_member_group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '留言Id',
-  `group_name` varchar(32) NOT NULL COMMENT '留言评论作者',
-  `status` tinyint(1) DEFAULT NULL,
-  `create_time` int(11) DEFAULT NULL COMMENT '留言回复时间',
-  `update_time` int(11) DEFAULT NULL,
+DROP TABLE IF EXISTS `system_menu`;
+CREATE TABLE `system_menu` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父id',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '名称',
+  `spread` tinyint(1) DEFAULT '0',
+  `node` varchar(200) NOT NULL DEFAULT '' COMMENT '节点代码',
+  `icon` varchar(100) NOT NULL DEFAULT '' COMMENT '菜单图标',
+  `href` varchar(400) NOT NULL DEFAULT '' COMMENT '链接',
+  `params` varchar(500) DEFAULT '' COMMENT '链接参数',
+  `target` varchar(20) NOT NULL DEFAULT '_self' COMMENT '链接打开方式',
+  `sort` float(11,2) DEFAULT '0.00' COMMENT '菜单排序',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态(0:禁用,1:启用)',
+  `remark` varchar(255) DEFAULT NULL,
+  `create_by` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建人',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_at` timestamp NULL DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_system_menu_node` (`node`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统菜单表';
+
+-- ----------------------------
+-- Records of system_menu
+-- ----------------------------
+INSERT INTO `system_menu` VALUES ('1', '0', '后台首页', '0', '', '&#xe68e;', 'admin/index/welcome', '', '_self', '0.00', '1', '', '0', '2018-07-21 13:28:32', null, null);
+INSERT INTO `system_menu` VALUES ('142', '0', '系统设置', '0', '', '&#xe620;', '#', '', '_self', '2.00', '1', null, '0', '2018-07-17 03:09:41', null, null);
+INSERT INTO `system_menu` VALUES ('163', '167', '管理员列表', '0', '', 'fa-group', 'admin/user/index', '', '_self', '0.00', '1', '', '0', '2018-07-18 01:15:16', null, null);
+INSERT INTO `system_menu` VALUES ('164', '167', '菜单配置', '0', '', '&#xe620;', 'admin/menu/index', '', '_self', '0.00', '1', '', '0', '2018-07-19 02:05:48', null, null);
+INSERT INTO `system_menu` VALUES ('165', '169', '刷新缓存', '0', '', '&#xe9aa;', 'admin/system/refresh', '', '_self', '0.00', '1', '', '0', '2018-07-19 10:11:27', null, null);
+INSERT INTO `system_menu` VALUES ('166', '168', '系统节点', '0', '', '&#xe631;', 'admin/node/index', '', '_self', '0.00', '1', '', '0', '2018-07-23 00:44:49', null, null);
+INSERT INTO `system_menu` VALUES ('167', '142', '系统管理', '0', '', '&#xe716;', '#', '', '_self', '0.00', '1', '', '0', '2018-07-23 01:23:11', null, null);
+INSERT INTO `system_menu` VALUES ('168', '142', '权限管理', '0', '', '&#xe857;', '#', '', '_self', '0.00', '1', '', '0', '2018-07-23 01:23:27', null, null);
+INSERT INTO `system_menu` VALUES ('169', '142', '系统刷新', '0', '', '&#xe639;', '#', '', '_self', '0.00', '1', '', '0', '2018-07-23 01:26:30', null, null);
+INSERT INTO `system_menu` VALUES ('171', '168', '角色权限', '0', '', '&#xe606;', 'admin/auth/index', '', '_self', '0.00', '1', '', '0', '2018-07-23 15:37:53', null, null);
+INSERT INTO `system_menu` VALUES ('172', '169', '刷新节点', '0', '', '&#xe666;', 'admin/system/refresh_node', '', '_self', '0.00', '1', '', '0', '2018-07-25 22:06:45', null, null);
+INSERT INTO `system_menu` VALUES ('173', '169', '清除节点', '0', '', '&#xe639;', 'admin/system/clear_node', '', '_self', '0.00', '1', '', '0', '2018-07-26 15:27:24', null, null);
+INSERT INTO `system_menu` VALUES ('175', '167', '系统配置', '0', '', '&#xe663;', 'admin/config/index', '', '_self', '0.00', '1', '', '0', '2018-07-31 00:11:14', '2018-08-01 11:28:42', null);
+INSERT INTO `system_menu` VALUES ('178', '0', '广告管理', '0', '', '&#xe60a;', '#', '', '_self', '1.00', '1', '', '0', '2018-09-20 02:00:30', null, null);
+INSERT INTO `system_menu` VALUES ('179', '178', '文章管理', '0', '', '&#xe62a;', '#', '', '_self', '0.00', '1', '', '0', '2018-09-20 02:01:44', null, null);
+INSERT INTO `system_menu` VALUES ('180', '179', '文章列表', '0', '', '&#xe637;', 'admin/blog.article/index', '', '_self', '0.00', '1', '', '0', '2018-09-20 02:03:17', null, null);
+INSERT INTO `system_menu` VALUES ('185', '178', '会员管理', '0', '', '&#xe66f;', '#', '', '_self', '0.00', '1', '', '0', '2018-09-21 01:12:26', null, null);
+INSERT INTO `system_menu` VALUES ('186', '185', '会员列表', '0', '', '&#xe770;', 'admin/blog.member/index', '', '_self', '0.00', '1', '', '0', '2018-09-21 01:13:19', null, null);
+INSERT INTO `system_menu` VALUES ('187', '179', '标签管理', '0', '', '&#xe6b2;', 'admin/blog.tag/index', '', '_self', '0.00', '1', '', '0', '2018-09-21 01:14:43', null, null);
+INSERT INTO `system_menu` VALUES ('189', '178', '轮播图管理', '0', '', '&#xe857;', '#', '', '_self', '0.00', '1', '', '0', '2018-09-21 01:17:25', null, null);
+INSERT INTO `system_menu` VALUES ('190', '189', '轮播图配置', '0', '', '&#xe64a;', 'admin/blog.slider/index', '', '_self', '0.00', '1', '', '0', '2018-09-21 01:17:44', null, null);
+INSERT INTO `system_menu` VALUES ('210', '185', '登录记录', '0', '', '&#xe665;', 'admin/blog.login_record/index', '', '_self', '0.00', '1', '', '0', '2018-09-26 17:33:29', null, null);
+INSERT INTO `system_menu` VALUES ('211', '179', '文章分类', '0', '', '&#xe664;', 'admin/blog.category/index', '', '_self', '0.00', '1', '', '0', '2018-09-27 01:34:06', null, null);
+INSERT INTO `system_menu` VALUES ('212', '179', '文章评论', '0', '', '&#xe66a;', 'admin/blog.comment/index', '', '_self', '0.00', '1', '', '0', '2018-10-11 21:04:53', null, null);
+INSERT INTO `system_menu` VALUES ('213', '178', '常用工具', '0', '', '&#xe665;', '#', '', '_self', '0.00', '1', '', '0', '2018-10-11 22:18:28', null, null);
+INSERT INTO `system_menu` VALUES ('214', '213', '配置管理', '0', '', '&#xe716;', 'admin/blog.config/index', '', '_self', '0.00', '1', '', '0', '2018-10-11 22:19:02', null, null);
+INSERT INTO `system_menu` VALUES ('215', '213', '友情链接', '0', '', '&#xe64d;', 'admin/blog.website_link/index', '', '_self', '0.00', '1', '', '0', '2018-10-11 22:19:32', null, null);
+INSERT INTO `system_menu` VALUES ('216', '213', '公告管理', '0', '', '&#xe667;', 'admin/blog.notice/index', '', '_self', '0.00', '1', '', '0', '2018-10-11 22:21:02', null, null);
+INSERT INTO `system_menu` VALUES ('217', '178', '搜索管理', '0', '', '&#xe615;', '#', '', '_self', '0.00', '1', '', '0', '2018-10-11 22:23:04', null, null);
+INSERT INTO `system_menu` VALUES ('218', '217', '搜索排行', '0', '', '&#xe649;', 'admin/blog.search_record/index', '', '_self', '0.00', '1', '', '0', '2018-10-11 22:23:32', null, null);
+INSERT INTO `system_menu` VALUES ('219', '217', '搜索记录', '0', '', '&#xe66e;', 'admin/blog.search/index', '', '_self', '0.00', '1', '', '0', '2018-10-11 22:23:54', null, null);
+INSERT INTO `system_menu` VALUES ('224', '142', '系统工具', '0', '', 'fa-server', '#', '', '_self', '0.00', '1', '', '0', '2018-10-13 21:41:40', null, null);
+INSERT INTO `system_menu` VALUES ('225', '224', '图标管理-layui', '0', '', 'fa-circle-o-notch', 'admin/tool.icon/index', '', '_self', '0.00', '1', '', '0', '2018-10-13 21:42:25', null, null);
+INSERT INTO `system_menu` VALUES ('226', '224', '图标管理-fa', '0', '', 'fa-crosshairs', 'admin/tool.icon/fa', '', '_self', '0.00', '1', '', '0', '2018-10-13 21:43:02', null, null);
+INSERT INTO `system_menu` VALUES ('227', '178', '广告配置', '0', '', 'fa-cc', '#', '', '_self', '0.00', '1', '', '0', '2019-02-15 10:06:44', null, null);
+INSERT INTO `system_menu` VALUES ('228', '227', '分类管理', '0', '', 'fa-columns', 'admin/ad.category/index', '', '_self', '0.00', '1', '', '0', '2019-02-15 10:09:57', null, null);
+INSERT INTO `system_menu` VALUES ('229', '185', '媒体列表', '0', '', 'fa-diamond', 'admin/ad.media/index', '', '_self', '0.00', '1', '', '0', '2019-02-20 15:53:35', null, null);
+INSERT INTO `system_menu` VALUES ('230', '227', '广告列表', '0', '', 'fa-bank', 'admin/ad.advert/index', '', '_self', '0.00', '1', '', '0', '2019-02-22 16:53:59', null, null);
+
+-- ----------------------------
+-- Table structure for system_nav
+-- ----------------------------
+DROP TABLE IF EXISTS `system_nav`;
+CREATE TABLE `system_nav` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '名称',
+  `icon` varchar(100) NOT NULL DEFAULT '' COMMENT '菜单图标',
+  `href` varchar(400) NOT NULL DEFAULT '' COMMENT '链接',
+  `sort` float(11,2) DEFAULT '0.00' COMMENT '菜单排序',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态(0:禁用,1:启用)',
+  `remark` varchar(255) DEFAULT NULL,
+  `create_by` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建人',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_at` timestamp NULL DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=122 DEFAULT CHARSET=utf8 COMMENT='文章评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统快捷导航';
 
 -- ----------------------------
--- Records of think_member_group
+-- Records of system_nav
 -- ----------------------------
-INSERT INTO `think_member_group` VALUES ('1', '系统组', '0', '1441616559', '1502341098');
-INSERT INTO `think_member_group` VALUES ('2', '游客组', '1', '1441617195', '1502281865');
-INSERT INTO `think_member_group` VALUES ('3', 'VIP', '1', '1441769224', null);
+INSERT INTO `system_nav` VALUES ('214', '配置管理', '&#xe716;', 'admin/blog.config/index', '0.00', '1', '', '0', '2018-10-11 22:19:02', null, null);
+INSERT INTO `system_nav` VALUES ('215', '友情链接', '&#xe64d;', 'admin/blog.website_link/index', '0.00', '1', '', '0', '2018-10-11 22:19:32', null, null);
+INSERT INTO `system_nav` VALUES ('216', '公告管理', '&#xe667;', 'admin/blog.notice/index', '0.00', '1', '', '0', '2018-10-11 22:21:02', null, null);
+INSERT INTO `system_nav` VALUES ('218', '搜索排行', '&#xe649;', 'admin/blog.search_record/index', '0.00', '1', '', '0', '2018-10-11 22:23:32', null, null);
+INSERT INTO `system_nav` VALUES ('219', '搜索记录', '&#xe66e;', 'admin/blog.search/index', '0.00', '1', '', '0', '2018-10-11 22:23:54', null, null);
+INSERT INTO `system_nav` VALUES ('225', '图标管理-layui', 'fa-circle-o-notch', 'admin/tool.icon/index', '0.00', '1', '', '0', '2018-10-13 21:42:25', null, null);
+INSERT INTO `system_nav` VALUES ('226', '图标管理-fa', 'fa-crosshairs', 'admin/tool.icon/fa', '0.00', '1', '', '0', '2018-10-13 21:43:02', null, null);
 
 -- ----------------------------
--- Table structure for think_user
+-- Table structure for system_node
 -- ----------------------------
-DROP TABLE IF EXISTS `think_user`;
-CREATE TABLE `think_user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `account` varchar(20) DEFAULT NULL COMMENT '认证的手机号码',
-  `nickname` varchar(32) DEFAULT NULL COMMENT '昵称',
-  `password` char(32) DEFAULT NULL,
-  `head_img` varchar(255) DEFAULT NULL COMMENT '头像',
-  `status` tinyint(1) DEFAULT NULL COMMENT '1激活  0 未激活',
-  `token` varchar(255) DEFAULT '0' COMMENT '令牌',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `system_node`;
+CREATE TABLE `system_node` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `node` varchar(100) DEFAULT NULL COMMENT '节点代码',
+  `title` varchar(500) DEFAULT NULL COMMENT '节点标题',
+  `type` tinyint(1) DEFAULT '3' COMMENT '节点类型（1：模块，2：控制器，3：节点）',
+  `is_auth` tinyint(1) unsigned DEFAULT '1' COMMENT '是否启动RBAC权限控制',
+  `is_auto` tinyint(1) DEFAULT '0' COMMENT '是否为系统自动刷新（0：是，1：手动添加）',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` bigint(20) DEFAULT NULL,
+  `update_at` timestamp NULL DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_system_node_node` (`node`)
+) ENGINE=InnoDB AUTO_INCREMENT=1436 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统节点表';
 
 -- ----------------------------
--- Records of think_user
+-- Records of system_node
 -- ----------------------------
-INSERT INTO `think_user` VALUES ('1', '18693281982', '田建龙', 'e10adc3949ba59abbe56e057f20f883e', 'http://123.56.237.22:8888/group1/M00/00/08/ezjtFlj4IHyAcjlzAABDms0T3Kk671.jpg', '1', 'LWBYIiLWinNiulNXYD1UzGgfynNx+gy/zmq5Ega0E0we4a0WyB8UaG4x+VKRoc9CG4e1BXrqZww=');
-INSERT INTO `think_user` VALUES ('2', '18993075721', '账号1', 'e10adc3949ba59abbe56e057f20f883e', 'http://opgkfon0o.bkt.clouddn.com/108.png', '1', 'VslU7gKYuddZFPq4ssWLZCNYBsi3YQIicyG1jm5pUfvZHI4qw03b3A2sygA4efLyWHRkYBQX8LAscwsA7sLzhg==');
-INSERT INTO `think_user` VALUES ('3', '15095340657', '呼丽华', 'e10adc3949ba59abbe56e057f20f883e', 'http://123.56.237.22:8888/group1/M00/00/00/ezjtFliGwvWAaYeXAABu1D1rZNo655.jpg', '1', '2d8471d156a9e6db155145571cedea5a');
+INSERT INTO `system_node` VALUES ('1037', 'admin', '后台模块管理', '1', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1040', 'admin/auth', '角色管理', '2', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1041', 'admin/auth/index', '角色列表', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1042', 'admin/auth/add', '添加角色', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1043', 'admin/auth/edit', '编辑角色', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1044', 'admin/auth/del', '删除角色', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1045', 'admin/auth/status', '更改角色状态', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1046', 'admin/auth/authorize', '角色授权', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1047', 'admin/icon', '系统图标管理', '2', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1048', 'admin/icon/index', '图标列表', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1049', 'admin/index', '系统后台首页（不要开启）', '2', '0', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1050', 'admin/index/index', '后台首页（不要开启）', '3', '0', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1051', 'admin/index/welcome', '后台欢迎页面（不要开启）', '3', '0', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1052', 'admin/menu', '系统菜单管理', '2', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1053', 'admin/menu/index', '菜单列表', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1054', 'admin/menu/add', '添加菜单', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1055', 'admin/menu/edit', '编辑菜单', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1056', 'admin/menu/del', '删除菜单', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1057', 'admin/menu/status', '更改菜单状态', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1058', 'admin/node', '节点管理', '2', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1059', 'admin/node/index', '节点列表', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1063', 'admin/node/status', '更改节点状态', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1064', 'admin/system', '系统管理', '2', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1065', 'admin/system/refresh', '刷新缓存', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1066', 'admin/system/refresh_node', '刷新节点', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1069', 'admin/user', '系统管理员管理', '2', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1070', 'admin/user/index', '管理员列表', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1071', 'admin/user/add', '添加管理员', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1072', 'admin/user/edit', '编辑管理员', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1073', 'admin/user/del', '删除管理员', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1074', 'admin/user/edit_password', '修改管理员密码', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1075', 'admin/user/status', '更改管理员状态', '3', '1', null, '2018-07-26 02:51:09', null, null, null);
+INSERT INTO `system_node` VALUES ('1109', 'admin/system/clear_node', '清除节点', '3', '1', null, '2018-07-26 15:29:55', null, null, null);
+INSERT INTO `system_node` VALUES ('1113', 'admin/config', '系统配置管理', '2', '1', null, '2018-07-31 01:00:16', null, null, null);
+INSERT INTO `system_node` VALUES ('1114', 'admin/config/index', '系统配置列表', '3', '1', null, '2018-07-31 01:00:16', null, null, null);
+INSERT INTO `system_node` VALUES ('1124', 'admin/login', '后台登录（不要开启）', '2', '0', '0', '2018-09-19 18:21:57', null, null, null);
+INSERT INTO `system_node` VALUES ('1125', 'admin/login/index', null, '3', '0', '0', '2018-09-19 18:21:57', null, null, null);
+INSERT INTO `system_node` VALUES ('1126', 'admin/login/change', null, '3', '0', '0', '2018-09-19 18:21:57', null, null, null);
+INSERT INTO `system_node` VALUES ('1127', 'admin/login/out', null, '3', '0', '0', '2018-09-19 18:21:57', null, null, null);
+INSERT INTO `system_node` VALUES ('1337', 'admin/api.menu', '菜单接口（不要开启）', '2', '0', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1338', 'admin/api.menu/get_menu', null, '3', '0', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1341', 'admin/api.node', '节点接口（不要开启）', '2', '0', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1342', 'admin/api.node/get_node_tree', null, '3', '0', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1345', 'admin/api.upload', '上传接口（不要开启）', '2', '0', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1346', 'admin/api.upload/image', null, '3', '0', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1349', 'admin/blog.article', '博客文章管理', '2', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1350', 'admin/blog.article/index', '文章列表', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1351', 'admin/blog.article/add', '文章添加', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1352', 'admin/blog.article/edit', '文章修改', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1353', 'admin/blog.article/del', '文章删除', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1354', 'admin/blog.article/status', '修改文章状态', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1357', 'admin/blog.category', '博客分类管理', '2', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1358', 'admin/blog.category/index', '分类列表', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1361', 'admin/blog.login_record', '博客登录记录管理', '2', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1362', 'admin/blog.login_record/index', '登录记录列表', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1363', 'admin/blog.login_record/del', '登录记录删除', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1366', 'admin/blog.member', '博客会员管理', '2', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1367', 'admin/blog.member/index', '会员列表', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1368', 'admin/blog.member/add', '会员接口', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1369', 'admin/blog.member/edit', '会员编辑', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1371', 'admin/blog.member/del', '会员删除', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1372', 'admin/blog.member/status', '会员状态修改', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1373', 'admin/blog.member/detail', '会员详情', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1376', 'admin/blog.tag', '博客文章标签管理', '2', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1377', 'admin/blog.tag/index', '标签列表', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1378', 'admin/blog.tag/add', '标签添加', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1379', 'admin/blog.tag/edit', '标签编辑', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1380', 'admin/blog.tag/del', '标签删除', '3', '1', '0', '2018-10-01 13:54:12', null, null, null);
+INSERT INTO `system_node` VALUES ('1383', 'admin/blog.category/add', '分类添加', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1384', 'admin/blog.category/edit', '分类编辑', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1385', 'admin/blog.category/del', '分类删除', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1386', 'admin/blog.category/status', '修改分类状态', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1387', 'admin/blog.member/reset_password', '会员重置密码', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1388', 'admin/blog.slider', '博客轮播图管理', '2', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1389', 'admin/blog.slider/index', '轮播图列表', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1390', 'admin/blog.slider/add', '轮播图添加', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1391', 'admin/blog.slider/edit', '轮播图编辑', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1392', 'admin/blog.slider/del', '轮播图删除', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1393', 'admin/blog.slider/status', '轮播图状态修改', '3', '1', '0', '2018-10-11 16:52:46', null, null, null);
+INSERT INTO `system_node` VALUES ('1396', 'admin/icon/fa', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1397', 'admin/test', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1398', 'admin/test/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1399', 'admin/test/upload', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1400', 'admin/test/test', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1401', 'admin/test/url', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1402', 'admin/test/curl', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1403', 'admin/test/add', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1404', 'admin/user/edit_self', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1405', 'admin/api.menu/get_nav', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1406', 'admin/api.welcome', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1407', 'admin/api.welcome/article_census', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1408', 'admin/blog.comment', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1409', 'admin/blog.comment/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1410', 'admin/blog.comment/del', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1411', 'admin/blog.config', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1412', 'admin/blog.config/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1413', 'admin/blog.notice', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1414', 'admin/blog.notice/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1415', 'admin/blog.notice/add', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1416', 'admin/blog.notice/edit', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1417', 'admin/blog.notice/del', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1418', 'admin/blog.notice/status', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1419', 'admin/blog.search', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1420', 'admin/blog.search/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1421', 'admin/blog.search/del', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1422', 'admin/blog.search_record', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1423', 'admin/blog.search_record/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1424', 'admin/blog.search_record/del', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1425', 'admin/blog.website_link', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1426', 'admin/blog.website_link/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1427', 'admin/blog.website_link/add', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1428', 'admin/blog.website_link/edit', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1429', 'admin/blog.website_link/del', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1430', 'admin/blog.website_link/status', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1431', 'admin/tool.icon', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1432', 'admin/tool.icon/index', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1433', 'admin/tool.icon/fa', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1434', 'admin/tool.upload', null, '2', '1', '0', '2019-02-14 10:04:34', null, null, null);
+INSERT INTO `system_node` VALUES ('1435', 'admin/tool.upload/image', null, '3', '1', '0', '2019-02-14 10:04:34', null, null, null);
 
 -- ----------------------------
--- Event structure for ceshi
+-- Table structure for system_user
 -- ----------------------------
-DROP EVENT IF EXISTS `ceshi`;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` EVENT `ceshi` ON SCHEDULE EVERY 1 MINUTE STARTS '2017-07-19 09:51:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE think_user set status='2' where id='1'
-;;
-DELIMITER ;
+DROP TABLE IF EXISTS `system_user`;
+CREATE TABLE `system_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `auth_id` varchar(255) DEFAULT NULL COMMENT '角色权限ID',
+  `head_img` varchar(255) DEFAULT '/static/image/admin/face1.jpg' COMMENT '头像',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户登录名',
+  `password` char(40) NOT NULL DEFAULT '' COMMENT '用户登录密码',
+  `qq` varchar(16) DEFAULT NULL COMMENT '联系QQ',
+  `mail` varchar(32) DEFAULT NULL COMMENT '联系邮箱',
+  `phone` varchar(16) DEFAULT NULL COMMENT '联系手机号',
+  `remark` varchar(255) DEFAULT '' COMMENT '备注说明',
+  `login_num` bigint(20) unsigned DEFAULT '0' COMMENT '登录次数',
+  `login_at` datetime DEFAULT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态(0:禁用,1:启用,)',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除状态(1:删除,0:未删)',
+  `create_by` bigint(20) unsigned DEFAULT '0' COMMENT '创建人',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新人',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_system_user_username` (`username`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统用户表';
+
+-- ----------------------------
+-- Records of system_user
+-- ----------------------------
+INSERT INTO `system_user` VALUES ('1', '[\"1\"]', '/static/image/admin/face1.jpg', 'admin', 'ed696eb5bba1f7460585cc6975e6cf9bf24903dd', '', '', '18040363559', '', '0', null, '1', '0', '0', '2019-02-14 09:42:51', null, null);
