@@ -1,0 +1,201 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>导入excel文件列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <form name="admin_list_sea" id="form" class="form-inline" method="post" action="{:url('index')}">
+                        <div class="form-group">
+                            <label for="filename" class="sr-only">文件名</label>
+                            <input type="text" name="filename" placeholder="请输入文件名" id="filename" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="money" class="sr-only">金额</label>
+                            <input type="text" name="money" placeholder="请输入金额" id="money" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="count" class="sr-only">总笔数</label>
+                            <input type="text" name="count" placeholder="请输入总笔数" id="count" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="picihao" class="sr-only">批次号</label>
+                            <input type="text" name="picihao" placeholder="请输入批次号" id="picihao" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <input placeholder="开始日期" class="form-control layer-date" name="start" id="start">
+                                <input placeholder="结束日期" class="form-control layer-date" name="end" id="end">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary"><i
+                                    class="fa fa-search"onclick="Ajaxpage(1)"></i> 搜索
+                            </button>
+                            <input type="reset" class="btn btn-white" onclick="resetForm()">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="3%">序号</th>
+                            <th width="8%">批次编号</th>
+                            <th width="5%">账号</th>
+                            <th width="9%">公司名称</th>
+                            <th width="5%">总金额</th>
+                            <th width="4%">总笔数</th>
+                            <th width="8%">文件名</th>
+                            <th width="8%">上传日期</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                        </thead>
+                        <script id="list-template" type="text/html">
+                            {{# for(var i=0; i
+                            <d.length; i++){  }}
+                            <tr class="long-td">
+                                <td>{{i+1}}</td>
+                                <td>{{d[i].picihao}}</td>
+                                <td>{{d[i]['user'].account}}</td>
+                                <td>{{d[i]['user'].nickname}}</td>
+                                <td>{{d[i].money}}</td>
+                                <td>{{d[i].count}}</td>
+                                <td>{{d[i].filename}}</td>
+                                <td>{{d[i].create_time}}</td>
+                                <td>
+                                    <a href="{{d[i].filepath}}" class="btn btn-primary btn-outline btn-xs">
+                                        <i class="fa fa-send-o"></i> 查看</a>&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            {{# } }}
+                        </script>
+                        <tbody id="list-content"></tbody>
+                    </table>
+                    <div id="AjaxPage" style=" text-align: right;"></div>
+                    <div id="allpage" style=" text-align: right;"></div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+<!-- 加载动画 -->
+<div class="spiner-example">
+    <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY-MM-DD hh:mm:ss',
+        min: '2000-06-16 23:59:59', //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY-MM-DD hh:mm:ss',
+        min: '2000-06-16 23:59:59',
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+
+    //laypage分页
+    Ajaxpage();
+
+    function Ajaxpage(curr) {
+        var filename = $('#filename').val();
+        var money = $('#money').val();
+        var start = $('#start').val();
+        var picihao = $('#picihao').val();
+        var count = $('#count').val();
+        var end = $('#end').val();
+        $.post('{:url("Daoru/index")}', {
+            page: curr || 1,
+            filename: filename,
+            count: count,
+            money: money,
+            picihao: picihao,
+            start: start,
+            end: end,
+        }, function (data) {
+            $(".spiner-example").css('display', 'none'); //数据加载完关闭动画
+            if (data == '') {
+                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+            } else {
+                var tpl = document.getElementById('list-template').innerHTML;
+                laytpl(tpl).render(data.data, function (html) {
+                    document.getElementById('list-content').innerHTML = html;
+                });
+                laypage({
+                    cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
+                    pages: data.pages,//总页数
+                    skip: true,//是否开启跳页
+                    skin: '#1AB5B7',//分页组件颜色
+                    curr: curr || 1,
+                    groups: 3,//连续显示分页数
+                    jump: function (obj, first) {
+                        if (!first) {
+                            Ajaxpage(obj.curr)
+                        }
+                        $('#allpage').html('第' + obj.curr + '页，共' + obj.pages + '页');
+                    }
+                });
+            }
+        });
+    }
+
+    //查看
+    function look(id){
+        location.href = './look/id/'+id+'.html';
+    }
+    
+    function resetForm() {
+        $(':input','#form')
+            .not(':button,:submit,:reset,:hidden')   //将myform表单中input元素type为button、submit、reset、hidden排除
+            .val('')  //将input元素的value设为空值
+            .removeAttr('checked'); // 如果任何radio/checkbox/select inputs有checked or selected 属性，将其移除
+
+        $('#filename').val('');
+        $('#money').val('');
+        $('#start').val('');
+        $('#picihao').val('');
+        $('#count').val('');
+        $('#end').val('');
+    }
+
+</script>
+</body>
+</html>

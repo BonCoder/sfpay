@@ -1,0 +1,177 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>审核列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <form name="admin_list_sea" class="form-inline" id="myForm">
+                        <div class="form-group">
+                            <label class="sr-only">类型</label>
+                            <select class="form-control m-b" name="type" id="type">
+                                <option value="">请选择类型</option>
+                                <option value="1">充值</option>
+                                <option value="2">代付不成功返还</option>
+                                <option value="3">手续费</option>
+                                <option value="4">代付支出</option>
+                                <option value="5">转账</option>
+                                <option value="6">接口记录</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <input placeholder="开始日期" class="form-control layer-date" name="start"
+                                       id="start">
+                                <input placeholder="结束日期" class="form-control layer-date" name="end"
+                                       id="end">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-primary" onclick="Ajaxpage()"><i
+                                        class="fa fa-search"></i> 搜索
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-white" onclick="formReset()">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="3%">序号</th>
+                            <th width="9%">公司名称</th>
+                            <th width="5%">操作金额</th>
+                            <th width="5%">类型</th>
+                            <th width="10%">备注</th>
+                            <th width="8%">操作日期</th>
+                        </tr>
+                        </thead>
+                        <tbody id="list-content">
+
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style=" text-align: right;"></div>
+                    <div id="allpage" style=" text-align: right;"></div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<script id="list-template" type="text/html">
+    {{# for(var i=0; i
+    <d.length; i++){  }}
+    <tr class="long-td">
+        <td>{{i+1}}</td>
+        <td>{{d[i]['user']['nickname']}}</td>
+        <td>{{d[i].money}}</td>
+        <td>{{d[i].type}}</td>
+        <td>{{d[i].beizhu}}</td>
+        <td>{{d[i].create_time}}</td>
+    </tr>
+    {{# } }}
+</script>
+<!-- End Panel Other -->
+</div>
+
+<!-- 加载动画 -->
+<div class="spiner-example">
+    <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY-MM-DD hh:mm:ss',
+        min: '2000-06-16 23:59:59', //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY-MM-DD hh:mm:ss',
+        min: '2000-06-16 23:59:59',
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+
+    //laypage分页
+    Ajaxpage();
+
+    function Ajaxpage(curr) {
+        var type = $('#type').val();
+        var start = $('#start').val();
+        var end = $('#end').val();
+        $.post('{:url("Chong/index")}', {
+            page: curr || 1,
+            type: type,
+            start: start,
+            end: end
+        }, function (data) {
+            $(".spiner-example").css('display', 'none'); //数据加载完关闭动画
+            if (data.data == '') {
+                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+            } else {
+                var tpl = document.getElementById('list-template').innerHTML;
+                laytpl(tpl).render(data.data, function (html) {
+                    document.getElementById('list-content').innerHTML = html;
+                });
+                laypage({
+                    cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
+                    pages: data.pages,//总页数
+                    skip: true,//是否开启跳页
+                    skin: '#1AB5B7',//分页组件颜色
+                    curr: curr || 1,
+                    groups: 3,//连续显示分页数
+                    jump: function (obj, first) {
+                        if (!first) {
+                            Ajaxpage(obj.curr)
+                        }
+                        $('#allpage').html('第' + obj.curr + '页，共' + obj.pages + '页');
+                    }
+                });
+            }
+        });
+    }
+
+    //重置
+    function formReset() {
+        document.getElementById("myForm").reset();
+    }
+</script>
+</body>
+</html>

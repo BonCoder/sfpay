@@ -10,6 +10,11 @@ class MemberModel extends Model
     protected $autoWriteTimestamp = true;   // 开启自动写入时间戳
 
 
+    public function getCreateTimeAttr($value)
+    {
+        return date('Y-m-d H:i:s',$value);
+    }
+
     /**
      * 根据搜索条件获取用户列表信息
      * @param $map
@@ -23,8 +28,7 @@ class MemberModel extends Model
      */
     public function getMemberByWhere($map, $Nowpage, $limits)
     {
-        return $this->field('think_member.*,group_name')->join('think_member_group', 'think_member.group_id = think_member_group.id')
-            ->where($map)->page($Nowpage, $limits)->select();
+        return $this->where($map)->page($Nowpage, $limits)->select();
     }
 
     /**
@@ -121,5 +125,43 @@ class MemberModel extends Model
         }
     }
 
+    /**
+     * @return mixed
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function daifu()
+    {
+        return $this->hasMany('DaifuModel','member_id');
+    }
+
+    /**
+     * @return mixed
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function daoru()
+    {
+        return $this->hasMany('DaoruModel','member_id');
+    }
+
+    /**
+     * @return mixed
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function chongzhi()
+    {
+        return $this->hasMany('ChongZhiModel','member_id');
+    }
+
+    /**
+     * @param $id
+     * @param $money
+     * @return int|true
+     * @throws \think\Exception
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public static function money($id, $money)
+    {
+        return self::where('id',$id)->setInc('money', $money);
+    }
 
 }

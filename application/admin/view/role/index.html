@@ -43,7 +43,7 @@
                                 <th width="25%">操作</th>
                             </tr>
                         </thead>
-                        <script id="list-template" type="text/html">
+                        <script id="arlist" type="text/html">
                             {{# for(var i=0;i<d.length;i++){  }}
                                 <tr class="long-td">
                                     <td>{{d[i].id}}</td>
@@ -65,18 +65,18 @@
                                     <td>{{d[i].update_time}}</td>                                                            
                                     <td>
                                         {{# if(d[i].id!==1){ }}
-                                            <a href="javascript:;" onclick="giveQx({{d[i].id}})" class="btn btn-info btn-outline btn-xs">
+                                            <a href="javascript:;" onclick="giveQx({{d[i].id}})" class="btn btn-info btn-xs">
                                                 <i class="fa fa-paste"></i> 权限分配</a>&nbsp;&nbsp;
-                                            <a href="javascript:;" onclick="roleEdit({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
+                                            <a href="javascript:;" onclick="roleEdit({{d[i].id}})" class="btn btn-primary btn-xs">
                                                 <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
-                                            <a href="javascript:;" onclick="roleDel({{d[i].id}})" class="btn btn-danger btn-outline btn-xs">
+                                            <a href="javascript:;" onclick="roleDel({{d[i].id}})" class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash-o"></i> 删除</a>
                                         {{# } }}    
                                     </td>
                                 </tr>
                             {{# } }}
                         </script>
-                        <tbody id="list-content"></tbody>
+                        <tbody id="article_list"></tbody>
                     </table>
                     <div id="AjaxPage" style=" text-align: right;"></div>
                     <div id="allpage" style=" text-align: right;"></div>
@@ -122,19 +122,20 @@
 
 <script type="text/javascript">
    
-    //laypage分页
-    Ajaxpage();
+    /**
+     * [Ajaxpage laypage分页]
+     * @param[curr]  [当前页]
+     */
     function Ajaxpage(curr){
         var key=$('#key').val();
-        $.getJSON('{:url("Role/index")}', {page: curr || 1,key:key}, function(data){
+        $.getJSON('{:url("Role/index")}', {
+            page: curr || 1,key:key
+        }, function(data){      //data是后台返回过来的JSON数据
             $(".spiner-example").css('display','none'); //数据加载完关闭动画 
             if(data==''){
-                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+                $("#article_list").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
             }else{
-                var tpl = document.getElementById('list-template').innerHTML;
-                laytpl(tpl).render(data, function(html){
-                    document.getElementById('list-content').innerHTML = html;
-                });
+                article_list(data); //模板赋值
                 laypage({
                     cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
                     pages:'{$allpage}',//总页数
@@ -143,6 +144,7 @@
                     curr: curr || 1,
                     groups: 3,//连续显示分页数
                     jump: function(obj, first){
+
                         if(!first){
                             Ajaxpage(obj.curr)
                         }
@@ -153,22 +155,76 @@
         });
     }
 
+    Ajaxpage();
+
+    /**
+     * [article_list 接收异步获取的数据渲染到模板]
+     * @param  {[type]} list [description]
+     * @return {[type]}      [description]
+     */
+    function article_list(list){
+
+        var tpl = document.getElementById('arlist').innerHTML;
+        laytpl(tpl).render(list, function(html){
+            document.getElementById('article_list').innerHTML = html;
+        });
+    }
 
 
-
-    //编辑角色
+    /**
+     * [edit 编辑角色]
+     * @Author[田建龙 864491238@qq.com]
+     * @param  {[type]} id [角色id]
+     */ 
     function roleEdit(id){
+
         location.href = './roleEdit/id/'+id+'.html';
     }
 
-    //删除角色
+
+    /**
+     * [del 删除角色]
+     * @Author[田建龙 864491238@qq.com]
+     * @param   {[type]}    id [角色id]
+     */
     function roleDel(id){
-        lunhui.confirm(id,'{:url('roleDel')}');
+        layer.confirm('确认删除此角色?', {icon: 3, title:'提示'}, function(index){
+            //do something
+            $.getJSON('./roleDel', {'id' : id}, function(res){
+                if(res.code == 1){
+                    layer.msg(res.msg,{icon:1,time:1500});
+                    Ajaxpage(1,5)
+                }else{
+                    layer.msg(res.msg,{icon:0,time:1500});
+                }
+            });
+
+            layer.close(index);
+        })
     }
 
-    //角色状态
-    function role_state(id){
-        lunhui.status(id,'{:url("role_state")}');
+    /**
+     * [user_state 用户状态]
+     * @param  {[type]} val [description]
+     * @Author[田建龙 864491238@qq.com]
+     */
+    function role_state(val){
+        $.post('{:url("role_state")}',
+        {id:val},
+        function(data){            
+            if(data.code==1){
+                var a='<span class="label label-danger">禁用</span>'
+                $('#zt'+val).html(a);
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                return false;
+            }else{
+                var b='<span class="label label-info">开启</span>'
+                $('#zt'+val).html(b);
+                layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+                return false;
+            }                     
+        });
+        return false;
     }
 
     zNodes = '';
@@ -188,10 +244,14 @@
                 //页面层
                 index = layer.open({
                     type: 1,
-                    area:['350px', '80%'],
+                    area:['350px', '600px'],
                     title:'权限分配',
                     skin: 'layui-layer-demo', //加上边框
                     content: $('#role')
+                });
+                //设置位置
+                layer.style(index, {
+                    top: '150px'
                 });
 
                 //设置zetree

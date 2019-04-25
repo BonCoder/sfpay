@@ -2,23 +2,13 @@
 
 namespace app\admin\model;
 use think\Model;
-use think\Db;
 
 class UserModel extends Model
 {
     protected $name = 'admin';
 
-
     /**
      * 根据搜索条件获取用户列表信息
-     * @param $map
-     * @param $Nowpage
-     * @param $limits
-     * @return false|\PDOStatement|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @author   Bob<bob@bobcoder.cc>
      */
     public function getUsersByWhere($map, $Nowpage, $limits)
     {
@@ -29,7 +19,6 @@ class UserModel extends Model
     /**
      * 根据搜索条件获取所有的用户数量
      * @param $where
-     * @return int|string
      */
     public function getAllUsers($where)
     {
@@ -39,16 +28,14 @@ class UserModel extends Model
     /**
      * 插入管理员信息
      * @param $param
-     * @return array
      */
     public function insertUser($param)
     {
         try{
-            $result = $this->validate('UserValidate')->allowField(true)->save($param);
+            $result = $this->validate('UserValidate')->save($param);
             if(false === $result){            
                 return ['code' => -1, 'data' => '', 'msg' => $this->getError()];
             }else{
-                writelog(session('uid'),session('username'),'用户【'.$param['username'].'】添加成功',1);
                 return ['code' => 1, 'data' => '', 'msg' => '添加用户成功'];
             }
         }catch( PDOException $e){
@@ -59,16 +46,14 @@ class UserModel extends Model
     /**
      * 编辑管理员信息
      * @param $param
-     * @return array
      */
     public function editUser($param)
     {
         try{
-            $result =  $this->validate('UserValidate')->allowField(true)->save($param, ['id' => $param['id']]);
+            $result =  $this->validate('UserValidate')->save($param, ['id' => $param['id']]);
             if(false === $result){            
                 return ['code' => 0, 'data' => '', 'msg' => $this->getError()];
             }else{
-                writelog(session('uid'),session('username'),'用户【'.$param['username'].'】编辑成功',1);
                 return ['code' => 1, 'data' => '', 'msg' => '编辑用户成功'];
             }
         }catch( PDOException $e){
@@ -80,10 +65,6 @@ class UserModel extends Model
     /**
      * 根据管理员id获取角色信息
      * @param $id
-     * @return array|false|\PDOStatement|string|Model
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function getOneUser($id)
     {
@@ -94,18 +75,14 @@ class UserModel extends Model
     /**
      * 删除管理员
      * @param $id
-     * @return array
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
      */
     public function delUser($id)
     {
         try{
 
             $this->where('id', $id)->delete();
-            Db::name('auth_group_access')->where('uid', $id)->delete();
             writelog(session('uid'),session('username'),'用户【'.session('username').'】删除管理员成功(ID='.$id.')',1);
-            return ['code' => 1, 'data' => '', 'msg' => '删除用户成功'];
+            return ['code' => 1, 'data' => '', 'msg' => '删除管理员成功'];
 
         }catch( PDOException $e){
             return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];

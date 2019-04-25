@@ -31,9 +31,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">状&nbsp;态：</label>
                             <div class="col-sm-6">
-                                <div class="radio i-checks">
-                                    <input type="radio" name='status' value="1" {if condition="$role['status'] eq 1 "}checked{/if}/>开启&nbsp;&nbsp;
-                                    <input type="radio" name='status' value="0" {if condition="$role['status'] eq 0 "}checked{/if}/>关闭
+                                <div class="radio ">                                        
+                                    <input type="checkbox" name='status' value="1" class="js-switch" checked />&nbsp;&nbsp;默认开启                                     
                                 </div>
                             </div>
                         </div>

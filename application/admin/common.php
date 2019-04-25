@@ -1,5 +1,5 @@
 <?php
-use think\Db;
+
 
 /**
  * 将字符解析成数组
@@ -11,7 +11,6 @@ function parseParams($str)
     parse_str(html_entity_decode(urldecode($str)), $arrParams);
     return $arrParams;
 }
-
 
 /**
  * 子孙树 用于菜单整理
@@ -32,15 +31,7 @@ function subTree($param, $pid = 0)
     return $res;
 }
 
-
-/**
- * 记录日志
- * @param  [type] $uid         [用户id]
- * @param  [type] $username    [用户名]
- * @param  [type] $description [描述]
- * @param  [type] $status      [状态]
- * @return [type]              [description]
- */
+//记录日志
 function writelog($uid,$username,$description,$status)
 {
 
@@ -50,7 +41,7 @@ function writelog($uid,$username,$description,$status)
     $data['status'] = $status;
     $data['ip'] = request()->ip();
     $data['add_time'] = time();
-    $log = Db::name('Log')->insert($data);
+    $log = db('Log')->insert($data);
 
 }
 
@@ -102,3 +93,4 @@ function format_bytes($size, $delimiter = '') {
     }
     return $size . $delimiter . $units[$i];
 }
+

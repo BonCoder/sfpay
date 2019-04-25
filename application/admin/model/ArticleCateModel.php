@@ -14,15 +14,17 @@ class ArticleCateModel extends Model
 
     /**
      * [getAllCate 获取全部分类]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function getAllCate()
     {
-        return $this->order('id asc')->select();       
+        return $this->order('id asc')->select();
     }
 
 
     /**
      * [insertCate 添加分类]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function insertCate($param)
     {
@@ -42,6 +44,7 @@ class ArticleCateModel extends Model
 
     /**
      * [editMenu 编辑分类]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function editCate($param)
     {
@@ -62,6 +65,7 @@ class ArticleCateModel extends Model
     /**
      * [getOneMenu 根据分类id获取一条信息]
      * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function getOneCate($id)
     {
@@ -73,12 +77,13 @@ class ArticleCateModel extends Model
     /**
      * [delMenu 删除分类]
      * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function delCate($id)
     {
         try{
             $this->where('id', $id)->delete();
-            return ['code' => 1, 'data' => '', 'msg' => '分类删除成功'];
+            return ['code' => 1, 'data' => '', 'msg' => '删除分类成功'];
         }catch( PDOException $e){
             return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
         }

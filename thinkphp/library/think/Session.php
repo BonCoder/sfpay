@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -11,6 +11,7 @@
 
 namespace think;
 
+use think\App;
 use think\exception\ClassNotFoundException;
 
 class Session
@@ -25,7 +26,6 @@ class Session
      */
     public static function prefix($prefix = '')
     {
-        empty(self::$init) && self::boot();
         if (empty($prefix) && null !== $prefix) {
             return self::$prefix;
         } else {
@@ -57,7 +57,7 @@ class Session
             $isDoStart = true;
         }
 
-        if (isset($config['prefix']) && ('' === self::$prefix || null === self::$prefix)) {
+        if (isset($config['prefix'])) {
             self::$prefix = $config['prefix'];
         }
         if (isset($config['var_session_id']) && isset($_REQUEST[$config['var_session_id']])) {
@@ -78,12 +78,7 @@ class Session
             ini_set('session.gc_maxlifetime', $config['expire']);
             ini_set('session.cookie_lifetime', $config['expire']);
         }
-        if (isset($config['secure'])) {
-            ini_set('session.cookie_secure', $config['secure']);
-        }
-        if (isset($config['httponly'])) {
-            ini_set('session.cookie_httponly', $config['httponly']);
-        }
+
         if (isset($config['use_cookies'])) {
             ini_set('session.use_cookies', $config['use_cookies'] ? 1 : 0);
         }
@@ -119,9 +114,7 @@ class Session
         if (is_null(self::$init)) {
             self::init();
         } elseif (false === self::$init) {
-            if (PHP_SESSION_ACTIVE != session_status()) {
-                session_start();
-            }
+            session_start();
             self::$init = true;
         }
     }
@@ -198,7 +191,7 @@ class Session
             self::delete($name, $prefix);
             return $result;
         } else {
-            return;
+            return null;
         }
     }
 
@@ -348,7 +341,7 @@ class Session
      * @param bool $delete 是否删除关联会话文件
      * @return void
      */
-    public static function regenerate($delete = false)
+    private static function regenerate($delete = false)
     {
         session_regenerate_id($delete);
     }

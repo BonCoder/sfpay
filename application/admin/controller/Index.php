@@ -1,9 +1,10 @@
 <?php
 
 namespace app\admin\controller;
-use think\Config;
-use think\Loader;
-use think\Db;
+
+use app\admin\model\ChongZhiModel;
+use app\admin\model\DaoruModel;
+use app\admin\model\MemberModel;
 
 class Index extends Base
 {
@@ -19,9 +20,6 @@ class Index extends Base
      */
     public function indexPage()
     {
-        //总用户
-        $members = Db::name('member')->count();
-        //
         $info = array(
             'web_server' => $_SERVER['SERVER_SOFTWARE'],
             'onload'     => ini_get('upload_max_filesize'),
@@ -29,48 +27,23 @@ class Index extends Base
             'phpversion' => phpversion(),
         );
 
+        if(session('auth') == 'user'){
+            //余额
+            $money = number_format(MemberModel::where('id',session('uid'))->value('money')  ?? 0,2);
+            //最近一个月充值
+            $chongzhi = number_format(ChongZhiModel::where('member_id',session('uid'))
+                    ->where('type',1)
+                    ->whereTime('create_time', 'month')
+                    ->sum('money') ?? 0,2);
+
+            //最近一个月代付
+            $daifu = number_format(DaoruModel::where('member_id',session('uid'))
+                    ->whereTime('create_time', 'month')
+                    ->sum('money') ?? 0,2);
+        }
+
+        $this->assign(compact('money', 'chongzhi','daifu'));
         $this->assign('info',$info);
         return $this->fetch('index');
     }
-
-
-    /**
-     * [userEdit 修改密码]
-     * @return mixed|\think\response\Json [type] [description]
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
-    public function editpwd(){
-
-        if(request()->isAjax()){
-            $param = input('post.');
-            $user=Db::name('admin')->where('id='.session('uid'))->find();
-            if(md5(md5($param['old_password']) . config('auth_key'))!=$user['password']){
-               return json(['code' => -1, 'url' => '', 'msg' => '旧密码错误']);
-            }else{
-                $pwd['password']=md5(md5($param['password']) . config('auth_key'));
-                Db::name('admin')->where('id='.$user['id'])->update($pwd);
-                session(null);
-                cache('db_config_data',null);//清除缓存中网站配置信息
-                return json(['code' => 1, 'url' => 'index/index', 'msg' => '密码修改成功']);
-            }
-        }
-        return $this->fetch();
-    }
-
-
-    /**
-     * 清除缓存
-     */
-    public function clear() {
-        if (delete_dir_file(CACHE_PATH) && delete_dir_file(TEMP_PATH)) {
-            return json(['code' => 1, 'msg' => '清除缓存成功']);
-        } else {
-            return json(['code' => 0, 'msg' => '清除缓存失败']);
-        }
-    }
-
 }

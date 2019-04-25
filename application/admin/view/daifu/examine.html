@@ -1,0 +1,202 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>审核列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <form name="admin_list_sea" class="form-inline" method="post" action="{:url('examine')}">
+                        <div class="form-group">
+                            <label for="account" class="sr-only">用户名</label>
+                            <input type="text" name="account" placeholder="请输入用户名" value="{$account}" id="account" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="money" class="sr-only">金额</label>
+                            <input type="text" name="money" placeholder="请输入金额" value="{$money}" id="money" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_card" class="sr-only">卡号</label>
+                            <input type="text" name="bank_card" placeholder="请输入卡号" value="{$bank_card}" id="bank_card" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="shenfenzheng" class="sr-only">身份证</label>
+                            <input type="text" name="shenfenzheng" placeholder="请输入身份证" value="{$shenfenzheng}" id="shenfenzheng" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_name" class="sr-only">姓名</label>
+                            <input type="text" name="bank_name" placeholder="请输入姓名" value="{$bank_name}" id="bank_name" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i
+                                class="fa fa-search"></i> 搜索
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="3%">序号</th>
+                            <th width="4%">头像</th>
+                            <th width="5%">账号</th>
+                            <th width="9%">公司名称</th>
+                            <th width="5%">代付金额</th>
+                            <th width="9%">身份证号</th>
+                            <th width="10%">开户名</th>
+                            <th width="10%">银行卡号</th>
+                            <th width="8%">文件名</th>
+                            <th width="8%">上传日期</th>
+                            <th width="6%">状态</th>
+                            <th width="10%">一审操作</th>
+                            <th width="10%">二审操作</th>
+                        </tr>
+                        </thead>
+                        <script id="list-template" type="text/html">
+                            {{# for(var i=0; i
+                            <d.length; i++){  }}
+                            <tr class="long-td">
+                                <td>{{i+1}}</td>
+                                <td>
+                                    <img src="/uploads/face/{{d[i]['user'].head_img}}" class="img-circle"
+                                         style="width:35px;height:35px"
+                                         onerror="this.src='/static/admin/images/head_default.gif'"/>
+                                </td>
+                                <td>{{d[i]['user'].account}}</td>
+                                <td>{{d[i]['user'].nickname}}</td>
+                                <td>{{d[i].money}}</td>
+                                <td>{{d[i].shenfenzheng}}</td>
+                                <td>{{d[i].bank_owner}}</td>
+                                <td>{{d[i].bank_card}}</td>
+                                <td>{{d[i]['daoru'].filename}}</td>
+                                <td>{{d[i].create_time}}</td>
+                                <td>
+                                    {{# if(d[i].status==1){ }}
+                                    待审核
+                                    {{# }else if(d[i].status==2){ }}
+                                    初审未通过
+                                    {{# }else if(d[i].status==3){ }}
+                                    初审通过
+                                    {{# }else if(d[i].status==4){ }}
+                                    终审未通过
+                                    {{# }else if(d[i].status==5){ }}
+                                    代付成功
+                                    {{# }else if(d[i].status==6){ }}
+                                    转账成功
+                                    {{# } }}
+                                </td>
+                                <td>
+                                    {{# if(d[i].status == 1){ }}
+                                    <a href="javascript:;" onclick="change({{d[i].id}},3)"
+                                       class="btn btn-primary btn-outline btn-xs">
+                                        通过</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="change({{d[i].id}},2)"
+                                       class="btn btn-danger btn-outline btn-xs">
+                                        不通过</a>
+                                    {{# } }}
+                                </td>
+                                <td>
+                                    {{# if(d[i].status == 3){ }}
+                                    <a href="javascript:;" onclick="change({{d[i].id}},5)"
+                                       class="btn btn-primary btn-outline btn-xs">
+                                        通过</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="change({{d[i].id}},4)"
+                                       class="btn btn-danger btn-outline btn-xs">
+                                        不通过</a>
+                                    {{# } }}
+                                </td>
+                            </tr>
+                            {{# } }}
+                        </script>
+                        <tbody id="list-content"></tbody>
+                    </table>
+                    <div id="AjaxPage" style=" text-align: right;"></div>
+                    <div id="allpage" style=" text-align: right;"></div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+<!-- 加载动画 -->
+<div class="spiner-example">
+    <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    //laypage分页
+    Ajaxpage();
+
+    function Ajaxpage(curr) {
+        var account = $('#account').val();
+        var money = $('#money').val();
+        var bank_card = $('#bank_card').val();
+        var shenfenzheng = $('#shenfenzheng').val();
+        var bank_name = $('#bank_name').val();
+        $.getJSON('{:url("Daifu/examine")}', {
+            page: curr || 1,
+            bank_name: bank_name,
+            account: account,
+            money: money,
+            bank_card: bank_card,
+            shenfenzheng: shenfenzheng,
+        }, function (data) {
+            $(".spiner-example").css('display', 'none'); //数据加载完关闭动画
+            if (data == '') {
+                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+            } else {
+                var tpl = document.getElementById('list-template').innerHTML;
+                laytpl(tpl).render(data, function (html) {
+                    document.getElementById('list-content').innerHTML = html;
+                });
+                laypage({
+                    cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
+                    pages: '{$allpage}',//总页数
+                    skip: true,//是否开启跳页
+                    skin: '#1AB5B7',//分页组件颜色
+                    curr: curr || 1,
+                    groups: 3,//连续显示分页数
+                    jump: function (obj, first) {
+                        if (!first) {
+                            Ajaxpage(obj.curr)
+                        }
+                        $('#allpage').html('第' + obj.curr + '页，共' + obj.pages + '页');
+                    }
+                });
+            }
+        });
+    }
+    //审核
+    function change(id, status) {
+        //提交
+        $.get("{:url('daifu/changeStatus')}", {id: id, status: status}, function (data) {
+            if (data.code === 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (data) {
+                    window.location.href = "{:url('daifu/examine')}";
+                });
+            } else {
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1});
+                return false;
+            }
+        });
+    }
+</script>
+</body>
+</html>

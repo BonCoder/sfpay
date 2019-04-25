@@ -12,6 +12,7 @@ class Node extends Model
 
     /**
      * [getNodeInfo 获取节点数据]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function getNodeInfo($id)
     {
@@ -39,12 +40,13 @@ class Node extends Model
 
     /**
      * [getMenu 根据节点数据获取对应的菜单]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function getMenu($nodeStr = '')
     {
         //超级管理员没有节点数组
         $where = empty($nodeStr) ? 'status = 1' : 'status = 1 and id in('.$nodeStr.')';
-        $result = Db::name('auth_rule')->where($where)->order('sort')->select();
+        $result = Db::name('auth_rule')->where($where)->order('sort asc')->select();
         $menu = prepareMenu($result);
         return $menu;
     }

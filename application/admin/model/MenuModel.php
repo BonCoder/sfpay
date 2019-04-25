@@ -13,15 +13,17 @@ class MenuModel extends Model
 
     /**
      * [getAllMenu 获取全部菜单]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function getAllMenu()
     {
-        return $this->order('id asc')->select();       
+        return $this->order('sort asc')->select();
     }
 
 
     /**
      * [insertMenu 添加菜单]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function insertMenu($param)
     {
@@ -43,6 +45,7 @@ class MenuModel extends Model
 
     /**
      * [editMenu 编辑菜单]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function editMenu($param)
     {
@@ -64,6 +67,7 @@ class MenuModel extends Model
 
     /**
      * [getOneMenu 根据菜单id获取一条信息]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function getOneMenu($id)
     {
@@ -74,6 +78,7 @@ class MenuModel extends Model
 
     /**
      * [delMenu 删除菜单]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function delMenu($id)
     {

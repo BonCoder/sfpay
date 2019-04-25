@@ -1,35 +1,37 @@
 <?php
 
 namespace app\admin\controller;
-use app\admin\model\MenuModel;
+use app\admin\Model\MenuModel;
 use think\Db;
 
 class Menu extends Base
-{
+{	
     /**
      * [index 菜单列表]
-     * @return mixed [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function index()
     {
         $nav = new \org\Leftnav;
-        $menu = new MenuModel();
+        $menu = new \app\admin\model\MenuModel();
         $admin_rule = $menu->getAllMenu();
         $arr = $nav::rule($admin_rule);
         $this->assign('admin_rule',$arr);
         return $this->fetch();
     }
 
-
+	
     /**
      * [add_rule 添加菜单]
-     * @return mixed|\think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
 	public function add_rule()
     {
         if(request()->isAjax()){
             $param = input('post.');           
-            $menu = new MenuModel();
+            $menu = new \app\admin\model\MenuModel();
             $flag = $menu->insertMenu($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
@@ -40,11 +42,12 @@ class Menu extends Base
 
     /**
      * [edit_rule 编辑菜单]
-     * @return mixed|\think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function edit_rule()
     {
-        $menu = new MenuModel();
+        $menu = new \app\admin\model\MenuModel();
         if(request()->isPost()){
             $param = input('post.');
             $flag = $menu->editMenu($param);
@@ -58,20 +61,23 @@ class Menu extends Base
 
     /**
      * [roleDel 删除角色]
-     * @return \think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function del_rule()
     {
         $id = input('param.id');
-        $menu = new MenuModel();
+        $menu = new \app\admin\model\MenuModel();
         $flag = $menu->delMenu($id);
         return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
     }
 
 
+
     /**
      * [ruleorder 排序]
-     * @return \think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function ruleorder()
     {
@@ -88,20 +94,21 @@ class Menu extends Base
 
     /**
      * [rule_state 菜单状态]
-     * @return \think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function rule_state()
     {
         $id = input('param.id');
-        $status = Db::name('auth_rule')->where('id',$id)->value('status');//判断当前状态
+        $status = Db::name('auth_rule')->where(array('id'=>$id))->value('status');//判断当前状态
         if($status==1)
         {
-            $flag = Db::name('auth_rule')->where('id',$id)->setField(['status'=>0]);
+            $flag = Db::name('auth_rule')->where(array('id'=>$id))->setField(['status'=>0]);
             return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
         }
         else
         {
-            $flag = Db::name('auth_rule')->where('id',$id)->setField(['status'=>1]);
+            $flag = Db::name('auth_rule')->where(array('id'=>$id))->setField(['status'=>1]);
             return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
         }
     

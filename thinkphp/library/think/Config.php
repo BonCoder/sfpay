@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -59,7 +59,6 @@ class Config
             self::$config[$range] = [];
         }
         if (is_file($file)) {
-            $name = strtolower($name);
             $type = pathinfo($file, PATHINFO_EXTENSION);
             if ('php' == $type) {
                 return self::set(include $file, $name, $range);
@@ -87,7 +86,7 @@ class Config
             return isset(self::$config[$range][strtolower($name)]);
         } else {
             // 二维数组设置和获取支持
-            $name = explode('.', $name, 2);
+            $name = explode('.', $name);
             return isset(self::$config[$range][strtolower($name[0])][$name[1]]);
         }
     }
@@ -111,17 +110,8 @@ class Config
             return isset(self::$config[$range][$name]) ? self::$config[$range][$name] : null;
         } else {
             // 二维数组设置和获取支持
-            $name    = explode('.', $name, 2);
+            $name    = explode('.', $name);
             $name[0] = strtolower($name[0]);
-
-            if (!isset(self::$config[$range][$name[0]])) {
-                // 动态载入额外配置
-                $module = Request::instance()->module();
-                $file   = CONF_PATH . ($module ? $module . DS : '') . 'extra' . DS . $name[0] . CONF_EXT;
-
-                is_file($file) && self::load($file, $name[0]);
-            }
-
             return isset(self::$config[$range][$name[0]][$name[1]]) ? self::$config[$range][$name[0]][$name[1]] : null;
         }
     }
@@ -144,7 +134,7 @@ class Config
                 self::$config[$range][strtolower($name)] = $value;
             } else {
                 // 二维数组设置和获取支持
-                $name                                                 = explode('.', $name, 2);
+                $name                                                 = explode('.', $name);
                 self::$config[$range][strtolower($name[0])][$name[1]] = $value;
             }
             return;
@@ -152,7 +142,8 @@ class Config
             // 批量设置
             if (!empty($value)) {
                 self::$config[$range][$value] = isset(self::$config[$range][$value]) ?
-                array_merge(self::$config[$range][$value], $name) : $name;
+                array_merge(self::$config[$range][$value], $name) :
+                self::$config[$range][$value] = $name;
                 return self::$config[$range][$value];
             } else {
                 return self::$config[$range] = array_merge(self::$config[$range], array_change_key_case($name));

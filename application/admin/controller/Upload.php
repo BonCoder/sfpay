@@ -4,7 +4,6 @@ namespace app\admin\controller;
 use think\Controller;
 use think\File;
 use think\Request;
-
 class Upload extends Base
 {
 	//图片上传
@@ -17,6 +16,7 @@ class Upload extends Base
             echo $file->getError();
         }
     }
+
 
     //会员头像上传
     public function uploadface(){

@@ -1,9 +1,13 @@
 <?php
 
 namespace app\admin\controller;
+
+use app\admin\model\ChongZhiModel;
 use app\admin\model\MemberModel;
 use app\admin\model\MemberGroupModel;
+use app\admin\model\RechargeModel;
 use think\Db;
+use think\Request;
 
 class Member extends Base
 {
@@ -11,23 +15,24 @@ class Member extends Base
     /**
      * [group 会员组]
      */
-    public function group(){
+    public function group()
+    {
 
         $key = input('key');
         $map = [];
-        if($key&&$key!==""){
-            $map['group_name'] = ['like',"%" . $key . "%"];          
-        }      
-        $group = new MemberGroupModel(); 
-        $Nowpage = input('get.page') ? input('get.page'):1;
+        if ($key && $key !== "") {
+            $map['group_name'] = ['like', "%" . $key . "%"];
+        }
+        $group = new MemberGroupModel();
+        $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = config('list_rows');
         $count = $group->getAllCount($map);         //获取总条数
         $allpage = intval(ceil($count / $limits));  //计算总页面      
-        $lists = $group->getAll($map, $Nowpage, $limits);  
+        $lists = $group->getAll($map, $Nowpage, $limits);
         $this->assign('Nowpage', $Nowpage); //当前页
         $this->assign('allpage', $allpage); //总页数 
         $this->assign('val', $key);
-        if(input('get.page')){
+        if (input('get.page')) {
             return json($lists);
         }
         return $this->fetch();
@@ -38,7 +43,7 @@ class Member extends Base
      */
     public function add_group()
     {
-        if(request()->isAjax()){
+        if (request()->isAjax()) {
             $param = input('post.');
             $group = new MemberGroupModel();
             $flag = $group->insertGroup($param);
@@ -54,13 +59,13 @@ class Member extends Base
     public function edit_group()
     {
         $group = new MemberGroupModel();
-        if(request()->isPost()){           
+        if (request()->isPost()) {
             $param = input('post.');
             $flag = $group->editGroup($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
         $id = input('param.id');
-        $this->assign('group',$group->getOne($id));
+        $this->assign('group', $group->getOne($id));
         return $this->fetch();
     }
 
@@ -81,44 +86,41 @@ class Member extends Base
      */
     public function group_status()
     {
-        $id=input('param.id');
-        $status = Db::name('member_group')->where(array('id'=>$id))->value('status');//判断当前状态情况
-        if($status==1)
-        {
-            $flag = Db::name('member_group')->where(array('id'=>$id))->setField(['status'=>0]);
+        $id = input('param.id');
+        $status = Db::name('member_group')->where(array('id' => $id))->value('status');//判断当前状态情况
+        if ($status == 1) {
+            $flag = Db::name('member_group')->where(array('id' => $id))->setField(['status' => 0]);
             return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
-        }
-        else
-        {
-            $flag = Db::name('member_group')->where(array('id'=>$id))->setField(['status'=>1]);
+        } else {
+            $flag = Db::name('member_group')->where(array('id' => $id))->setField(['status' => 1]);
             return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
-        }   
-    } 
+        }
+    }
 
 
     //*********************************************会员列表*********************************************//
+
     /**
      * 会员列表
      */
-    public function index(){
+    public function index()
+    {
 
         $key = input('key');
         $map = [];
-        if($key&&$key!=="")
-        {
-            $map['account|nickname|mobile'] = ['like',"%" . $key . "%"];          
+        if ($key && $key !== "") {
+            $map['account|nickname'] = ['like', "%" . $key . "%"];
         }
-        $member = new MemberModel();       
-        $Nowpage = input('get.page') ? input('get.page'):1;
-        $limits = config('list_rows');// 获取总条数
+        $member = new MemberModel();
+        $Nowpage = input('get.page') ? input('get.page') : 1;
+        $limits = 10;// 获取总条数
         $count = $member->getAllCount($map);//计算总页面
-        $allpage = intval(ceil($count / $limits));       
-        $lists = $member->getMemberByWhere($map, $Nowpage, $limits);   
+        $allpage = intval(ceil($count / $limits));
+        $lists = $member->getMemberByWhere($map, $Nowpage, $limits);
         $this->assign('Nowpage', $Nowpage); //当前页
         $this->assign('allpage', $allpage); //总页数 
         $this->assign('val', $key);
-        if(input('get.page'))
-        {
+        if (input('get.page')) {
             return json($lists);
         }
         return $this->fetch();
@@ -130,8 +132,7 @@ class Member extends Base
      */
     public function add_member()
     {
-        if(request()->isAjax()){
-
+        if (request()->isAjax()) {
             $param = input('post.');
             $param['password'] = md5(md5($param['password']) . config('auth_key'));
             $member = new MemberModel();
@@ -140,7 +141,7 @@ class Member extends Base
         }
 
         $group = new MemberGroupModel();
-        $this->assign('group',$group->getGroup());
+        $this->assign('group', $group->getGroup());
         return $this->fetch();
     }
 
@@ -151,11 +152,11 @@ class Member extends Base
     public function edit_member()
     {
         $member = new MemberModel();
-        if(request()->isAjax()){
+        if (request()->isAjax()) {
             $param = input('post.');
-            if(empty($param['password'])){
+            if (empty($param['password'])) {
                 unset($param['password']);
-            }else{
+            } else {
                 $param['password'] = md5(md5($param['password']) . config('auth_key'));
             }
             $flag = $member->editMember($param);
@@ -184,25 +185,101 @@ class Member extends Base
     }
 
 
-
     /**
      * 会员状态
      */
     public function member_status()
     {
         $id = input('param.id');
-        $status = Db::name('member')->where('id',$id)->value('status');//判断当前状态情况
-        if($status==1)
-        {
-            $flag = Db::name('member')->where('id',$id)->setField(['status'=>0]);
+        $status = Db::name('member')->where('id', $id)->value('status');//判断当前状态情况
+        if ($status == 1) {
+            $flag = Db::name('member')->where('id', $id)->setField(['status' => 0]);
             return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
-        }
-        else
-        {
-            $flag = Db::name('member')->where('id',$id)->setField(['status'=>1]);
+        } else {
+            $flag = Db::name('member')->where('id', $id)->setField(['status' => 1]);
             return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
         }
-    
+
     }
 
+    /**
+     * 给用户充值
+     * @param Request $request
+     * @return mixed|\think\response\Json
+     * @throws \think\Exception
+     * @throws \think\Exception\DbException
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function recharge(Request $request)
+    {
+        $id = input('param.id');
+        if ($request->isAjax()) {
+            $data = $request->post();
+            if (! is_numeric($data['money'])) {
+                return json(['code' => 0, 'data' => '', 'msg' => '请输入正确的金额！']);
+            }
+            $model = new ChongZhiModel();
+            $res = $model->recharge($data['money'], $id, $data['remark']);
+            if ($res) {
+                $user = MemberModel::get($id);
+                $user->money = $user->money + $data['money'];
+                $user->save();
+
+                return json(['code' => 1, 'data' => '', 'msg' => '充值成功']);
+            }
+
+            return json(['code' => 0, 'data' => '', 'msg' => '充值失败']);
+        }
+
+        $this->assign('id', $id);
+        return $this->fetch();
+    }
+
+
+    /**
+     * 修改登陆密码
+     * @param Request $request
+     * @return mixed|\think\response\Json
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function updatePassword(Request $request)
+    {
+        if($request->isPost()){
+            $password = md5(md5($request->post('password') . config('auth_key')));
+            $member = MemberModel::findOrFail(session('uid'));
+            $member->password = $password;
+            $member->save();
+
+            return json(['code' => 1, 'data' => '', 'msg' => '修改成功']);
+        }
+
+        return $this->fetch('member/update_password');
+    }
+
+    /**
+     * 修改登陆密码
+     * @param Request $request
+     * @return mixed|\think\response\Json
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function updatePayPassword(Request $request)
+    {
+        if($request->isPost()){
+            $member = MemberModel::findOrFail(session('uid'));
+
+            if($member->pay_password){
+                $cryption = crypt($request->post('old_password'),'deal');
+                if($member->pay_password != $cryption)
+                    return json(['code' => 0, 'data' => '', 'msg' => '旧交易密码错误']);
+            }
+
+            $pay_password = crypt($request->post('old_password'),'deal');
+            $member->pay_password = $pay_password;
+            $member->save();
+
+            return json(['code' => 1, 'data' => '', 'msg' => '修改成功']);
+        }
+
+        return $this->fetch('member/update_pay_password');
+    }
 }

@@ -9,15 +9,10 @@
             <!--搜索框开始-->
             <div class="row">
                 <div class="col-sm-12">                                             
-                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('operate_log')}">               
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('log')}">                
                         <div class="col-sm-3">
                             <div class="input-group">
-                                 <select class="form-control m-b chosen-select" name="key" id='key'>
-                                    <option value="0">选择管理员</option>
-                                    {volist name="search_user" id="v"}
-                                        <option value="{$key}" {if condition="$val eq $key"}selected{/if}>{$v}</option>
-                                    {/volist}
-                                </select>
+                                <input type="text" id="key" class="form-control" name="key" value="{$val}" placeholder="输入需查询的用户名" />   
                                 <span class="input-group-btn"> 
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button> 
                                 </span>
@@ -37,23 +32,21 @@
                                 <th width="5%">ID</th>
                                 <th width="5%">用户ID</th>
                                 <th width="5%">操作用户</th>
-                                <th width="15%">描述</th>
+                                <th width="20%">描述</th>
                                 <th width="8%">操作IP</th>
-                                <th width="10%">地址</th>
                                 <th width="6%">状态</th>
                                 <th width="10%">操作时间</th>
-                                <th width="8%">操作</th>
+                                <th width="10%">操作</th>
                             </tr>
                         </thead>
-                        <script id="list-template" type="text/html">
+                        <script id="arlist" type="text/html">
                             {{# for(var i=0;i<d.length;i++){  }}
                                 <tr class="long-td">
                                     <td>{{d[i].log_id}}</td>
                                     <td>{{d[i].admin_id}}</td>
                                     <td>{{d[i].admin_name}}</td> 
                                     <td>{{d[i].description}}</td>  
-                                    <td>{{d[i].ip}}</td> 
-                                    <td>{{d[i].ipaddr.country}}{{d[i].ipaddr.area}}</td> 
+                                    <td>{{d[i].ip}}</td>  
                                     <td>
                                         {{# if(d[i].status==1){ }}
                                             操作成功
@@ -63,14 +56,14 @@
                                     </td> 
                                     <td>{{d[i].add_time}}</td> 
                                     <td>
-                                        <a href="javascript:;" onclick="del_log({{d[i].log_id}})" class="btn btn-danger btn-outline btn-xs">
+                                        <a href="javascript:;" onclick="del_log({{d[i].log_id}})" class="btn btn-danger btn-xs">
                                             <i class="fa fa-trash-o"></i> 删除
                                         </a>
                                     </td>
                                 </tr>
                             {{# } }}
                         </script>
-                        <tbody id="list-content"></tbody>
+                        <tbody id="article_list"></tbody>
                     </table>
                     <div id="AjaxPage" style="text-align:right;"></div>
                     <div style="text-align: right;">
@@ -97,19 +90,20 @@
 
 <script type="text/javascript">
 
-    //laypage分页
-    Ajaxpage();
+    /**
+     * [Ajaxpage laypage分页]
+     * @param {[type]} curr [当前页]
+     */
     function Ajaxpage(curr){
         var key=$('#key').val();
-        $.getJSON('{:url("log/operate_log")}', {page: curr || 1,key:key}, function(data){
+        $.getJSON('{:url("log/operate_log")}', {
+            page: curr || 1,key:key
+        }, function(data){      //data是后台返回过来的JSON数据
             $(".spiner-example").css('display','none'); //数据加载完关闭动画 
             if(data==''){
-                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+                $("#article_list").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
             }else{
-                var tpl = document.getElementById('list-template').innerHTML;
-                laytpl(tpl).render(data, function(html){
-                    document.getElementById('list-content').innerHTML = html;
-                });
+                article_list(data); //模板赋值
                 laypage({
                     cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
                     pages:'{$allpage}',//总页数
@@ -118,6 +112,7 @@
                     curr: curr || 1,
                     groups: 3,//连续显示分页数
                     jump: function(obj, first){
+
                         if(!first){
                             Ajaxpage(obj.curr)
                         }
@@ -128,11 +123,44 @@
         });
     }
 
+    Ajaxpage();
 
-    //删除日志
-    function del_log(log_id){
-        lunhui.confirm(log_id,'{:url('del_log')}');
-    }
+/**
+ * [article_list 接收异步获取的数据渲染到模板]
+ * @param  {[type]} list [description]
+ * @return {[type]}      [description]
+ */
+function article_list(list){
+
+    var tpl = document.getElementById('arlist').innerHTML;
+    laytpl(tpl).render(list, function(html){
+        document.getElementById('article_list').innerHTML = html;
+    });
+}
+
+
+/**
+ * [del 删除用户]
+ * @Author[田建龙 864491238@qq.com]
+ * @param   {[type]}    log_id[log_id]
+ */
+function del_log(log_id){
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        //do something
+        $.getJSON('./del_log', {'log_id' : log_id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500});
+                Ajaxpage()
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500});
+            }
+        });
+
+        layer.close(index);
+    })
+
+}
+
 
 </script>
 </body>

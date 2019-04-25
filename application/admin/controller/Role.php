@@ -3,14 +3,14 @@
 namespace app\admin\controller;
 use app\admin\model\Node;
 use app\admin\model\UserType;
-use think\Db;
 
 class Role extends Base
 {
 
     /**
      * [index 角色列表]
-     * @return mixed|\think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function index(){
 
@@ -22,10 +22,15 @@ class Role extends Base
         }   
         $user = new UserType();    
         $Nowpage = input('get.page') ? input('get.page'):1;
-        $limits = config('list_rows');// 获取总条数
+        $limits = 10;// 获取总条数
         $count = $user->getAllRole($map);  //总数据
         $allpage = intval(ceil($count / $limits));       
-        $lists = $user->getRoleByWhere($map, $Nowpage, $limits);  
+        $lists = $user->getRoleByWhere($map, $Nowpage, $limits);
+        foreach($lists as $k=>$v)
+        {
+            $lists[$k]['create_time']=date('Y-m-d H:i:s',$v['create_time']);
+            $lists[$k]['update_time']=date('Y-m-d H:i:s',$v['update_time']);
+        }   
         $this->assign('Nowpage', $Nowpage); //当前页
         $this->assign('allpage', $allpage); //总页数 
         $this->assign('val', $key);
@@ -37,9 +42,11 @@ class Role extends Base
     }
 
 
+
     /**
      * [roleAdd 添加角色]
-     * @return mixed|\think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function roleAdd()
     {
@@ -55,9 +62,11 @@ class Role extends Base
     }
 
 
+
     /**
      * [roleEdit 编辑角色]
-     * @return mixed|\think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function roleEdit()
     {
@@ -76,9 +85,11 @@ class Role extends Base
     }
 
 
+
     /**
      * [roleDel 删除角色]
-     * @return \think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function roleDel()
     {
@@ -89,31 +100,35 @@ class Role extends Base
     }
 
 
+
     /**
      * [role_state 用户状态]
-     * @return \think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function role_state()
     {
         $id = input('param.id');
-        $status = Db::name('auth_group')->where('id',$id)->value('status');//判断当前状态情况
+        $status = Db::name('auth_group')->where(array('id'=>$id))->value('status');//判断当前状态情况
         if($status==1)
         {
-            $flag = Db::name('auth_group')->where('id',$id)->setField(['status'=>0]);
+            $flag = Db::name('auth_group')->where(array('id'=>$id))->setField(['status'=>0]);
             return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
         }
         else
         {
-            $flag = Db::name('auth_group')->where('id',$id)->setField(['status'=>1]);
+            $flag = Db::name('auth_group')->where(array('id'=>$id))->setField(['status'=>1]);
             return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
         }
     
     }
 
 
+
     /**
      * [giveAccess 分配权限]
-     * @return \think\response\Json [type] [description]
+     * @return [type] [description]
+     * @author [田建龙] [864491238@qq.com]
      */
     public function giveAccess()
     {

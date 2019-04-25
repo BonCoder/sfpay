@@ -9,8 +9,6 @@ class LogModel extends Model
 
     /**
      * 删除日志
-     * @param $log_id
-     * @return array
      */
     public function delLog($log_id)
     {
