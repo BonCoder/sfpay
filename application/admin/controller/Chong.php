@@ -51,8 +51,7 @@ class Chong extends Base
      */
     public function total()
     {
-        $member = new MemberModel();
-        $member = $member->where('id', session('uid'))->find();
+        $member = MemberModel::findOrFail(session('uid'));
         $member->status = $member->status == 1 ? '启用' : '禁用';
 
         $this->assign(compact('member'));

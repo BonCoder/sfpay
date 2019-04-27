@@ -62,7 +62,7 @@ class ChongZhiModel extends Model
      */
     public function getCreateTimeAttr($value)
     {
-        return date('Y-m-d H:s:i', $value);
+        return date('Y-m-d H:i:s', $value);
     }
 
     /**

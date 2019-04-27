@@ -48,7 +48,7 @@ class MemberModel extends Model
      */
     public function getLastLoginTimeAttr($value)
     {
-        return date('Y-m-d H:s:i', $value);
+        return date('Y-m-d H:i:s', $value);
     }
 
 
