@@ -269,7 +269,7 @@ class Member extends Base
                     return json(['code' => 0, 'data' => '', 'msg' => '旧交易密码错误']);
             }
 
-            $pay_password = crypt($request->post('old_password'),'deal');
+            $pay_password = crypt($request->post('password'),'deal');
             $member->pay_password = $pay_password;
             $member->save();
 
