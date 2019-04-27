@@ -241,7 +241,7 @@ class Member extends Base
     public function updatePassword(Request $request)
     {
         if($request->isPost()){
-            $password = md5(md5($request->post('password') . config('auth_key')));
+            $password = md5(md5($request->post('password')) . config('auth_key'));
             $member = MemberModel::findOrFail(session('uid'));
             $member->password = $password;
             $member->save();
