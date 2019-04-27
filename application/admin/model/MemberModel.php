@@ -41,6 +41,16 @@ class MemberModel extends Model
         return $this->where($map)->count();
     }
 
+    /**
+     * @param $value
+     * @return false|string
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function getLastLoginTimeAttr($value)
+    {
+        return date('Y-m-d H:s:i', $value);
+    }
+
 
     /**
      * 插入信息
@@ -114,11 +124,18 @@ class MemberModel extends Model
     }
 
 
+    /**
+     * @param $id
+     * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     * @author  Bob<bob@bobcoder.cc>
+     */
     public function delMember($id)
     {
         try{
             $map['closed']=1;
-            $this->save($map, ['id' => $id]);
+            $this->where('id',$id)->delete();
             return ['code' => 1, 'data' => '', 'msg' => '删除成功'];
         }catch( PDOException $e){
             return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];

@@ -38,12 +38,13 @@
                                 <th width="4%">头像</th>
                                 <th width="5%">账号</th>
                                 <th width="9%">公司名称</th>
+                                <th width="5%">费率</th>
                                 <th width="5%">余额</th>
                                 <th width="10%">开户名</th>
                                 <th width="10%">银行卡号</th>
                                 <th width="8%">开户行</th>
                                 <th width="6%">状态</th>
-                                <!--<th width="8%">注册时间</th>-->
+                                <th width="8%">上次操作时间</th>
                                 <th width="10%">操作</th>
                             </tr>
                         </thead>
@@ -56,6 +57,7 @@
                                 </td>
                                 <td>{{d[i].account}}</td>
                                 <td>{{d[i].nickname}}</td>
+                                <td>{{d[i].rate}}</td>
                                 <td>{{d[i].money}}</td>
                                 <td>{{d[i].bank_owner}}</td>
                                 <td>{{d[i].bank_card}}</td>
@@ -71,7 +73,7 @@
                                         </a>
                                     {{# } }}                               
                                 </td>
-                                <!--<td>{{d[i].create_time}}</td> -->
+                                <td>{{d[i].last_login_time}}</td>
                                 <td>                                  
                                     <a href="javascript:;" onclick="edit_member({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
                                         <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;

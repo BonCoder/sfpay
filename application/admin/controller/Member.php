@@ -135,6 +135,7 @@ class Member extends Base
         if (request()->isAjax()) {
             $param = input('post.');
             $param['password'] = md5(md5($param['password']) . config('auth_key'));
+            $param['group_id'] = 4;
             $member = new MemberModel();
             $flag = $member->insertMember($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
@@ -207,7 +208,6 @@ class Member extends Base
      * @param Request $request
      * @return mixed|\think\response\Json
      * @throws \think\Exception
-     * @throws \think\Exception\DbException
      * @author  Bob<bob@bobcoder.cc>
      */
     public function recharge(Request $request)
@@ -221,10 +221,6 @@ class Member extends Base
             $model = new ChongZhiModel();
             $res = $model->recharge($data['money'], $id, $data['remark']);
             if ($res) {
-                $user = MemberModel::get($id);
-                $user->money = $user->money + $data['money'];
-                $user->save();
-
                 return json(['code' => 1, 'data' => '', 'msg' => '充值成功']);
             }
 
