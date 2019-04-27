@@ -20,14 +20,14 @@ class Base extends Controller
         $url        = $module."/".$controller."/".$action;
 
         //跳过检测以及主页权限
-        if(session('uid')!=1){
-
-            if(!in_array($url, ['home/index/index','home/index/indexpage'])){
-                if(!$auth->check($url,session('uid'))){
-                    $this->error('抱歉，您没有操作权限');
-                }
-            }
-        }
+//        if(session('uid')!=1){
+//
+//            if(!in_array($url, ['home/index/index','home/index/indexpage'])){
+//                if(!$auth->check($url,session('uid'))){
+//                    $this->error('抱歉，您没有操作权限');
+//                }
+//            }
+//        }
 
         $node = new Node();
         $this->assign([
