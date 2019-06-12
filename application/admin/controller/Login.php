@@ -90,7 +90,8 @@ class Login extends Controller
         $verify->codeSet = '0123456789';
         $verify->length = 4;
         $verify->useNoise = false;
-        $verify->fontSize = 14;
+        $verify->useCurve = false;
+        $verify->fontSize = 15;
         return $verify->entry();
     }
 
