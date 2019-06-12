@@ -135,6 +135,7 @@ class Member extends Base
         if (request()->isAjax()) {
             $param = input('post.');
             $param['password'] = md5(md5($param['password']) . config('auth_key'));
+            $param['pay_password'] = crypt($param['pay_password'],'deal');
             $param['group_id'] = 4;
             $member = new MemberModel();
             $flag = $member->insertMember($param);
@@ -160,6 +161,11 @@ class Member extends Base
             } else {
                 $param['password'] = md5(md5($param['password']) . config('auth_key'));
             }
+            if (empty($param['pay_password'])) {
+                unset($param['pay_password']);
+            } else {
+                $param['pay_password'] = crypt($param['pay_password'],'deal');
+            }
             $flag = $member->editMember($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
@@ -176,6 +182,11 @@ class Member extends Base
 
     /**
      * 删除会员
+     *
+     * @return \think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     * @author  Bob<bob@bobcoder.cc>
      */
     public function del_member()
     {
