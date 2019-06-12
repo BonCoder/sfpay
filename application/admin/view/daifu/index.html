@@ -52,7 +52,7 @@
                         <thead>
                         <tr class="long-tr">
                             <th width="3%">序号</th>
-                            <th width="4%">头像</th>
+                            <!--<th width="4%">头像</th>-->
                             <th width="5%">账号</th>
                             <th width="9%">公司名称</th>
                             <th width="5%">代付金额</th>
@@ -69,11 +69,11 @@
                             <d.length; i++){  }}
                             <tr class="long-td">
                                 <td>{{i+1}}</td>
-                                <td>
-                                    <img src="/uploads/face/{{d[i]['user'].head_img}}" class="img-circle"
-                                         style="width:35px;height:35px"
-                                         onerror="this.src='/static/admin/images/head_default.gif'"/>
-                                </td>
+                                <!--<td>-->
+                                    <!--<img src="/uploads/face/{{d[i]['user'].head_img}}" class="img-circle"-->
+                                         <!--style="width:35px;height:35px"-->
+                                         <!--onerror="this.src='/static/admin/images/head_default.gif'"/>-->
+                                <!--</td>-->
                                 <td>{{d[i]['user'].account}}</td>
                                 <td>{{d[i]['user'].nickname}}</td>
                                 <td>{{d[i].money}}</td>
