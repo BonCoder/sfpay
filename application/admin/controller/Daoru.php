@@ -193,7 +193,7 @@ class Daoru extends Base
             //保存导入动作记录，并生成id号
             $daoru = new DaoruModel();
             $daoru->filename = explode('.', $file->getInfo()['name'])[0];  //获取原文件名
-            $daoru->filepath = DS . 'uploads' . DS . 'excel' . DS . $exclePath;  //文件存放路径
+            $daoru->filepath = $exclePath;  //文件存放路径
             $daoru->member_id = session('uid');  //导入用户
             $daoru->count = count($excel_array);  //总笔数
             $daoru->money = $money;

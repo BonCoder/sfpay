@@ -17,6 +17,14 @@ use think\Request;
 
 class Daifu extends Base
 {
+    /**
+     * @param Request $request
+     * @return mixed|\think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @author  Bob<bob@bobcoder.cc>
+     */
     public function index(Request $request)
     {
         $map = [];

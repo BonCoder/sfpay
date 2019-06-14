@@ -41,7 +41,7 @@ class ChongZhiModel extends Model
      */
     public function getAllList($map, $Nowpage, $limits)
     {
-        return $this->with('user')->where($map)->page($Nowpage, $limits)->select();
+        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time','desc')->select();
     }
 
     /**

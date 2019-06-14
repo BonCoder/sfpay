@@ -39,7 +39,7 @@ class DaifuModel extends Model
      */
     public function getDaifuByWhere($map, $Nowpage, $limits)
     {
-        return $this->with('user,daoru')->where($map)->page($Nowpage, $limits)->select();
+        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time','desc')->select();
     }
 
 //    public function getStatusAttr($value, $data)
@@ -55,7 +55,7 @@ class DaifuModel extends Model
      */
     public function getAllCount($map)
     {
-        return $this->with('user,daoru')->where($map)->count();
+        return $this->where($map)->count();
     }
 
     /**
@@ -74,7 +74,7 @@ class DaifuModel extends Model
      */
     public function daoru()
     {
-        return $this->belongsTo('DaoruModel', 'daoru_id');
+        return $this->belongsTo('DaoruModel', 'daoru_id')->bind(['filepath','filename','create_time']);
     }
 
 
