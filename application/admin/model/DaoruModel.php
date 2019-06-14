@@ -39,7 +39,7 @@ class DaoruModel extends Model
      */
     public function getDaoruByWhere($map, $Nowpage, $limits)
     {
-        return $this->with('user')->where($map)->page($Nowpage, $limits)->select();
+        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time', 'desc')->select();
     }
 
     /**
