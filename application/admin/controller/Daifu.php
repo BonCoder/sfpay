@@ -43,10 +43,6 @@ class Daifu extends Base
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = 10;// 获取总条数
         $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits);
-        $count = count($lists);//计算总页面
-        $allpage = intval(ceil($count / $limits));
-        $this->assign('Nowpage', $Nowpage); //当前页
-        $this->assign('allpage', $allpage); //总页数
 
         return json($lists);
     }
@@ -63,35 +59,23 @@ class Daifu extends Base
     public function examine(Request $request)
     {
         $map = [];
-        if ($money = input('money', '')) {
-            $map['think_daifu.money'] = $money;
+        if ($money = input('money', '')) $map['think_daifu.money'] = $money;
+        if ($account = input('account', '')) $map['account'] = $account;
+        if ($bank_card = input('bank_card', '')) $map['think_daifu.bank_card'] = $bank_card;
+        if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
+        if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
+        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'account'));
+
+        if ($request->isGet()) {
+            return $this->fetch();
         }
-        if ($account = input('account', '')) {
-            $map['account'] = $account;
-        }
-        if ($bank_card = input('bank_card', '')) {
-            $map['think_daifu.bank_card'] = $bank_card;
-        }
-        if ($shenfenzheng = input('shenfenzheng', '')) {
-            $map['think_daifu.shenfenzheng'] = $shenfenzheng;
-        }
-        if ($bank_name = input('bank_name', '')) {
-            $map['think_daifu.bank_name'] = $bank_name;
-        }
-        $map['think_daifu.status'] = ['in', '1,3'];
+
         $daifu = new DaifuModel();
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = 10;// 获取总条数
         $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits);
-        $count = $daifu->getAllCount($map);//计算总页面
-        $allpage = intval(ceil($count / $limits));
-        $this->assign('Nowpage', $Nowpage); //当前页
-        $this->assign('allpage', $allpage); //总页数
-        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'account'));
-        if (input('get.page')) {
-            return json($lists);
-        }
-        return $this->fetch();
+
+        return json($lists);
     }
 
     /**

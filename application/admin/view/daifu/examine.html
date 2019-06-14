@@ -63,13 +63,8 @@
                             <d.length; i++){  }}
                             <tr class="long-td">
                                 <td>{{i+1}}</td>
-                                <!--<td>-->
-                                    <!--<img src="/uploads/face/{{d[i]['user'].head_img}}" class="img-circle"-->
-                                         <!--style="width:35px;height:35px"-->
-                                         <!--onerror="this.src='/static/admin/images/head_default.gif'"/>-->
-                                <!--</td>-->
-                                <td>{{d[i]['user'].account}}</td>
-                                <td>{{d[i]['user'].nickname}}</td>
+                                <td>{{d[i].account}}</td>
+                                <td>{{d[i].nickname}}</td>
                                 <td>{{d[i].money}}</td>
                                 <td>{{d[i].shenfenzheng}}</td>
                                 <td>{{d[i].bank_owner}}</td>
@@ -148,7 +143,7 @@
         var bank_card = $('#bank_card').val();
         var shenfenzheng = $('#shenfenzheng').val();
         var bank_name = $('#bank_name').val();
-        $.getJSON('{:url("Daifu/examine")}', {
+        $.post('{:url("Daifu/examine")}', {
             page: curr || 1,
             bank_name: bank_name,
             account: account,
@@ -157,16 +152,16 @@
             shenfenzheng: shenfenzheng,
         }, function (data) {
             $(".spiner-example").css('display', 'none'); //数据加载完关闭动画
-            if (data == '') {
+            if (data.data == '') {
                 $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
             } else {
                 var tpl = document.getElementById('list-template').innerHTML;
-                laytpl(tpl).render(data, function (html) {
+                laytpl(tpl).render(data.data, function (html) {
                     document.getElementById('list-content').innerHTML = html;
                 });
                 laypage({
                     cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
-                    pages: '{$allpage}',//总页数
+                    pages: Math.round(data.total/10),//总页数
                     skip: true,//是否开启跳页
                     skin: '#1AB5B7',//分页组件颜色
                     curr: curr || 1,

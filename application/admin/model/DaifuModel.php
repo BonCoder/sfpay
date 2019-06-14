@@ -39,7 +39,13 @@ class DaifuModel extends Model
      */
     public function getDaifuByWhere($map, $Nowpage, $limits)
     {
-        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time','desc')->select();
+//        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time','desc')->select();
+        return $this->where($map)->order('create_time','desc')->paginate($limits)->each(function($item, $key){
+            $user = $item->user()->field('account,nickname')->find();
+            $item->account = $user['account'];
+            $item->nickname = $user['nickname'];
+            return $item;
+        });;
     }
 
 //    public function getStatusAttr($value, $data)
