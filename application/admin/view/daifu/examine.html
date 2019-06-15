@@ -143,6 +143,7 @@
         var bank_card = $('#bank_card').val();
         var shenfenzheng = $('#shenfenzheng').val();
         var bank_name = $('#bank_name').val();
+        $(".spiner-example").css('display', 'block'); //数据加载完关闭动画
         $.post('{:url("Daifu/examine")}', {
             page: curr || 1,
             bank_name: bank_name,
