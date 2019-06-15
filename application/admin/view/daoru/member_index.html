@@ -195,6 +195,19 @@
 
     $( '#daoru_excel input[type="file"]' ).prettyFile();
 
+    //查看
+    function getDaoruDetail(id) {
+        $.get('{:url("Daoru/detail")}', {
+            id: id
+        }, function (res) {
+            $("#detail").css('display', 'block'); //数据加载动画
+            var tpl = document.getElementById('list-template-detail').innerHTML;
+            laytpl(tpl).render(res.data, function (html) {
+                document.getElementById('list-content-detail').innerHTML = html;
+            });
+        })
+    }
+
     //laypage分页
     Ajaxpage();
 
@@ -277,18 +290,7 @@
             }
         }
 
-        //查看
-        function getDaoruDetail(id) {
-            $.get('{:url("Daoru/detail")}', {
-                id: id
-            }, function (res) {
-                $("#detail").css('display', 'block'); //数据加载动画
-                var tpl = document.getElementById('list-template-detail').innerHTML;
-                laytpl(tpl).render(res.data, function (html) {
-                    document.getElementById('list-content-detail').innerHTML = html;
-                });
-            })
-        }
+
 
     });
 </script>
