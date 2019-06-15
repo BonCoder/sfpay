@@ -122,6 +122,7 @@
 </div>
 
 <!-- 加载动画 -->
+<div class="spiner-example-shade"></div>
 <div class="spiner-example">
     <div class="sk-spinner sk-spinner-three-bounce">
         <div class="sk-bounce1"></div>
@@ -138,12 +139,12 @@
     Ajaxpage();
 
     function Ajaxpage(curr) {
+        $(".spiner-example").css('display', 'block'); //数据加载动画
         var account = $('#account').val();
         var money = $('#money').val();
         var bank_card = $('#bank_card').val();
         var shenfenzheng = $('#shenfenzheng').val();
         var bank_name = $('#bank_name').val();
-        $(".spiner-example").css('display', 'block'); //数据加载完关闭动画
         $.post('{:url("Daifu/examine")}', {
             page: curr || 1,
             bank_name: bank_name,

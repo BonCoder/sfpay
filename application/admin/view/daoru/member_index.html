@@ -96,6 +96,7 @@
 </div>
 
 <!-- 加载动画 -->
+<div class="spiner-example-shade"></div>
 <div class="spiner-example">
     <div class="sk-spinner sk-spinner-three-bounce">
         <div class="sk-bounce1"></div>
@@ -150,6 +151,7 @@
     Ajaxpage();
 
     function Ajaxpage(curr) {
+        $(".spiner-example").css('display', 'block'); //数据加载动画
         var filename = $('#filename').val();
         var money = $('#money').val();
         var count = $('#count').val();
