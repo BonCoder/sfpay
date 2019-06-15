@@ -80,9 +80,10 @@ class Daifu extends Base
 
     /**
      * @param Request $request
-     * @author  Bob<bob@bobcoder.cc>
      * @return \think\response\Json
+     * @throws \think\Exception
      * @throws \think\Exception\DbException
+     * @author  Bob<bob@bobcoder.cc>
      */
     public function changeStatus(Request $request)
     {

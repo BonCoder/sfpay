@@ -13,7 +13,8 @@
                     <form name="admin_list_sea" class="form-inline" method="get" action="{:url('index')}">
                         <div class="form-group">
                             <label for="account" class="sr-only">用户名</label>
-                            <input type="text" name="account" placeholder="请输入用户名" value="{$account|default=''}" id="account"
+                            <input type="text" name="account" placeholder="请输入用户名" value="{$account|default=''}"
+                                   id="account"
                                    class="form-control">
                         </div>
                         <div class="form-group">
@@ -23,17 +24,20 @@
                         </div>
                         <div class="form-group">
                             <label for="bank_card" class="sr-only">卡号</label>
-                            <input type="text" name="bank_card" placeholder="请输入卡号" value="{$bank_card|default=''}" id="bank_card"
+                            <input type="text" name="bank_card" placeholder="请输入卡号" value="{$bank_card|default=''}"
+                                   id="bank_card"
                                    class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="shenfenzheng" class="sr-only">身份证</label>
-                            <input type="text" name="shenfenzheng" placeholder="请输入身份证" value="{$shenfenzheng|default=''}"
+                            <input type="text" name="shenfenzheng" placeholder="请输入身份证"
+                                   value="{$shenfenzheng|default=''}"
                                    id="shenfenzheng" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="bank_name" class="sr-only">姓名</label>
-                            <input type="text" name="bank_name" placeholder="请输入姓名" value="{$bank_name|default=''}" id="bank_name"
+                            <input type="text" name="bank_name" placeholder="请输入姓名" value="{$bank_name|default=''}"
+                                   id="bank_name"
                                    class="form-control">
                         </div>
                         <div class="form-group">
@@ -65,7 +69,8 @@
                         </tr>
                         </thead>
                         <script id="list-template" type="text/html">
-                            {{# for(var i=0; i<d.length; i++){  }}
+                            {{# for(var i=0; i
+                            <d.length; i++){  }}
                             <tr class="long-td">
                                 <td>{{i+1}}</td>
                                 <td>{{d[i].account}}</td>
@@ -148,7 +153,7 @@
                 });
                 laypage({
                     cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
-                    pages: Math.round(data.total/10),//总页数
+                    pages: Math.round(data.total / 10),//总页数
                     skip: true,//是否开启跳页
                     skin: '#1AB5B7',//分页组件颜色
                     curr: curr || 1,
@@ -163,6 +168,7 @@
             }
         });
     }
+
 </script>
 </body>
 </html>

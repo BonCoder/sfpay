@@ -1,5 +1,8 @@
 <?php
 namespace app\admin\controller;
+use app\admin\model\ChongZhiModel;
+use app\admin\model\DaifuModel;
+use app\admin\model\DaoruModel;
 use think\Config;
 use think\Db;
 use think\Session;
@@ -23,10 +26,11 @@ class Data extends Base
 
     /**
      * 备份数据库
-     * @param  String  $ids 表名
-     * @param  Integer $id     表ID
-     * @param  Integer $start  起始行数
+     * @param  String $ids 表名
+     * @param  Integer $id 表ID
+     * @param  Integer $start 起始行数
      * @author 田建龙 <864491238@qq.com>
+     * @return \think\response\Json|void
      */
     public function export($ids = null, $id = null, $start = null) {
         $Request = Request::instance();
@@ -273,6 +277,20 @@ class Data extends Base
         } else {
             return $this->error('参数错误！');
         }
+    }
+
+    /**
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function delete()
+    {
+        ChongZhiModel::where('create_time', '<', strtotime('-3 month'))->delete();
+        DaifuModel::where('create_time', '<', strtotime('-3 month'))->delete();
+        DaoruModel::where('create_time', '<', strtotime('-3 month'))->delete();
+
+        $this->success("删除成功！");
     }
 
 

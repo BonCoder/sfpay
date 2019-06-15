@@ -45,7 +45,7 @@ class DaifuModel extends Model
             $item->account = $user['account'];
             $item->nickname = $user['nickname'];
             return $item;
-        });;
+        });
     }
 
 //    public function getStatusAttr($value, $data)
@@ -71,7 +71,7 @@ class DaifuModel extends Model
      */
     public function user()
     {
-        return $this->belongsTo('MemberModel', 'member_id')->field('id,account,nickname');
+        return $this->belongsTo('MemberModel', 'member_id');
     }
 
     /**
