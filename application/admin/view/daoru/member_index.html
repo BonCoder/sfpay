@@ -68,6 +68,54 @@
                     <div id="AjaxPage" style=" text-align: right;"></div>
                     <div id="allpage" style=" text-align: right;"></div>
                 </div>
+                <table class="table table-bordered table-hover" id="detail" style="display: none">
+                    <thead>
+                    <tr class="long-tr">
+                        <th width="3%">序号</th>
+                        <!--<th width="4%">头像</th>-->
+                        <th width="5%">账号</th>
+                        <th width="9%">公司名称</th>
+                        <th width="5%">代付金额</th>
+                        <th width="9%">身份证号</th>
+                        <th width="10%">开户名</th>
+                        <th width="10%">银行卡号</th>
+                        <!--<th width="8%">文件名</th>-->
+                        <th width="8%">上传日期</th>
+                        <th width="6%">状态</th>
+                    </tr>
+                    </thead>
+                    <script id="list-template-detail" type="text/html">
+                        {{# for(var i=0; i
+                        <d.length; i++){  }}
+                        <tr class="long-td">
+                            <td>{{d[i].id}}</td>
+                            <td>{{d[i]['user'].account}}</td>
+                            <td>{{d[i]['user'].nickname}}</td>
+                            <td>{{d[i].money}}</td>
+                            <td>{{d[i].shenfenzheng}}</td>
+                            <td>{{d[i].bank_owner}}</td>
+                            <td>{{d[i].bank_card}}</td>
+                            <td>{{d[i].create_time}}</td>
+                            <td>
+                                {{# if(d[i].status==1){ }}
+                                待审核
+                                {{# }else if(d[i].status==2){ }}
+                                初审未通过
+                                {{# }else if(d[i].status==3){ }}
+                                初审通过
+                                {{# }else if(d[i].status==4){ }}
+                                终审未通过
+                                {{# }else if(d[i].status==5){ }}
+                                代付成功
+                                {{# }else if(d[i].status==6){ }}
+                                转账成功
+                                {{# } }}
+                            </td>
+                        </tr>
+                        {{# } }}
+                    </script>
+                    <tbody id="list-content-detail"></tbody>
+                </table>
             </div>
             <!-- End Example Pagination -->
         </div>
@@ -86,7 +134,7 @@
         <td>{{d[i].money}}</td>
         <td>{{d[i].create_time}}</td>
         <td>
-            <a href="/uploads/excel/{{d[i].filepath}}" class="btn btn-primary btn-outline btn-xs">
+            <a onclick="getDaoruDetail({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
                 <i class="fa fa-send-o"></i> 查看</a>&nbsp;&nbsp;
         </td>
     </tr>
@@ -227,6 +275,19 @@
                 layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1});
                 return false;
             }
+        }
+
+        //查看
+        function getDaoruDetail(id) {
+            $.get('{:url("Daoru/detail")}', {
+                id: id
+            }, function (res) {
+                $("#detail").css('display', 'block'); //数据加载动画
+                var tpl = document.getElementById('list-template-detail').innerHTML;
+                laytpl(tpl).render(res.data, function (html) {
+                    document.getElementById('list-content-detail').innerHTML = html;
+                });
+            })
         }
 
     });
