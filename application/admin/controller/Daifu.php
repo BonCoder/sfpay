@@ -166,14 +166,12 @@ class Daifu extends Base
             if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
             if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
 
-            $model = new DaifuModel();
-            $Nowpage = input('page', 1);
-            $limits = 10;
-            $count = $model->getAllCount($map);
-            $lists = $model->getDaifuByWhere($map, $Nowpage, $limits);
-            $allpage = intval(ceil($count / $limits));  //计算
+            $daifu = new DaifuModel();
+            $Nowpage = input('get.page') ? input('get.page') : 1;
+            $limits = 10;// 获取总条数
+            $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits);
 
-            return json(['code' => 1, 'data' => $lists, 'pages' => $allpage]);
+            return json($lists);
         }
 
         return $this->fetch();

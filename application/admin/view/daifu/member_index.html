@@ -61,7 +61,7 @@
                             <th width="9%">身份证号</th>
                             <th width="10%">开户名</th>
                             <th width="10%">银行卡号</th>
-                            <th width="8%">文件名</th>
+                            <!--<th width="8%">文件名</th>-->
                             <th width="8%">上传日期</th>
                             <th width="6%">状态</th>
                         </tr>
@@ -83,18 +83,12 @@
     <d.length; i++){  }}
     <tr class="long-td">
         <td>{{i+1}}</td>
-        <!--<td>-->
-            <!--<img src="/uploads/face/{{d[i]['user'].head_img}}" class="img-circle"-->
-                 <!--style="width:35px;height:35px"-->
-                 <!--onerror="this.src='/static/admin/images/head_default.gif'"/>-->
-        <!--</td>-->
-        <td>{{d[i]['user'].account}}</td>
-        <td>{{d[i]['user'].nickname}}</td>
+        <td>{{d[i].account}}</td>
+        <td>{{d[i].nickname}}</td>
         <td>{{d[i].money}}</td>
         <td>{{d[i].shenfenzheng}}</td>
         <td>{{d[i].bank_owner}}</td>
         <td>{{d[i].bank_card}}</td>
-        <td>{{d[i]['daoru'].filename}}</td>
         <td>{{d[i].create_time}}</td>
         <td>
             {{# if(d[i].status==1){ }}
@@ -162,7 +156,7 @@
                 });
                 laypage({
                     cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
-                    pages: data.pages,//总页数
+                    pages: Math.round(data.total / 10),//总页数
                     skip: true,//是否开启跳页
                     skin: '#1AB5B7',//分页组件颜色
                     curr: curr || 1,
