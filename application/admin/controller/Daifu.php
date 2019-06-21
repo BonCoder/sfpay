@@ -69,7 +69,7 @@ class Daifu extends Base
         if ($request->isGet()) {
             return $this->fetch();
         }
-
+        $map['think_daifu.status'] = ['in', '1,3'];
         $daifu = new DaifuModel();
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = 10;// 获取总条数

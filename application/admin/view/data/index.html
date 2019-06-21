@@ -25,7 +25,12 @@
                         <button class="btn btn-outline btn-primary" href="javascript:;" id="export">立即备份</button>
                         <button id="optimize" class="btn btn-outline btn-info " url="{:url('optimize')}" >优化表</button>
                         <button id="repair" class="btn btn-outline btn-danger" url="{:url('repair')}" >修复表</button>
-                        <button id="old_data" class="btn btn-outline btn-default" url="{:url('delete')}" >删除三个月前的数据</button>
+                    </div>
+                    <div class="col-sm-9 m-b-xs">
+                        <div class="col-sm-10">
+                        <input placeholder="删除日期数据" class="form-control layer-date" name="start" id="start">
+                        <button id="old_data" class="btn btn-outline btn-default" url="{:url('delete')}" >删除数据</button>
+                        </div>
                     </div>
                 </div>
                 <form id="export-form" method="post" action="{:url('export')}">
@@ -73,7 +78,20 @@
 {include file="public/footer" /}
 
 <script type="text/javascript">
-
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY-MM-DD hh:mm:ss',
+        min: '2000-06-16 23:59:59', //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    laydate(start);
 //全选的实现
 $('.check-all').on('ifChecked', function (event) {
     $('input[name="ids[]"]').iCheck('check');

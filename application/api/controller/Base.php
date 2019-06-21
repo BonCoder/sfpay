@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller;
+namespace app\api\controller;
 use think\Controller;
 
 class Base extends Controller

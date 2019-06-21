@@ -20,6 +20,7 @@ use think\Model;
  * @property string bank_name
  * @property string bank_owner
  * @property int status
+ * @property false|int create_time
  */
 class DaifuModel extends Model
 {

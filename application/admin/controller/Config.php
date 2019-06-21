@@ -6,8 +6,6 @@ use think\Db;
 
 class Config extends Base
 {
-
-
     /**
      * 获取配置参数
      */
@@ -35,8 +33,7 @@ class Config extends Base
                 $configModel->SaveConfig($map,$value);
             }
         }
-        cache('db_config_data',null);
+        cache('db_config_data',$config);
         $this->success('保存成功！');
     }
-
 }

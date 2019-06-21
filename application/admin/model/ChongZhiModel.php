@@ -17,6 +17,7 @@ use think\Model;
  * @property string beizhu
  * @property int daoru_id
  * @property int create_time
+ * @property int type
  */
 class ChongZhiModel extends Model
 {
