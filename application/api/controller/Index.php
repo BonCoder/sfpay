@@ -33,6 +33,9 @@ class Index extends Controller
             $info = file_get_contents("php://input");
             $data = json_decode($info);
         }
+        if (!$data){
+            return json(['code' => 0, 'msg' => '参数不能为空！']);
+        }
         $model = new DaifuModel();
         $model->member_id = $config['member_id'];
         $model->daoru_id = 1;
