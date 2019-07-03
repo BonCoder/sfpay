@@ -55,6 +55,7 @@ class Index extends Controller
         $chongzhi->member_id = $config['member_id'];
         $chongzhi->beizhu = "接口记录";
         $chongzhi->daoru_id = 1;
+        $chongzhi->create_time = strtotime($data['transDate']);
         $chongzhi->save();
 
         return json(['code' => 1, 'msg' => '插入成功！']);
