@@ -12,10 +12,8 @@
                 <div class="col-sm-12">
                     <form name="admin_list_sea" class="form-inline" method="get" action="{:url('index')}">
                         <div class="form-group">
-                            <label for="account" class="sr-only">用户名</label>
-                            <input type="text" name="account" placeholder="请输入用户名" value="{$account|default=''}"
-                                   id="account"
-                                   class="form-control">
+                            <label for="member_id" class="sr-only">用户ID</label>
+                            <input type="text" name="member_id" placeholder="请输入用户ID" value="{$member_id}" id="member_id" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="money" class="sr-only">金额</label>
@@ -130,7 +128,7 @@
 
     function Ajaxpage(curr) {
         $(".spiner-example").css('display', 'block'); //数据加载动画
-        var account = $('#account').val();
+        var member_id = $('#member_id').val();
         var money = $('#money').val();
         var bank_card = $('#bank_card').val();
         var shenfenzheng = $('#shenfenzheng').val();
@@ -138,7 +136,7 @@
         $.post('{:url("Daifu/index")}', {
             page: curr || 1,
             bank_name: bank_name,
-            account: account,
+            member_id: member_id,
             money: money,
             bank_card: bank_card,
             shenfenzheng: shenfenzheng,

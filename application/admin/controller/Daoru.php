@@ -18,46 +18,50 @@ use think\Request;
 class Daoru extends Base
 {
     /**
+     * @param Request $request
      * @return mixed|\think\response\Json
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @author  Bob<bob@bobcoder.cc>
      */
-    public function index()
+    public function index(Request $request)
     {
+        $map = [];
 
-        if (request()->isPost()) {
-            $map = [];
-
-            if ($filename = input('filename', '')) {
-                $map['filename'] = ['like', "%" . $filename . "%"];
-            }
-            if ($money = input('money', '')) {
-                $map['money'] = $money;
-            }
-            if ($count = input('count', '')) {
-                $map['count'] = $count;
-            }
-            if ($picihao = input('picihao', '')) {
-                $map['picihao'] = $picihao;
-            }
-            $start = input('start', '');
-            $end = input('end', '');
-            if ($start && $end) {
-                $map['think_daoru.create_time'] = ['between time', [strtotime($start), strtotime($end)]];
-            }
-            $daoru = new DaoruModel();
-            $Nowpage = input('page',1);
-            $limits = 10;// 获取总条数
-            $lists = $daoru->getDaoruByWhere($map, $Nowpage, $limits);
-            $count = $daoru->getAllCount($map);//计算总页面
-            $allpage = intval(ceil($count / $limits));
-
-            return json(['code' => 1, 'data' => $lists, 'pages' => $allpage]);
+        if ($filename = input('filename', '')) {
+            $map['filename'] = ['like', "%" . $filename . "%"];
+        }
+        if ($money = input('money', '')) {
+            $map['money'] = $money;
+        }
+        if ($count = input('count', '')) {
+            $map['count'] = $count;
+        }
+        if ($picihao = input('picihao', '')) {
+            $map['picihao'] = $picihao;
+        }
+        $start = input('start', '');
+        $end = input('end', '');
+        if ($start && $end) {
+            $map['think_daoru.create_time'] = ['between time', [strtotime($start), strtotime($end)]];
         }
 
-        return $this->fetch();
+        $this->assign(compact('filename', 'money', 'count', 'picihao', 'start','end'));
+
+        if ($request->isGet()) {
+            return $this->fetch();
+        }
+
+        $daoru = new DaoruModel();
+        $Nowpage = input('page',1);
+        $limits = 10;// 获取总条数
+        $lists = $daoru->getDaoruByWhere($map, $Nowpage, $limits);
+        $count = $daoru->getAllCount($map);//计算总页面
+        $allpage = intval(ceil($count / $limits));
+
+        return json(['code' => 1, 'data' => $lists, 'pages' => $allpage]);
+
     }
 
     /**

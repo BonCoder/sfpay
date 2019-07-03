@@ -29,11 +29,11 @@ class Daifu extends Base
     {
         $map = [];
         if ($money = input('money', '')) $map['think_daifu.money'] = $money;
-        if ($account = input('account', '')) $map['account'] = $account;
+        if ($member_id = input('member_id', '')) $map['member_id'] = $member_id;
         if ($bank_card = input('bank_card', '')) $map['think_daifu.bank_card'] = $bank_card;
         if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
         if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
-        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'account'));
+        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'member_id'));
 
         if ($request->isGet()) {
             return $this->fetch();
@@ -60,11 +60,11 @@ class Daifu extends Base
     {
         $map = [];
         if ($money = input('money', '')) $map['think_daifu.money'] = $money;
-        if ($account = input('account', '')) $map['account'] = $account;
+        if ($member_id = input('member_id', '')) $map['member_id'] = $member_id;
         if ($bank_card = input('bank_card', '')) $map['think_daifu.bank_card'] = $bank_card;
         if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
         if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
-        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'account'));
+        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'member_id'));
 
         if ($request->isGet()) {
             return $this->fetch();
