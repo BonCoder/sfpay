@@ -21,6 +21,9 @@ class Index extends Controller
      *
      * @param Request $request
      * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      * @author  Bob<bob@bobcoder.cc>
      */
     public function host(Request $request)
@@ -54,7 +57,7 @@ class Index extends Controller
         $chongzhi->save();
 		
 		$user = MemberModel::where('id', $config['member_id'])->find();
-        $user->money = $user->money - $model->money;
+        $user->money = $user->money + $model->money;
         $user->save();
 		
         return json(['code' => 1, 'msg' => '插入成功！']);
