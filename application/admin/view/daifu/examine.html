@@ -135,6 +135,7 @@
 
 <script type="text/javascript">
 
+    var now_page = 1;
     //laypage分页
     Ajaxpage();
 
@@ -173,6 +174,7 @@
                         if (!first) {
                             Ajaxpage(obj.curr)
                         }
+                        now_page = obj.curr;
                         $('#allpage').html('第' + obj.curr + '页，共' + obj.pages + '页');
                     }
                 });
@@ -184,8 +186,8 @@
         //提交
         $.get("{:url('daifu/changeStatus')}", {id: id, status: status}, function (data) {
             if (data.code === 1) {
-                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (data) {
-                    window.location.href = "{:url('daifu/examine')}";
+                layer.msg('审核成功', {icon: 6, time: 1500, shade: 0.1}, function (data) {
+                    Ajaxpage(now_page);
                 });
             } else {
                 layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1});

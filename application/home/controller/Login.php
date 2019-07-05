@@ -44,7 +44,7 @@ class Login extends Controller
 
         $hasUser = db('member')->where('account', $username)->find();
         if (empty($hasUser)) {
-            return json(['code' => -1, 'data' => '', 'msg' => '管理员不存在']);
+            return json(['code' => -1, 'data' => '', 'msg' => '用户不存在']);
         }
 
         if (md5(md5($password) . config('auth_key')) != $hasUser['password']) {
