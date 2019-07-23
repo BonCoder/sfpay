@@ -23,9 +23,6 @@ class Demo extends Base
         return $this->fetch();      
     }
 
-
-
-
     /**
      * 生成二维码
      */

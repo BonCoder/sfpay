@@ -24,7 +24,7 @@ return [
     'cache' => [
         'type'   => 'file',// 驱动方式
         'path'   => CACHE_PATH,// 缓存保存目录        
-        'prefix' => '',// 缓存前缀       
+        'prefix' => 'sfpay',// 缓存前缀
         'expire' => 0,// 缓存有效期 0表示永久缓存
         'host'   => '127.0.0.1',
         'port'   => 11211,
@@ -47,5 +47,6 @@ return [
     'data_backup_compress' => '1',          //压缩备份文件需要PHP环境支持gzopen,gzwrite函数        0:不压缩 1:启用压缩
     'data_backup_compress_level' => '9',    //压缩级别   1:普通   4:一般   9:最高
 
-
+    // 异常处理handle类 留空使用 \think\exception\Handle
+    'exception_handle'       => '\\app\\api\\exception\\ExceptionHandler',
 ];

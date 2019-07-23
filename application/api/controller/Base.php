@@ -1,20 +1,63 @@
 <?php
 
 namespace app\api\controller;
+use think\Cache;
 use think\Controller;
+use think\exception\HttpException;
+use think\response\Json;
+use think\response\Jsonp;
 
 class Base extends Controller
 {
-    public function _initialize()
+    /**
+     * Base constructor.
+     */
+    public function __construct()
     {
-
-        $config = cache('db_config_data');
-
-        if(!$config){            
-            $config = load_config();                          
-            cache('db_config_data',$config);
+        parent::__construct();
+        $agent = $this->request->header('Authorization');
+        $token = explode(' ', $agent)[1] ?? '';
+        if (!$token || !Cache::has($token)) {
+            throw new HttpException('401', 'Unauthenticated.');
         }
-        config($config); 
 
+        $this->request->user = json_decode(Cache::get($token), false);
+    }
+
+    /**
+     * send error json string
+     * @param int $code
+     * @param string $message
+     * @param int $statusCode
+     * @return Json
+     */
+    public function sendError($code = 0, $message = '', $statusCode = 422){
+
+        $headers = ['content-type' => 'application/json'];
+        return json(['code' => $code, 'msg' => $message], $statusCode)->header($headers);
+    }
+
+    /**
+     * send success json string
+     * @param array $data
+     * @return Json|Jsonp
+     */
+    public function sendJson($data = [])
+    {
+        $headers = ['content-type' => 'application/json'];
+        return json(['code' => 1, 'data' => $data, 'msg' => ''], 200)->header($headers);
+    }
+
+
+    /**
+     * send success string
+     * @param string $msg
+     * @param int $statusCode
+     * @return Json|Jsonp
+     */
+    public function sendSuccess($msg = '操作成功！', $statusCode = 201)
+    {
+        $headers = ['content-type' => 'application/json'];
+        return json(['code' => 1, 'msg' => $msg], $statusCode)->header($headers);
     }
 }
