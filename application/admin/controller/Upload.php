@@ -4,7 +4,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\File;
 use think\Request;
-class Upload extends Base
+class Upload extends Controller
 {
 	//图片上传
     public function upload(){
