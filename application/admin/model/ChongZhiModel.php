@@ -159,7 +159,7 @@ class ChongZhiModel extends Model
         $data['money'] = $money;
         $data['type'] = 1;
         $data['member_id'] = $user_id;
-        $data['beizhu'] = $remark;
+        $data['beizhu'] = $remark ?? '';
         $data['create_time'] = time();
         //插入充值记录
         Db::name('chongzhi')->insert($data);

@@ -1,6 +1,7 @@
 <?php
 
 namespace app\admin\model;
+use think\exception\PDOException;
 use think\Model;
 use think\Db;
 

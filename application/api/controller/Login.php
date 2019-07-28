@@ -74,6 +74,9 @@ class Login extends Controller
         if (!$hasUser) {
             return json(['code' => 0, 'data' => '', 'msg' => '用户不存在']);
         }
+        if ($hasUser['status'] == 0){
+            return json(['code' => 0, 'data' => '', 'msg' => '账户已被禁用']);
+        }
         if (md5(md5($password) . config('auth_key')) != $hasUser['password']) {
             writelog($hasUser['id'], $username, '用户【' . $username . '】登录失败：密码错误', 2);
             return json(['code' => 0, 'data' => '', 'msg' => '密码错误']);
