@@ -31,17 +31,19 @@ class Login extends Controller
         $username = $this->request->post('username');
         $password = $this->request->post('password');
 
+        print_r($this->request->post());die;
+
         $hasUser = Admin::where('username', $username)->find();
         if (!$hasUser) {
-            return json(['code' => -1, 'data' => '', 'msg' => '管理员不存在']);
+            return json(['code' => 0, 'data' => '', 'msg' => '管理员不存在']);
         }
         if (md5(md5($password) . config('auth_key')) != $hasUser['password']) {
             writelog($hasUser['id'], $username, '用户【' . $username . '】登录失败：密码错误', 2);
-            return json(['code' => -2, 'data' => '', 'msg' => '密码错误']);
+            return json(['code' => 0, 'data' => '', 'msg' => '密码错误']);
         }
         if (1 != $hasUser['status']) {
             writelog($hasUser['id'], $username, '用户【' . $username . '】登录失败：该账号被禁用', 2);
-            return json(['code' => -6, 'data' => '', 'msg' => '该账号被禁用']);
+            return json(['code' => 0, 'data' => '', 'msg' => '该账号被禁用']);
         }
         // 直接创建token并设置有效期
         $hasUser['auth'] = 'admin';
