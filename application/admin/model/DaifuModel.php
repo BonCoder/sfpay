@@ -41,13 +41,7 @@ class DaifuModel extends Model
     public function getDaifuByWhere($map, $Nowpage, $limits)
     {
 //        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time','desc')->select();
-
-        return $this->where($map)->order('create_time','desc')->paginate($limits)->each(function($item, $key){
-            $user = MemberModel::field('account,nickname')->where('id', $item->member_id)->find();
-            $item->account = $user['account'];
-            $item->nickname = $user['nickname'];
-            return $item;
-        });
+        return $this->with('user')->where($map)->order('create_time','desc')->paginate($limits);
     }
 
 //    public function getStatusAttr($value, $data)
@@ -58,8 +52,9 @@ class DaifuModel extends Model
 
     /**
      * 根据搜索条件获取数量
-     * @param $where
+     * @param $map
      * @return int|string
+     * @throws \think\Exception
      */
     public function getAllCount($map)
     {
@@ -73,7 +68,7 @@ class DaifuModel extends Model
      */
     public function user()
     {
-        return $this->belongsTo('MemberModel', 'member_id');
+        return $this->belongsTo('MemberModel', 'member_id')->bind(['account', 'nickname']);
     }
 
     /**

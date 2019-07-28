@@ -105,8 +105,8 @@
                         <d.length; i++){  }}
                         <tr class="long-td">
                             <td>{{d[i].id}}</td>
-                            <td>{{d[i]['user'].account}}</td>
-                            <td>{{d[i]['user'].nickname}}</td>
+                            <td>{{d[i].account ?? ''}}</td>
+                            <td>{{d[i].nickname ?? ''}}</td>
                             <td>{{d[i].money}}</td>
                             <td>{{d[i].shenfenzheng}}</td>
                             <td>{{d[i].bank_owner}}</td>

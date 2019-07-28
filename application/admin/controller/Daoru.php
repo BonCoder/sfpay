@@ -65,15 +65,6 @@ class Daoru extends Base
     }
 
     /**
-     * @param Request $request
-     * @author  Bob<bob@bobcoder.cc>
-     */
-    public function look(Request $request)
-    {
-
-    }
-
-    /**
      * 代付批次管理
      * @return mixed|\think\response\Json
      * @throws \think\db\exception\DataNotFoundException

@@ -59,7 +59,17 @@ class DaoruModel extends Model
      */
     public function user()
     {
-        return $this->belongsTo('MemberModel', 'member_id')->field('id,account,nickname');
+        return $this->belongsTo('MemberModel', 'member_id', 'id');
+    }
+
+    /**
+     * @return mixed
+     * @throws \think\Exception
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function user2()
+    {
+        return $this->belongsTo('MemberModel', 'member_id', 'id')->bind(['account', 'nickname']);
     }
 
     public function daifu()
