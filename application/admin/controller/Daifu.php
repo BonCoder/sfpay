@@ -169,16 +169,13 @@ class Daifu extends Base
             $daifu = new DaifuModel();
             $Nowpage = input('get.page') ? input('get.page') : 1;
             $limits = 10;// 获取总条数
-            $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits)->toArray();
+            $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits);
             if (session('uid') == cache('db_config_data')['member_id']){
-                $data = [];
-                foreach ($lists['data'] as $item){
+                $lists->each(function ($item){
                     $item['bank_owner'] = mb_substr($item['bank_owner'], 0,1).'*';
                     $item['shenfenzheng'] = substr($item['shenfenzheng'],0, 4).'**********'.substr($item['shenfenzheng'], -4);
                     $item['bank_card'] = '**********'.substr($item['bank_card'], -4);
-                    array_push($data, $item);
-                }
-                $lists['data'] = $data;
+                });
             }
             return json($lists);
         }
