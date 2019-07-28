@@ -31,8 +31,6 @@ class Login extends Controller
         $username = $this->request->post('username');
         $password = $this->request->post('password');
 
-        print_r($this->request->post());die;
-
         $hasUser = Admin::where('username', $username)->find();
         if (!$hasUser) {
             return json(['code' => 0, 'data' => '', 'msg' => '管理员不存在']);
