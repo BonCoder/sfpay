@@ -54,7 +54,7 @@ class Member extends Base
     public function save(UserModel $user)
     {
         $param = $this->request->post();
-        if (isset($param['id']) && $param){
+        if (isset($param['id']) && $param) {
             $user = $user->find($param['id']);
         }
         if (empty($param['password'])) {
@@ -65,7 +65,7 @@ class Member extends Base
         if (empty($param['pay_password'])) {
             unset($param['pay_password']);
         } else {
-            $param['pay_password'] = crypt($param['pay_password'],'deal');
+            $param['pay_password'] = crypt($param['pay_password'], 'deal');
         }
         $param['group_id'] = 4;
 
@@ -83,7 +83,7 @@ class Member extends Base
     public function recharge()
     {
         $data = $this->request->post();
-        if (! is_numeric($data['money'])) {
+        if (!is_numeric($data['money'])) {
             return json(['code' => 0, 'data' => '', 'msg' => '请输入正确的金额！']);
         }
         $model = new ChongZhiModel();
@@ -111,4 +111,58 @@ class Member extends Base
 
         return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
     }
+
+    /**
+     * 修改登录密码
+     *
+     * @param MemberModel $model
+     * @return \think\response\Json|\think\response\Jsonp
+     * @throws \think\exception\DbException
+     * @link https://www.bobcoder.cc/
+     * @Date 2019/7/29
+     * @author Bob<bob@bobcoder.cc>
+     */
+    public function updatePassword(MemberModel $model)
+    {
+        if (!$this->request->post('password')) {
+            return $this->sendError('请填写密码');
+        }
+        $password = md5(md5($this->request->post('password')) . config('auth_key'));
+        $member = $model->findOrFail($this->request->user->id);
+        $member->password = $password;
+        $member->save();
+
+        return $this->sendSuccess('修改成功');
+    }
+
+    /**
+     * 修改支付登录密码
+     *
+     * @param MemberModel $model
+     * @return \think\response\Json|\think\response\Jsonp
+     * @throws \think\exception\DbException
+     * @link https://www.bobcoder.cc/
+     * @Date 2019/7/29
+     * @author Bob<bob@bobcoder.cc>
+     */
+    public function updatePayPassword(MemberModel $model)
+    {
+        $password = $this->request->post('password', '');
+        $old_password = $this->request->post('old_password', '');
+        if (!$password || !$old_password)
+            return $this->sendError('请填写密码');
+
+        $member = $model->findOrFail($this->request->user->id);
+        if ($member->pay_password) {
+            $cryption = crypt($old_password, 'deal');
+            if ($member->pay_password != $cryption)
+                return $this->sendError('旧交易密码错误');
+        }
+        $pay_password = crypt($password, 'deal');
+        $member->pay_password = $pay_password;
+        $member->save();
+
+        return $this->sendSuccess('修改成功');
+    }
+
 }
