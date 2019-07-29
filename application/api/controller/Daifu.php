@@ -185,11 +185,11 @@ class Daifu extends Base
             ->select();
 
         if ($this->request->user->id == cache('db_config_data')['member_id']){
-            $list->each(function ($item){
+            foreach ($list as &$item){
                 $item['bank_owner'] = mb_substr($item['bank_owner'], 0,1).'*';
                 $item['shenfenzheng'] = substr($item['shenfenzheng'],0, 4).'**********'.substr($item['shenfenzheng'], -4);
                 $item['bank_card'] = '**********'.substr($item['bank_card'], -4);
-            });
+            }
         }
 
         return $this->sendJson($list);
