@@ -57,7 +57,7 @@ class Log extends Base
      */
     public function del_log(LogModel $log)
     {
-        $log_id = input('param.log_id');
+        $log_id = $this->request->post('log_id');
         $flag = $log->delLog($log_id);
 
         return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
