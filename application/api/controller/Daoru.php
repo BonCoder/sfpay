@@ -193,7 +193,7 @@ class Daoru extends Base
             }
 
             //修改用户余额和插入数据
-            ChongZhiModel::dodaifuyue($money, $daoru->id);
+            ChongZhiModel::dodaifuyue($money, $daoru->id, $request->user->id);
         }
 
         return json(['code' => 1, 'msg' => 'excel文件导入成功！']);

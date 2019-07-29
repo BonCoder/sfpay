@@ -76,6 +76,15 @@ class ChongZhiModel extends Model
         return $this->belongsTo('MemberModel', 'member_id');
     }
 
+    /**
+     * @return mixed
+     * @throws \think\Exception
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function user2()
+    {
+        return $this->belongsTo('MemberModel', 'member_id')->bind(['account', 'nickname']);
+    }
 
     /**
      * 代付不成功返还
@@ -126,15 +135,16 @@ class ChongZhiModel extends Model
      * 代付
      * @param $money
      * @param $daoru_id
+     * @param $member_id
      * @return int|true
      * @throws \think\Exception
      * @author  Bob<bob@bobcoder.cc>
      */
-    public static function dodaifuyue($money, $daoru_id)
+    public static function dodaifuyue($money, $daoru_id, $member_id)
     {
         $data['money'] = 0 - $money;
         $data['type'] = 4;
-        $data['member_id'] = session('uid');
+        $data['member_id'] = $member_id;
         $data['beizhu'] = "代付支出";
         $data['daoru_id'] = $daoru_id;
         $data['create_time'] = time();

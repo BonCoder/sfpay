@@ -16,6 +16,7 @@ class Index extends Controller
         return view('admin/index');
     }
 
+    
     /**
      * 接口数据
      *
