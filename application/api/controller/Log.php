@@ -35,9 +35,13 @@ class Log extends Base
         }
         $list = $log
             ->where($map)
-            ->order('create_time','desc')
+            ->order('add_time','desc')
             ->limit($offset, $limit)
             ->select();
+
+        foreach ($list as &$item){
+            $item->add_time = date('Y-m-d H:i:s', $item->add_time);
+        }
 
         return $this->sendJson($list);
     }
