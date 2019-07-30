@@ -82,12 +82,17 @@ class Member extends Base
      */
     public function recharge()
     {
-        $data = $this->request->post();
-        if (!is_numeric($data['money'])) {
+        $money = $this->request->post('money');
+        $id = $this->request->post('id', '');
+        $remark = $this->request->post('remark','');
+        if (!$id){
+            return $this->sendError(0,'ID不能为空');
+        }
+        if (!$money || !is_numeric($money)) {
             return json(['code' => 0, 'data' => '', 'msg' => '请输入正确的金额！']);
         }
         $model = new ChongZhiModel();
-        $res = $model->recharge($data['money'], $data['id'], $data['remark']);
+        $res = $model->recharge($money, $id, $remark);
         if ($res) {
             return $this->sendSuccess('充值成功！');
         }

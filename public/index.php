@@ -10,8 +10,9 @@
 // +----------------------------------------------------------------------
 
 header('Access-Control-Allow-Origin:*');
-header('Access-Control-Allow-Methods:*');
+header('Access-Control-Allow-Methods:DELETE, POST, GET, OPTIONS, HEAD');
 header('Access-Control-Allow-Headers:x-requested-with,content-type,authorization');
+header('Access-Control-Allow-Credentials:true');
 // [ 应用入口文件 ]
 
 // 定义应用目录

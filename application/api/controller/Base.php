@@ -15,14 +15,15 @@ class Base extends Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->request->method() !== 'OPTIONS'){
-            $agent = $this->request->header('Authorization');
-            $token = explode(' ', $agent)[1] ?? '';
-            if (!$token || !Cache::has($token)) {
-                throw new HttpException('401', 'Unauthenticated.');
-            }
-            $this->request->user = json_decode(Cache::get($token), false);
+        if ($this->request->method() == 'OPTIONS'){
+            throw new HttpException('200', '');
         }
+        $agent = $this->request->header('Authorization');
+        $token = explode(' ', $agent)[1] ?? '';
+        if (!$token || !Cache::has($token)) {
+            throw new HttpException('401', 'Unauthenticated.');
+        }
+        $this->request->user = json_decode(Cache::get($token), false);
     }
 
     /**
