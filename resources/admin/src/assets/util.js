@@ -3,8 +3,8 @@ import index from '../router/index';
 import qs from 'qs';
 
 axios.defaults.timeout = 8000;
-// axios.defaults.baseURL = 'http://www.shenfupay.net/api/';
-axios.defaults.baseURL = 'http://www.sfpay.com/api/';
+axios.defaults.baseURL = 'http://www.shenfupay.net/api/';
+// axios.defaults.baseURL = 'http://www.sfpay.com/api/';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded,multipart/form-data';
 
