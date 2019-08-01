@@ -4,11 +4,15 @@ namespace app\admin\controller;
 
 use app\admin\model\Node;
 use think\Controller;
+use think\Request;
 
 class Base extends Controller
 {
     public function _initialize()
     {
+        if (Request::instance()->isMobile()){
+            $this->redirect(url('home/wap/admin'));
+        }
         if (!session('uid')) {
             $this->redirect(url('login/index'));
         }
