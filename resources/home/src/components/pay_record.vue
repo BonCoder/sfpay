@@ -1,149 +1,191 @@
 <template>
-  <div @scroll="scroll($event)">
-    <i-form inline v-show="show">
+  <div class="layout-content" @scroll="scroll($event)">
+    <i-form inline v-show="!status&&show">
       <Form-item>
-        <DatePicker
-          type="date"
-          placeholder="开始时间"
-          format="yyyy-MM-dd"
-          style="width: 150px;vertical-align:middle"
-          v-model="start"
-        ></DatePicker>
+        <i-input :value.sync="formItem.input" placeholder="请输入文件名"></i-input>
+      </Form-item>
+      <Form-item>
+        <i-input :value.sync="formItem.input" placeholder="请输入金额" number></i-input>
+      </Form-item>
+      <Form-item>
+        <i-input :value.sync="formItem.input" placeholder="请输入总笔数" number></i-input>
+      </Form-item>
+      <Form-item>
+        <i-input :value.sync="formItem.input" placeholder="请输入批次号" number></i-input>
       </Form-item>
       <Form-item>
         <DatePicker
-          type="date"
-          placeholder="结束时间"
-          format="yyyy-MM-dd"
-          style="width: 150px"
-          v-model="end"
+          type="daterange"
+          style="width:100%"
+          placement="bottom-start"
+          placeholder="请选择时间"
         ></DatePicker>
       </Form-item>
-      <Form-item>
-        <i-select placeholder="请选择类型" ref="select" @on-change="chage" clearable>
-          <Option v-for="(item,i) in options" :key="i" :value="i">{{item}}</Option>
-        </i-select>
-      </Form-item>
-      <i-button type="success" size="large" @click="search">查询</i-button>
-      <i-button type="default" size="large" @click="reset">重置</i-button>
+      <i-button type="success" size="large" @click="search">
+        <Icon type="ios-search"></Icon>
+        <span>搜索</span>
+      </i-button>
     </i-form>
-
-    <Card v-for="(item,i) in arr" :key="i">
-      <Row class="tables">
-        <i-col class="tables" span="6">
-          <span>公司名称</span>
-        </i-col>
-        <i-col class="tables" span="6">
-          <span>{{item.nickname}}</span>
-        </i-col>
-        <i-col class="tables" span="6">
-          <span>操作金额</span>
-        </i-col>
-        <i-col class="tables" span="6">
-          <span>{{item.money}}</span>
-        </i-col>
-      </Row>
-      <Row>
-        <i-col class="tables" span="6">
-          <span>类型</span>
-        </i-col>
-        <i-col class="tables" span="6">
-          <span>{{item.type}}</span>
-        </i-col>
-        <i-col class="tables" span="6">
-          <span>备注</span>
-        </i-col>
-        <i-col class="tables" span="6">
-          <span>{{item.beizhu}}</span>
-        </i-col>
-      </Row>
-      <Row>
-        <i-col class="tables" span="6">
-          <span>操作时间</span>
-        </i-col>
-        <i-col class="tables" span="6">
-          <span>{{item.create_time}}</span>
-        </i-col>
-      </Row>
-      <!-- <Row>
-        <i-col class="tables options" span="12">
-          <i-button icon="md-settings" shape="circle">设置</i-button>
-        </i-col>
-        <i-col class="tables options" span="12">
-          <i-button icon="ios-trash-outline" type="error" shape="circle">删除</i-button>
-        </i-col>
-      </Row>-->
+    <Card v-show="!status" v-for="(props,index) in list " :key="index">
+      <div class="ivu-col box" v-for="(item,idx) in props " :key="idx" v-show="!item.time">
+        <div>
+          <span>{{item.name}}</span>
+          <span>{{item.value}}</span>
+        </div>
+      </div>
+      <div class="ivu-col box time">
+        <i-button size="lager" type="success" @click="see(index)">
+          <Icon type="ios-paper-plane-outline" />
+          <span>查看</span>
+        </i-button>
+      </div>
     </Card>
+    <Card v-show="status" v-for="(props,index) in seeList " :key="index">
+      <div class="ivu-col box" v-for="(item,idx) in props " :key="idx" v-show="!item.time">
+        <div>
+          <span>{{item.name}}</span>
+          <span>{{item.value}}</span>
+        </div>
+      </div>
+    </Card>
+    <i-button type="error" v-show="status" @click="status=false">
+      <Icon type="ios-undo" />返回
+    </i-button>
     <!-- <Page :total="40" size="small" show-total></Page> -->
   </div>
 </template>
+
 <script>
 export default {
+  name: "HelloWorld",
   props: ["show"],
   data() {
     return {
-      clearable: false,
-      visible: false,
-      name: "",
-      arr: [],
+      status: false,
+      list: [],
+      query: { limit: 10 },
       page: 0,
-      start: "",
-      end: "",
-      options: [
-        "充值",
-        "代付不成功返还",
-        "手续费",
-        "代付支出",
-        "转账",
-        "接口记录"
+      arr: [
+        { name: "批次编号", value: "184511234", check: true },
+        { name: "账号", value: "company" },
+        { name: "公司名称", value: "balance" },
+        { name: "总金额", value: "bankCardName", check: true },
+        { name: "总笔数", value: "card", check: true },
+        { name: "文件名", value: "bank", check: true },
+        { name: "上传日期", value: "status" }
+        // { name: "上次操作时间	", value: "lastTime" }
       ],
-      type: ""
+      check: [
+        { name: "序号", value: "184511234", check: true },
+        { name: "账号", value: "company" },
+        { name: "公司名称", value: "balance" },
+        { name: "代付金额", value: "balance" },
+        { name: "身份证号", value: "bankCardName", check: true },
+        { name: "开户名", value: "card", check: true },
+        { name: "银行卡号", value: "bank", check: true },
+        { name: "上传日期", value: "status" },
+        { name: "状态	", value: "初审通过" }
+      ],
+      formItem: {},
+      seeList: []
     };
   },
   created() {
-    this.name = this.$route.params.name;
-    this.arr.forEach(val => {
-      val.visible = false;
-    });
+    let that = this;
+    setInterval(() => {
+      let time = new Date();
+      that.msg = time.toLocaleString();
+    }, 1000);
     this.getData();
   },
-  mounted() {},
   methods: {
-    getData(t) {
+    search() {
+      (this.page = 0), (this.query.offset = 0);
+      this.getData();
+    },
+    see(i) {
+      // for (let i = 0; i < 2; i++) {
+      //   this.seeList.push(this.check);
+      // }
+      let that = this
+      this.$ajax({
+        url:"daoru/detail",
+        data:{id:this.list[i][0].id},
+        then:r=>{
+          console.log(r)
+          if(r.data.length==0){
+            that.$Message.info('没有更多数据')
+            return false
+          }
+          r.data.forEach((val, i) => {
+            let str;
+            switch (val.status) {
+              case 1:
+                str = "待审核";
+                break;
+              case 2:
+                str = "初审未通过";
+                break;
+              case 3:
+                str = "初审通过";
+                break;
+              case 4:
+                str = "终审未通过";
+                break;
+              case 6:
+                str = "转账成功";
+                break;
+              case 5:
+                str = "代付成功";
+                break;
+            }
+
+            let arr = [
+              { name: "账号", value: val.account },
+              { name: "公司名称", value: val.nickname },
+              { name: "代付金额", value: val.money },
+              { name: "身份证号", value: val.shenfenzheng, check: true },
+              { name: "开户名", value: val.bank_owner, check: true },
+              { name: "银行卡号", value: val.bank_card, check: true },
+              { name: "上传日期", value: val.create_time },
+              { name: "状态	", value: str }
+            ];
+           that.seeList.push(arr);
+          });
+        }
+      })
+      this.status = true;
+    },
+    getData(  t) {
       let that = this;
       this.$ajax({
-        url: "chongzhi/lists",
-        data: {
-          start: this.start ? new Date(this.start).toLocaleDateString() : "",
-          end: this.end ? new Date(this.end).toLocaleDateString() : "",
-          type: this.type,
-          limit: 10,
-          offset: this.page * 10
-        },
+        url: "daoru/lists",
+        data: this.query,
         then: r => {
+          if (r.code != 1) {
+            this.$Message.info(r.data.msg);
+          }
+          let list = [];
+          r.data.forEach((val, i) => {
+            let arr = [
+              { name: "批次编号", value: val.picihao, check: true,id:val.id },
+              { name: "账号", value: val.account },
+              { name: "公司名称", value: val.nickname },
+              { name: "总金额", value: val.money, check: true },
+              { name: "总笔数", value: val.count, check: true },
+              { name: "文件名", value: val.filename, check: true },
+              { name: "上传日期", value: val.create_time }
+            ];
+            list.push(arr);
+          });
           if (t) {
-            that.arr = that.arr.concat(r.data);
+            that.list = that.list.concat(list);
           } else {
-            that.arr = r.data;
+            that.list = list;
           }
         }
       });
     },
-    search() {
-      this.page = 0;
-      this.getData();
-    },
-    reset() {
-      this.end = "";
-      this.start = "";
-      this.type = "";
-      this.$refs.select.clearSingleSelect();
-    },
-    chage(e) {
-      console.log(e);
-      this.type = e;
-    },
-    edit() {},
     scroll(e) {
       let [sH, sT, cH] = [
         e.currentTarget.scrollHeight,
@@ -152,48 +194,31 @@ export default {
       ];
       if (sH == sT + cH) {
         this.page++;
+        this.query.offset = 10 * this.page;
         this.getData(true);
       }
     }
-  }
+  },
+  computed: {}
 };
 </script>
-<style >
-.tables:not(:last-child) {
-  border-bottom: 1px solid rgba(245, 245, 245, 0.5);
-}
 
-form {
-  margin-top: 10px;
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+html {
+  /* min-height: 100%; */
+  /* background: #f2f2f2; */
 }
-.ivu-form-item:nth-child(1),
-.ivu-form-item:nth-child(2) {
-  margin-top: 30px;
-}
-button {
-  /* margin: 30px; */
+.layout-content {
+  min-height: 100%;
+  width: 100%;
+  background: #f2f2f2;
+  padding-top: 20px;
 }
 .ivu-card {
-  width: 90%;
-  margin: 30px auto;
-  margin-bottom: 0;
-}
-.ivu-row {
-  height: 50px;
-}
-.tables {
-  height: 50px;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-.tables span {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.del {
-  color: red;
+  width: 80%;
+  /* display: inline-block; */
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 </style>
-

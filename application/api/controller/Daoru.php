@@ -198,4 +198,18 @@ class Daoru extends Base
 
         return json(['code' => 1, 'msg' => 'excel文件导入成功！']);
     }
+
+    /**
+     * @return \think\response\Json
+     * @throws \think\exception\DbException
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function detail()
+    {
+        $id = $this->request->get('id');
+        $daifu = new DaifuModel();
+        $data = $daifu->with('user')->where('daoru_id',$id)->select();
+
+        return json(['code' => 1, 'data' => $data]);
+    }
 }

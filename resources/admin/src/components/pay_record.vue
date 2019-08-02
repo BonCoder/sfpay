@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="ivu-col box time">
-        <i-button size="lager" type="success" @click="see(i)">
+        <i-button size="lager" type="success" @click="see(index)">
           <Icon type="ios-paper-plane-outline" />
           <span>查看</span>
         </i-button>
@@ -104,13 +104,59 @@ export default {
       this.getData();
     },
     see(i) {
-      for (let i = 0; i < 2; i++) {
-        this.seeList.push(this.check);
-      }
+      // for (let i = 0; i < 2; i++) {
+      //   this.seeList.push(this.check);
+      // }
+      let that = this
+      this.$ajax({
+        url:"daoru/detail",
+        data:{id:this.list[i][0].id},
+        then:r=>{
+          console.log(r)
+          if(r.data.length==0){
+            that.$Message.info('没有更多数据')
+            return false
+          }
+          r.data.forEach((val, i) => {
+            let str;
+            switch (val.status) {
+              case 1:
+                str = "待审核";
+                break;
+              case 2:
+                str = "初审未通过";
+                break;
+              case 3:
+                str = "初审通过";
+                break;
+              case 4:
+                str = "终审未通过";
+                break;
+              case 6:
+                str = "转账成功";
+                break;
+              case 5:
+                str = "代付成功";
+                break;
+            }
 
+            let arr = [
+              { name: "账号", value: val.account },
+              { name: "公司名称", value: val.nickname },
+              { name: "代付金额", value: val.money },
+              { name: "身份证号", value: val.shenfenzheng, check: true },
+              { name: "开户名", value: val.bank_owner, check: true },
+              { name: "银行卡号", value: val.bank_card, check: true },
+              { name: "上传日期", value: val.create_time },
+              { name: "状态	", value: str }
+            ];
+           that.seeList.push(arr);
+          });
+        }
+      })
       this.status = true;
     },
-    getData(t) {
+    getData(  t) {
       let that = this;
       this.$ajax({
         url: "daoru/lists",
@@ -122,7 +168,7 @@ export default {
           let list = [];
           r.data.forEach((val, i) => {
             let arr = [
-              { name: "批次编号", value: val.picihao, check: true },
+              { name: "批次编号", value: val.picihao, check: true,id:val.id },
               { name: "账号", value: val.account },
               { name: "公司名称", value: val.nickname },
               { name: "总金额", value: val.money, check: true },
