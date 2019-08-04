@@ -36,9 +36,9 @@ class Daoru extends Base
 
         $map = [];
         isset($get['filename']) && $get['filename'] ? $map['filename'] = ['like', "%" . $get['money'] . "%"] : false;
-        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] = $get['bank_card'] : false;
-        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] = $get['shenfenzheng'] : false;
-        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] = $get['bank_name'] : false;
+        isset($get['money']) && $get['money'] ? $map['money'] = $get['money'] : false;
+        isset($get['count']) && $get['count'] ? $map['count'] = $get['count'] : false;
+        isset($get['picihao']) && $get['picihao'] ? $map['picihao'] = $get['picihao'] : false;
 
         $list = $daoru->with('user2')
             ->where($map)
@@ -66,9 +66,9 @@ class Daoru extends Base
 
         $map = [];
         isset($get['filename']) && $get['filename'] ? $map['filename'] = ['like', "%" . $get['money'] . "%"] : false;
-        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] = $get['bank_card'] : false;
-        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] = $get['shenfenzheng'] : false;
-        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] = $get['bank_name'] : false;
+        isset($get['money']) && $get['money'] ? $map['money'] = $get['money'] : false;
+        isset($get['count']) && $get['count'] ? $map['count'] = $get['count'] : false;
+        isset($get['picihao']) && $get['picihao'] ? $map['picihao'] = $get['picihao'] : false;
 
         $list = $daoru->with('user2')
             ->where($map)
@@ -197,5 +197,19 @@ class Daoru extends Base
         }
 
         return json(['code' => 1, 'msg' => 'excel文件导入成功！']);
+    }
+
+    /**
+     * @return \think\response\Json
+     * @throws \think\exception\DbException
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function detail()
+    {
+        $id = $this->request->get('id');
+        $daifu = new DaifuModel();
+        $data = $daifu->with('user')->where('daoru_id',$id)->select();
+
+        return json(['code' => 1, 'data' => $data]);
     }
 }

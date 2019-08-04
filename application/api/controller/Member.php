@@ -36,6 +36,10 @@ class Member extends Base
             ->limit($offset, $limit)
             ->select();
 
+        foreach ($list as &$item){
+            $item->last_login_time = date('Y-m-d H:i:s', $item->last_login_time);
+        }
+
         return $this->sendJson($list);
     }
 

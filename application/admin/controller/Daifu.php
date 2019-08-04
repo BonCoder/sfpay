@@ -113,7 +113,7 @@ class Daifu extends Base
      * @throws \think\Exception
      * @author  Bob<bob@bobcoder.cc>
      */
-    public function writelog($daifu, $member_id)
+    public function writelog(&$daifu, $member_id)
     {
         $status = '';
 

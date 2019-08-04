@@ -12,7 +12,13 @@ namespace app\api\controller;
 use app\admin\model\ChongZhiModel;
 use app\admin\model\DaifuModel;
 use app\admin\model\MemberModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
+use think\Exception;
+use think\exception\DbException;
 use think\Request;
+use think\response\Json;
+use think\response\Jsonp;
 
 class Daifu extends Base
 {
@@ -20,10 +26,10 @@ class Daifu extends Base
      * 代付记录列表
      *
      * @param DaifuModel $daifu
-     * @return \think\response\Json|\think\response\Jsonp
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @return Json|Jsonp
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      * @author  Bob<bob@bobcoder.cc>
      */
     public function lists(DaifuModel $daifu)
@@ -53,10 +59,10 @@ class Daifu extends Base
      * 代付审核列表
      *
      * @param DaifuModel $daifu
-     * @return \think\response\Json|\think\response\Jsonp
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @return Json|Jsonp
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      * @author  Bob<bob@bobcoder.cc>
      */
     public function examine(DaifuModel $daifu)
@@ -87,9 +93,9 @@ class Daifu extends Base
      * 代付审核
      *
      * @param Request $request
-     * @return \think\response\Json
-     * @throws \think\Exception
-     * @throws \think\Exception\DbException
+     * @return Json
+     * @throws Exception
+     * @throws DbException
      * @author  Bob<bob@bobcoder.cc>
      */
     public function changeStatus(Request $request)
@@ -117,7 +123,7 @@ class Daifu extends Base
      * 写入日志
      * @param $daifu
      * @param $member_id
-     * @throws \think\Exception
+     * @throws Exception
      * @author  Bob<bob@bobcoder.cc>
      */
     public function writelog($daifu, $member_id)
@@ -158,10 +164,10 @@ class Daifu extends Base
      * 用户代付批次查询
      *
      * @param DaifuModel $daifu
-     * @return mixed|\think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @return mixed|Json
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
      * @author  Bob<bob@bobcoder.cc>
      */
     public function member_index(DaifuModel $daifu)
