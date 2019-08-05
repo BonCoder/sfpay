@@ -18,8 +18,8 @@ class Base extends Controller
         if ($this->request->method() == 'OPTIONS'){
             throw new HttpException('200', '');
         }
-        $agent = $this->request->header('Authorization');
-        $token = explode(' ', $agent)[1] ?? '';
+        $agent =  explode(' ', $this->request->header('Authorization'));
+        $token = $agent[0].':'.$agent[1] ?? '';
         if (!$token || !Cache::has($token)) {
             throw new HttpException('401', 'Unauthenticated.');
         }

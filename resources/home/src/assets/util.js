@@ -7,10 +7,6 @@ axios.defaults.baseURL = 'http://www.shenfupay.net/api/';
 // axios.defaults.baseURL = 'http://www.sfpay.com/api/';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
-let token = JSON.parse(localStorage.getItem('user_a'));
-if (token) {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token.data.content;
-}
 
 // http request 拦截器
 axios.interceptors.request.use(
@@ -18,7 +14,7 @@ axios.interceptors.request.use(
     config.data = qs.stringify(config.data);
     let token =JSON.parse(localStorage.getItem('user_a'));
     if (token) { //判断token是否存在
-      config.headers.Authorization = 'Bearer ' + token.data.access_token;  //将token设置成请求头
+      config.headers.Authorization = 'Home ' + token.data.access_token;  //将token设置成请求头
     }
     return config;
   },
@@ -30,16 +26,27 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-
     if (response.data.code === -1) {
-      console.log(1)
       localStorage.removeItem('user_a')
       location.reload()
     }
     return response;
   },
   error => {
-    return Promise.reject(error);
+    let _response = error.response;
+    switch (_response.status) {
+      case 401:
+        // 401 未授权，请重新登录
+        return index.replace({
+          //跳转到登录页面
+          path: "/login",
+          name: '登录',
+          component: '@/components/login'
+        });
+      case 500:
+        return Promise.reject("服务器出错：", error.response.data);
+    }
+    return Promise.reject(error.response.data); // 返回接口返回的错误信息
   }
 )
 

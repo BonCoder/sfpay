@@ -46,7 +46,7 @@ class Login extends Controller
         // 直接创建token并设置有效期
         $hasUser['auth'] = 'admin';
         $token = md5(json_encode($hasUser).time());
-        Cache::set($token, json_encode($hasUser), 7 * 86400);
+        Cache::set('Admin:'.$token, json_encode($hasUser), 7 * 86400);
 
         $access = [
             'access_token' => $token,
@@ -88,7 +88,7 @@ class Login extends Controller
         // 直接创建token并设置有效期
         $hasUser['auth'] = 'member';
         $token = md5(json_encode($hasUser).time());
-        Cache::set($token, json_encode($hasUser), 7 * 86400);
+        Cache::set('Home:'.$token, json_encode($hasUser), 7 * 86400);
 
         $access = [
             'access_token' => $token,

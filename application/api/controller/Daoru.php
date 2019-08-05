@@ -98,26 +98,28 @@ class Daoru extends Base
     {
         $password = $request->post('password', '');
         $cryption = crypt($password, 'deal');
-        $res = MemberModel::where('pay_password', $cryption)->where('id', session('uid'))->find();
+        $user = $this->request->user;
+        $res = MemberModel::where('pay_password', $cryption)->where('id', $user->id)->find();
         if (!$res) {
             return json(['code' => 0, 'data' => '', 'msg' => '交易密码错误']);
         }
 
-        return $this->uploadExcel($request);
+        return $this->uploadExcel($request, $user);
     }
 
     /**
      * @param Request $request
+     * @param $user
      * @return \think\response\Json
      * @throws \PHPExcel_Exception
      * @throws \PHPExcel_Reader_Exception
+     * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @author  Bob<bob@bobcoder.cc>
-     * @throws \think\Exception
      */
-    protected function uploadExcel(Request $request)
+    protected function uploadExcel(Request $request, $user)
     {
         Loader::import('PHPExcel.PHPExcel', EXTEND_PATH);
         Loader::import('PHPExcel.PHPExcel.IOFactory.PHPExcel_IOFactory', EXTEND_PATH);
@@ -125,7 +127,7 @@ class Daoru extends Base
 
         $file = $request->file('excel');
         $file_path = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'excel';
-        $file_name = session('username') . '_daifu_' . time();
+        $file_name = $user->account . '_daifu_' . time();
         $info = $file->move($file_path, $file_name);
         if ($info) {
             $exclePath = $info->getSaveName();  //获取文件名
@@ -158,7 +160,7 @@ class Daoru extends Base
                 $money += floatval($danp);  //总金额增加
             }
 
-            $member = MemberModel::where('id', session('uid'))->find();
+            $member = MemberModel::where('id', $user->id)->find();
             if ($money > $member->money) {
                 return json(['code' => 0, 'msg' => 'excel文件导入失败，账户余额不足！']);
             }
@@ -171,7 +173,7 @@ class Daoru extends Base
             $daoru = new DaoruModel();
             $daoru->filename = explode('.', $file->getInfo()['name'])[0];  //获取原文件名
             $daoru->filepath = $exclePath;  //文件存放路径
-            $daoru->member_id = session('uid');  //导入用户
+            $daoru->member_id = $user->id;  //导入用户
             $daoru->count = count($excel_array);  //总笔数
             $daoru->money = $money;
             $daoru->picihao = $picihao;
@@ -181,7 +183,7 @@ class Daoru extends Base
             foreach ($excel_array as $k => $v) {
                 $item = array_values($v);
                 $daifumodel = new DaifuModel();
-                $daifumodel->member_id = session('uid');
+                $daifumodel->member_id = $user->id;
                 $daifumodel->daoru_id = $daoru->id;
                 $daifumodel->shenfenzheng = $item[1];
                 $daifumodel->bank_card = $item[2];
@@ -193,7 +195,7 @@ class Daoru extends Base
             }
 
             //修改用户余额和插入数据
-            ChongZhiModel::dodaifuyue($money, $daoru->id, $request->user->id);
+            ChongZhiModel::dodaifuyue($money, $daoru->id, $user->id);
         }
 
         return json(['code' => 1, 'msg' => 'excel文件导入成功！']);
