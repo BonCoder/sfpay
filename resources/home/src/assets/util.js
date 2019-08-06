@@ -64,8 +64,11 @@ const ajax = option => {
   }
   axios(data)
     .then(r => {
-
       //成功回调
+      if (r.data.data.length === 0) {
+        iview.Message.info('没有更多数据')
+        return false
+      }
       typeof option.then === 'function' && option.then(r.data)
     })
     .catch(r => {

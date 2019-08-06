@@ -29,8 +29,8 @@
     <Card v-show="!status" v-for="(props,index) in list " :key="index">
       <div class="ivu-col box" v-for="(item,idx) in props " :key="idx" v-show="!item.time">
         <div>
-          <span>{{item.name}}</span>
-          <span>{{item.value}}</span>
+          <span class="span-1">{{item.name}}</span>
+          <span class="span-2">{{item.value}}</span>
         </div>
       </div>
       <div class="ivu-col box time">
@@ -43,8 +43,8 @@
     <Card v-show="status" v-for="(props,index) in seeList " :key="index">
       <div class="ivu-col box" v-for="(item,idx) in props " :key="idx" v-show="!item.time">
         <div>
-          <span>{{item.name}}</span>
-          <span>{{item.value}}</span>
+          <span class="span-1">{{item.name}}</span>
+          <span class="span-2">{{item.value}}</span>
         </div>
       </div>
     </Card>
@@ -66,24 +66,24 @@ export default {
       query: { limit: 10 },
       page: 0,
       arr: [
-        { name: "批次编号", value: "184511234", check: true },
+        { name: "批次", value: "184511234", check: true },
         { name: "账号", value: "company" },
-        { name: "公司名称", value: "balance" },
+        { name: "公司", value: "balance" },
         { name: "总金额", value: "bankCardName", check: true },
         { name: "总笔数", value: "card", check: true },
         { name: "文件名", value: "bank", check: true },
-        { name: "上传日期", value: "status" }
+        { name: "日期", value: "status" }
         // { name: "上次操作时间	", value: "lastTime" }
       ],
       check: [
         { name: "序号", value: "184511234", check: true },
         { name: "账号", value: "company" },
-        { name: "公司名称", value: "balance" },
-        { name: "代付金额", value: "balance" },
-        { name: "身份证号", value: "bankCardName", check: true },
+        { name: "公司", value: "balance" },
+        { name: "金额", value: "balance" },
+        { name: "身份证", value: "bankCardName", check: true },
         { name: "开户名", value: "card", check: true },
-        { name: "银行卡号", value: "bank", check: true },
-        { name: "上传日期", value: "status" },
+        { name: "银行卡", value: "bank", check: true },
+        { name: "日期", value: "status" },
         { name: "状态	", value: "初审通过" }
       ],
       formItem: {},
@@ -142,12 +142,12 @@ export default {
 
             let arr = [
               { name: "账号", value: val.account },
-              { name: "公司名称", value: val.nickname },
-              { name: "代付金额", value: val.money },
-              { name: "身份证号", value: val.shenfenzheng, check: true },
+              { name: "公司", value: val.nickname },
+              { name: "金额", value: val.money },
+              { name: "身份证", value: val.shenfenzheng, check: true },
               { name: "开户名", value: val.bank_owner, check: true },
-              { name: "银行卡号", value: val.bank_card, check: true },
-              { name: "上传日期", value: val.create_time },
+              { name: "银行卡", value: val.bank_card, check: true },
+              { name: "日期", value: val.create_time },
               { name: "状态	", value: str }
             ];
            that.seeList.push(arr);
@@ -168,13 +168,13 @@ export default {
           let list = [];
           r.data.forEach((val, i) => {
             let arr = [
-              { name: "批次编号", value: val.picihao, check: true,id:val.id },
+              { name: "批次号", value: val.picihao, check: true,id:val.id },
               { name: "账号", value: val.account },
-              { name: "公司名称", value: val.nickname },
+              { name: "公司", value: val.nickname },
               { name: "总金额", value: val.money, check: true },
               { name: "总笔数", value: val.count, check: true },
               { name: "文件名", value: val.filename, check: true },
-              { name: "上传日期", value: val.create_time }
+              { name: "日期", value: val.create_time }
             ];
             list.push(arr);
           });

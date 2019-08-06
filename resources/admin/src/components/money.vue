@@ -21,8 +21,8 @@
     <Card v-show="!status" v-for="(props,index) in list " :key="index">
       <div class="ivu-col box" v-for="(item,idx) in props.list " :key="idx" >
         <div>
-          <span>{{item.name}}</span>
-          <span>{{item.value}}</span>
+          <span class="span-1">{{item.name}}</span>
+          <span class="span-2">{{item.value}}</span>
         </div>
       </div>
       <div class="ts" v-show="props.status==1">一审操作</div>
@@ -109,7 +109,6 @@ export default {
        url:'daifu/examine',
        data:this.query,
        then:r=>{
-         console.log(r)
          let list =[]
          r.data.forEach(val=>{
            let str;
@@ -136,10 +135,10 @@ export default {
            let obj={}
            let arr= [
               { name: "账号", value: val.account, check: true },
-              { name: "公司名称", value: val.nickname },
-              { name: "代付金额", value: val.money  },
+              { name: "公司", value: val.nickname },
+              { name: "金额", value: val.money  },
               { name: "开户名", value:val.bank_owner, check: true },
-              { name: "银行卡号", value:val.bank_card, check: true },
+              { name: "卡号", value:val.bank_card, check: true },
               { name: "开户行", value:val.bank_name, check: true },
               { name: "身份证", value:val.shenfenzheng, check: true },
               { name: "状态", value: str},

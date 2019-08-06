@@ -16,6 +16,7 @@
       </Header>
     </Layout>
     <router-view @login="Login" @search="isSearch" class="view" :show="showInp" @scroll="scroll($event)"></router-view>
+    <div v-show="showNav" @click="showNav = !showNav" id="mask"></div>
     <div class="navMenu" :class="showNav?'done':''">
       <div class="tabNav" v-for="(item,i) in str" :key="i" @click="navigate(item.name,i)">
         <p>{{item.name}}</p>
@@ -110,6 +111,15 @@ html {
 .iconfont {
   font-size: 24px;
   margin: 0 10px;
+}
+#mask{
+  width: 100%;
+  height:calc(100% - 64px);
+  position: fixed;
+  top: 64px;
+  background: transparent;
+  z-index: 1;
+
 }
 .icon-shanchu {
   color: red;
@@ -236,12 +246,21 @@ div.ivu-col.box > div {
 div.ivu-col.box:last-child div.ivu-col.box:last-child {
   width: 100%;
 }
-div.ivu-col.box > div > span {
+div.ivu-col.box > div > .span-1 {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   display: inline-block;
-  width: 50%;
+  width: 30%;
+  font-size: 0.7rem;
+  text-align: left;
+}
+div.ivu-col.box > div > .span-2 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+  width: 70%;
   font-size: 0.7rem;
   text-align: left;
 }
@@ -286,6 +305,9 @@ div.ivu-col.box > div > span button {
 }
 .ivu-page {
   margin-top: 30px;
+}
+.ivu-card{
+  width: 95%!important;
 }
 /* .ivu-card .ivu-row > .ivu-col:nth-child(2) {
   border-right: 1px solid rgba(245, 245, 245, 0.5);

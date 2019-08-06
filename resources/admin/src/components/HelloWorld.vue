@@ -14,15 +14,15 @@
     <Card v-show="!status&&!payStatus" v-for="(props,index) in list " :key="index">
       <div class="ivu-col box" v-for="(item,idx) in props " :key="idx" v-show="!item.time">
         <div>
-          <span>{{item.name}}</span>
-          <span v-show="item.value!=='status'">{{item.value}}</span>
+          <span class="span-1">{{item.name}}</span>
+          <span  class="span-2" v-show="item.value!=='status'">{{item.value}}</span>
           <i-button v-show="item.value=='status'" size="small" type="success">开启</i-button>
         </div>
       </div>
       <div class="ivu-col box time">
         <div>
-          <span>上次操作时间</span>
-          <span>{{props[props.length-1].value}}</span>
+          <span class="span-1">上次操作时间</span>
+          <span class="span-2">{{props[props.length-1].value}}</span>
         </div>
       </div>
       <div class="options">
@@ -157,11 +157,11 @@ export default {
           r.data.forEach((val, i) => {
             let arr = [
               { name: "账号", value: val.account, check: true ,key:"account",id:val.id},
-              { name: "公司名称", value: val.nickname ,check: true ,key:"nickname"},
+              { name: "公司", value: val.nickname ,check: true ,key:"nickname"},
               { name: "费率", value: val.rate, check: true ,key:"rate"},
               { name: "余额", value: val.money },
               { name: "开户名", value: val.bank_owner, check: true  ,key:"bank_owner"},
-              { name: "银行卡号", value: val.bank_card, check: true ,key:"bank_card"},
+              { name: "银行卡", value: val.bank_card, check: true ,key:"bank_card"},
               { name: "开户行", value: val.bank_name, check: true  ,key:"bank_name"},
               { name: "状态", value: val.status == 1 ? "正常" : "禁用" },
               { name: "上次操作时间	", value: val.last_login_time, time: true }

@@ -11,65 +11,65 @@
         <i-input  v-model="query.shenfenzheng"  placeholder="请输入身份证" number></i-input>
       </Form-item>
       <Form-item>
-        <i-input  v-model="query.bank_owner" placeholder="请输入开户行"></i-input>
+        <i-input  v-model="query.back_name" placeholder="请输入开户行"></i-input>
       </Form-item>
       <i-button type="success" size="large" @click="search">查询</i-button>
       <i-button type="default" size="large" @click="reset">重置</i-button>
     </i-form>
     <Card v-for="(item,i) in arr" :key="i">
-      <Row class="tables">
-        <i-col class="tables" span="6">
+      <Row>
+        <i-col class="tables" span="4">
           <span>账号</span>
         </i-col>
         <i-col class="tables" span="6">
           <span>{{item.account}}</span>
         </i-col>
-        <i-col class="tables" span="6">
-          <span>公司名称</span>
+        <i-col class="tables" span="4">
+          <span>公司</span>
         </i-col>
         <i-col class="tables" span="6">
           <span>{{item.nickname}}</span>
         </i-col>
       </Row>
-      <Row class="tables">
-        <i-col class="tables" span="6">
-          <span>开户名</span>
+      <Row>
+        <i-col class="tables" span="4">
+          <span>户名</span>
         </i-col>
         <i-col class="tables" span="6">
           <span>{{item.bank_owner}}</span>
         </i-col>
-        <i-col class="tables" span="6">
-          <span>操作金额</span>
+        <i-col class="tables" span="4">
+          <span>金额</span>
         </i-col>
         <i-col class="tables" span="6">
           <span>{{item.money}}</span>
         </i-col>
       </Row>
       <Row>
-          <i-col class="tables" span="6">
-            <span>银行卡号</span>
+          <i-col class="tables" span="4">
+            <span>卡号</span>
           </i-col>
           <i-col class="tables" span="6">
             <span>{{item.bank_card}}</span>
           </i-col>
-          <i-col class="tables" span="6">
-          <span>身份证号</span>
+          <i-col class="tables" span="4">
+          <span>证号</span>
         </i-col>
-        <i-col class="tables" span="6">
+        <i-col class="tables" span="10">
           <span>{{item.shenfenzheng}}</span>
         </i-col>
         </Row>
       <Row>
-        <i-col class="tables" span="6">
+        <i-col class="tables" span="4">
           <span>状态</span>
         </i-col>
         <i-col class="tables" span="6">
           <span>{{item.str}}</span>
         </i-col>
-        <i-col class="tables" span="6">
-          <span>操作时间</span>
+        <i-col class="tables" span="4">
+          <span>时间</span>
         </i-col>
-        <i-col class="tables" span="6">
+        <i-col class="tables" span="10">
           <span>{{item.create_time}}</span>
         </i-col>
       </Row>
@@ -153,17 +153,14 @@ export default {
       }
     },
     errors(e) {
-      console.log(e);
     },
     sucess(e) {
-      console.log(e);
     },
     search(){
       this.page = 0
       this.getData()
     },
     bUpload(e) {
-      console.log(e);
     },
     scroll(e) {
       let windowHeight =

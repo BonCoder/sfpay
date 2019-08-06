@@ -119,7 +119,6 @@ export default {
     },
     edit() {},
     scroll(e){
-      console.log(e.target.offsetTop)
     }
   }
 };

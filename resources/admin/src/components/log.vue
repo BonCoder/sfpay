@@ -12,8 +12,8 @@
     <Card v-show="!status" v-for="(props,index) in list " :key="index">
       <div class="ivu-col box" v-for="(item,idx) in props " :key="idx" v-show="!item.time">
         <div>
-          <span>{{item.name}}</span>
-          <span>{{item.value}}</span>
+          <span class="span-1">{{item.name}}</span>
+          <span class="span-2">{{item.value}}</span>
         </div>
       </div>
 
@@ -38,7 +38,7 @@ export default {
       page: 0,
       arr: [
         { name: "用户ID", value: "acount", check: true },
-        { name: "操作用户", value: "company" },
+        { name: "用户", value: "company" },
         { name: "描述", value: "payParsent", check: true },
         { name: "操作IP", value: "balance" },
         { name: "状态", value: "status" },

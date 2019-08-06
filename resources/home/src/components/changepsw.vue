@@ -35,7 +35,6 @@ export default {
       }
     },
     submit() {
-      console.log(1);
       this.$ajax({
         url: this.isLogin
           ? "member/updatePassword"
