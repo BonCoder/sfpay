@@ -1,7 +1,7 @@
 <template>
   <i-form>
     <img src="../assets/logo.png" alt srcset />
-    <h2>欢迎使用申孚通后台管理</h2>
+    <h2>欢迎使用申孚通管理</h2>
     <Form-item label="账号">
       <i-input placeholder="请输入账号" v-model="ac"></i-input>
     </Form-item>
@@ -41,7 +41,7 @@ export default {
                   this.$Message.info(r.msg);
                   return false
                 }
-                localStorage.setItem('user_a',JSON.stringify(r))
+                localStorage.setItem('userInfo',JSON.stringify(r))
                 location.reload()
               }
             })

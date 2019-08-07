@@ -87,66 +87,66 @@
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      visible: false,
-      name: "",
-      page:0,
-      item:{}
-    };
-  },
-  created() {
-    this.name = this.$route.params.name;
-
-    this.$emit('search',false)
-    this.getData()
-  },
-  mounted() {},
-  methods: {
-    getData(t){
-      let  that = this
-      this.$ajax({
-        url:"chongzhi/total",
-        data:{
-          limit:10,
-          offset:this.page*10
-        },
-        then:r=>{
-          that.item = r.data
-        }
-      })
+  export default {
+    data() {
+      return {
+        visible: false,
+        name: "",
+        page:0,
+        item:{}
+      };
     },
-    edit() {},
-    scroll(e){
+    created() {
+      this.name = this.$route.params.name;
+
+      this.$emit('search',false)
+      this.getData()
+    },
+    mounted() {},
+    methods: {
+      getData(t){
+        let  that = this
+        this.$ajax({
+          url:"chongzhi/total",
+          data:{
+            limit:10,
+            offset:this.page*10
+          },
+          then:r=>{
+            that.item = r.data
+          }
+        })
+      },
+      edit() {},
+      scroll(e){
+      }
     }
-  }
-};
+  };
 </script>
 <style scoped>
-.ivu-card {
-  width: 90%;
-  margin: 30px auto;
-  margin-bottom: 0;
-}
-.iconfont {
-}
-.ivu-row {
-  height: 50px;
-}
-.tables {
-  height: 50px;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-.tables span {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.del {
-  color: red;
-}
+  .ivu-card {
+    width: 90%;
+    margin: 30px auto;
+    margin-bottom: 0;
+  }
+  .iconfont {
+  }
+  .ivu-row {
+    height: 50px;
+  }
+  .tables {
+    height: 50px;
+    display: flex !important;
+    /*justify-content: center !important;*/
+    align-items: center !important;
+  }
+  .tables span {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .del {
+    color: red;
+  }
 </style>
 

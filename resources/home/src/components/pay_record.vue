@@ -30,38 +30,44 @@
 
     <Card v-for="(item,i) in arr" :key="i">
       <Row>
-        <i-col class="tables" span="4">
-          <span>公司</span>
+        <i-col class="tables" span="10">
+          <span>公司名称</span>
         </i-col>
-        <i-col class="tables" span="6">
+        <i-col class="tables" span="14">
           <span>{{item.nickname}}</span>
         </i-col>
-        <i-col class="tables" span="4">
-          <span>金额</span>
+
+      </Row>
+      <Row>
+        <i-col class="tables" span="10">
+          <span>操作金额</span>
         </i-col>
-        <i-col class="tables" span="8">
+        <i-col class="tables" span="14">
           <span>{{item.money}}</span>
         </i-col>
       </Row>
       <Row>
-        <i-col class="tables" span="4">
+        <i-col class="tables" span="10">
           <span>类型</span>
         </i-col>
-        <i-col class="tables" span="6">
+        <i-col class="tables" span="14">
           <span>{{item.type}}</span>
         </i-col>
-        <i-col class="tables" span="4">
+
+      </Row>
+      <Row>
+        <i-col class="tables" span="10">
           <span>备注</span>
         </i-col>
-        <i-col class="tables" span="8">
+        <i-col class="tables" span="14">
           <span>{{item.beizhu}}</span>
         </i-col>
       </Row>
       <Row>
-        <i-col class="tables" span="4">
-          <span>时间</span>
+        <i-col class="tables" span="10">
+          <span>操作时间</span>
         </i-col>
-        <i-col class="tables" span="11">
+        <i-col class="tables" span="14">
           <span>{{item.create_time}}</span>
         </i-col>
       </Row>
@@ -78,121 +84,117 @@
   </div>
 </template>
 <script>
-export default {
-  props: ["show"],
-  data() {
-    return {
-      clearable: false,
-      visible: false,
-      name: "",
-      arr: [],
-      page: 0,
-      start: "",
-      end: "",
-      options: [
-        "充值",
-        "代付不成功返还",
-        "手续费",
-        "代付支出",
-        "转账",
-        "接口记录"
-      ],
-      type: ""
-    };
-  },
-  created() {
-    this.name = this.$route.params.name;
-    this.arr.forEach(val => {
-      val.visible = false;
-    });
-    this.getData();
-  },
-  mounted() {},
-  methods: {
-    getData(t) {
-      let that = this;
-      this.$ajax({
-        url: "chongzhi/lists",
-        data: {
-          start: this.start ? new Date(this.start).toLocaleDateString() : "",
-          end: this.end ? new Date(this.end).toLocaleDateString() : "",
-          type: this.type,
-          limit: 10,
-          offset: this.page * 10
-        },
-        then: r => {
-          if (t) {
-            that.arr = that.arr.concat(r.data);
-          } else {
-            that.arr = r.data;
-          }
-        }
-      });
+  export default {
+    props: ["show"],
+    data() {
+      return {
+        clearable: false,
+        visible: false,
+        name: "",
+        arr: [],
+        page: 0,
+        start: "",
+        end: "",
+        options: [
+          "充值",
+          "代付不成功返还",
+          "手续费",
+          "代付支出",
+          "转账",
+          "接口记录"
+        ],
+        type: ""
+      };
     },
-    search() {
-      this.page = 0;
+    created() {
+      this.name = this.$route.params.name;
+      this.arr.forEach(val => {
+        val.visible = false;
+      });
       this.getData();
     },
-    reset() {
-      this.end = "";
-      this.start = "";
-      this.type = "";
-      this.$refs.select.clearSingleSelect();
-    },
-    chage(e) {
-      this.type = e;
-    },
-    edit() {},
-    scroll(e) {
-      let [sH, sT, cH] = [
-        e.currentTarget.scrollHeight,
-        e.currentTarget.scrollTop,
-        e.currentTarget.clientHeight
-      ];
-      if (sH == sT + cH) {
-        this.page++;
-        this.getData(true);
+    mounted() {},
+    methods: {
+      getData(t) {
+        let that = this;
+        this.$ajax({
+          url: "chongzhi/lists",
+          data: {
+            start: this.start ? new Date(this.start).toLocaleDateString() : "",
+            end: this.end ? new Date(this.end).toLocaleDateString() : "",
+            type: this.type,
+            limit: 10,
+            offset: this.page * 10
+          },
+          then: r => {
+            if (t) {
+              that.arr = that.arr.concat(r.data);
+            } else {
+              that.arr = r.data;
+            }
+          }
+        });
+      },
+      search() {
+        this.page = 0;
+        this.getData();
+      },
+      reset() {
+        this.end = "";
+        this.start = "";
+        this.type = "";
+        this.$refs.select.clearSingleSelect();
+      },
+      chage(e) {
+        this.type = e;
+      },
+      edit() {},
+      scroll(e) {
+        let [sH, sT, cH] = [
+          e.currentTarget.scrollHeight,
+          e.currentTarget.scrollTop,
+          e.currentTarget.clientHeight
+        ];
+        if (sH == sT + cH) {
+          this.page++;
+          this.getData(true);
+        }
       }
     }
-  }
-};
+  };
 </script>
 <style >
-.tables:not(:last-child) {
-  border-bottom: 1px solid rgba(245, 245, 245, 0.5);
-}
+  .tables:not(:last-child) {
+    border-bottom: 1px solid rgba(245, 245, 245, 0.5);
+  }
 
-form {
-  margin-top: 10px;
-}
-.ivu-form-item:nth-child(1),
-.ivu-form-item:nth-child(2) {
-  margin-top: 30px;
-}
-button {
-  /* margin: 30px; */
-}
-.ivu-card {
-  width: 90%;
-  margin: 30px auto;
-  margin-bottom: 0;
-}
-.ivu-row {
-  height: 50px;
-}
-.tables {
-  height: 50px;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-.tables span {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.del {
-  color: red;
-}
+  form {
+    margin-top: 10px;
+  }
+  .ivu-form-item:nth-child(1),
+  .ivu-form-item:nth-child(2) {
+    margin-top: 30px;
+  }
+  button {
+    /* margin: 30px; */
+  }
+  .ivu-card {
+    width: 90%;
+    margin: 30px auto;
+    margin-bottom: 0;
+  }
+  .ivu-row {
+    height: 40px;
+  }
+  .tables {
+    height: 40px;
+    display: flex !important;
+    /*justify-content: center !important;*/
+    align-items: center !important;
+  }
+
+  .del {
+    color: red;
+  }
 </style>
 
