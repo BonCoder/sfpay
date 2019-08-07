@@ -64,6 +64,7 @@ export default {
         data:{log_id:id},
         then:r=>{
           that.$Message.success(r.msg)
+          this.getData()
         }
       })
     },
