@@ -18,7 +18,7 @@ class Log extends Base
         $key = input('key');
         $map = [];
         if ($key && $key !== "") {
-            $map['admin_name'] = ['like', "%" . $key . "%"];
+            $map['admin_name|description'] = ['like', "%" . $key . "%"];
         }
         if (session('auth') == 'user') {
             $map['admin_id'] = session('uid');
