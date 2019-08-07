@@ -91,6 +91,7 @@ export default {
       this.getData()
     },
     examine(s,i){
+      let that = this
       this.$ajax({
         url:"daifu/changeStatus",
         method: 'post',
@@ -142,6 +143,7 @@ export default {
               { name: "开户行", value:val.bank_name, check: true },
               { name: "身份证", value:val.shenfenzheng, check: true },
               { name: "状态", value: str},
+              { name: "时间	", value: val.create_time, time: true }
             ]
             obj.list =arr
             obj.status = val.status
