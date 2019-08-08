@@ -61,7 +61,7 @@ class User extends Base
 
         $role = new \app\admin\model\UserType();
         $this->assign('role',$role->getRole());
-        return $this->fetch();
+        return $this->fetch('user/useradd');
     }
 
 
@@ -93,7 +93,7 @@ class User extends Base
             'user' => $user->getOneUser($id),
             'role' => $role->getRole()
         ]);
-        return $this->fetch();
+        return $this->fetch('user/useredit');
     }
 
 
