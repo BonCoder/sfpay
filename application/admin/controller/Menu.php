@@ -18,7 +18,7 @@ class Menu extends Base
         $admin_rule = $menu->getAllMenu();
         $arr = $nav::rule($admin_rule);
         $this->assign('admin_rule',$arr);
-        return $this->fetch();
+        return $this->fetch('menu/index');
     }
 
 	

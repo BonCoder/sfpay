@@ -135,7 +135,7 @@ class Member extends Base
         if (request()->isAjax()) {
             $param = input('post.');
             $param['password'] = md5(md5($param['password']) . config('auth_key'));
-            $param['pay_password'] = crypt($param['pay_password'],'deal');
+            $param['pay_password'] = crypt($param['pay_password'], 'deal');
             $param['group_id'] = 4;
             $member = new MemberModel();
             $flag = $member->insertMember($param);
@@ -164,7 +164,7 @@ class Member extends Base
             if (empty($param['pay_password'])) {
                 unset($param['pay_password']);
             } else {
-                $param['pay_password'] = crypt($param['pay_password'],'deal');
+                $param['pay_password'] = crypt($param['pay_password'], 'deal');
             }
             $flag = $member->editMember($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
@@ -226,17 +226,20 @@ class Member extends Base
         $id = input('param.id');
         if ($request->isAjax()) {
             $data = $request->post();
-            if (! is_numeric($data['money'])) {
+            if (!is_numeric($data['money'])) {
                 return json(['code' => 0, 'data' => '', 'msg' => '请输入正确的金额！']);
             }
             $model = new ChongZhiModel();
             $res = $model->recharge($data['money'], $id, $data['remark']);
             if ($res) {
+                $username = MemberModel::where('id',$id)->value('account');
+                writelog(session('uid'), session('username'), '用户【' . $username . '】充值金额' . $data['money'], 1);
                 return json(['code' => 1, 'data' => '', 'msg' => '充值成功']);
             }
 
             return json(['code' => 0, 'data' => '', 'msg' => '充值失败']);
         }
+
 
         $this->assign('id', $id);
         return $this->fetch();
@@ -251,7 +254,7 @@ class Member extends Base
      */
     public function updatePassword(Request $request)
     {
-        if($request->isPost()){
+        if ($request->isPost()) {
             $password = md5(md5($request->post('password')) . config('auth_key'));
             $member = MemberModel::findOrFail(session('uid'));
             $member->password = $password;
@@ -271,16 +274,16 @@ class Member extends Base
      */
     public function updatePayPassword(Request $request)
     {
-        if($request->isPost()){
+        if ($request->isPost()) {
             $member = MemberModel::findOrFail(session('uid'));
 
-            if($member->pay_password){
-                $cryption = crypt($request->post('old_password'),'deal');
-                if($member->pay_password != $cryption)
+            if ($member->pay_password) {
+                $cryption = crypt($request->post('old_password'), 'deal');
+                if ($member->pay_password != $cryption)
                     return json(['code' => 0, 'data' => '', 'msg' => '旧交易密码错误']);
             }
 
-            $pay_password = crypt($request->post('password'),'deal');
+            $pay_password = crypt($request->post('password'), 'deal');
             $member->pay_password = $pay_password;
             $member->save();
 

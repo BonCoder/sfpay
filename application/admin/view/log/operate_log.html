@@ -36,7 +36,7 @@
                                 <th width="8%">操作IP</th>
                                 <th width="6%">状态</th>
                                 <th width="10%">操作时间</th>
-                                <th width="10%">操作</th>
+<!--                                <th width="10%">操作</th>-->
                             </tr>
                         </thead>
                         <script id="arlist" type="text/html">
@@ -55,11 +55,11 @@
                                         {{# } }}
                                     </td> 
                                     <td>{{d[i].add_time}}</td> 
-                                    <td>
-                                        <a href="javascript:;" onclick="del_log({{d[i].log_id}})" class="btn btn-danger btn-xs">
-                                            <i class="fa fa-trash-o"></i> 删除
-                                        </a>
-                                    </td>
+<!--                                    <td>-->
+<!--                                        <a href="javascript:;" onclick="del_log({{d[i].log_id}})" class="btn btn-danger btn-xs">-->
+<!--                                            <i class="fa fa-trash-o"></i> 删除-->
+<!--                                        </a>-->
+<!--                                    </td>-->
                                 </tr>
                             {{# } }}
                         </script>

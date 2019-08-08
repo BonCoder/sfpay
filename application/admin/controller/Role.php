@@ -26,11 +26,6 @@ class Role extends Base
         $count = $user->getAllRole($map);  //总数据
         $allpage = intval(ceil($count / $limits));       
         $lists = $user->getRoleByWhere($map, $Nowpage, $limits);
-        foreach($lists as $k=>$v)
-        {
-            $lists[$k]['create_time']=date('Y-m-d H:i:s',$v['create_time']);
-            $lists[$k]['update_time']=date('Y-m-d H:i:s',$v['update_time']);
-        }   
         $this->assign('Nowpage', $Nowpage); //当前页
         $this->assign('allpage', $allpage); //总页数 
         $this->assign('val', $key);
