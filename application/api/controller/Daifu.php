@@ -157,7 +157,8 @@ class Daifu extends Base
                 break;
         }
 
-        writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status, 1);
+        $user = $this->request->user;
+        writelog($user->id, $user->username, '代付：开户名【' . $daifu->bank_owner . '】' . $status, 1);
     }
 
     /**

@@ -29,11 +29,11 @@ class Daifu extends Base
     {
         $map = [];
         if ($money = input('money', '')) $map['think_daifu.money'] = $money;
-        if ($member_id = input('member_id', '')) $map['member_id'] = $member_id;
+        if ($account = input('account', '')) $map['think_member.account'] = $account;
         if ($bank_card = input('bank_card', '')) $map['think_daifu.bank_card'] = $bank_card;
         if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
         if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
-        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'member_id'));
+        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'account'));
 
         if ($request->isGet()) {
             return $this->fetch();
@@ -42,7 +42,12 @@ class Daifu extends Base
         $daifu = new DaifuModel();
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = 10;// 获取总条数
-        $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits);
+        $lists = $daifu
+            ->field('think_daifu.*,think_member.account,think_member.nickname')
+            ->join('think_member', 'think_daifu.member_id = think_member.id', 'left')
+            ->where($map)
+            ->order('create_time','desc')
+            ->paginate($limits);
 
         return json($lists);
     }
@@ -60,11 +65,11 @@ class Daifu extends Base
     {
         $map = [];
         if ($money = input('money', '')) $map['think_daifu.money'] = $money;
-        if ($member_id = input('member_id', '')) $map['member_id'] = $member_id;
+        if ($account = input('account', '')) $map['think_member.account'] = $account;
         if ($bank_card = input('bank_card', '')) $map['think_daifu.bank_card'] = $bank_card;
         if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
         if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
-        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'member_id'));
+        $this->assign(compact('money', 'bank_card', 'shenfenzheng', 'bank_name', 'account'));
 
         if ($request->isGet()) {
             return $this->fetch();
@@ -73,7 +78,12 @@ class Daifu extends Base
         $daifu = new DaifuModel();
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = 10;// 获取总条数
-        $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits);
+        $lists = $daifu
+            ->field('think_daifu.*,think_member.account,think_member.nickname')
+            ->join('think_member', 'think_daifu.member_id = think_member.id', 'left')
+            ->where($map)
+            ->order('create_time','desc')
+            ->paginate($limits);
 
         return json($lists);
     }
@@ -160,7 +170,6 @@ class Daifu extends Base
     {
         if (request()->isPost()) {
             if ($money = input('money', '')) $map['think_daifu.money'] = $money;
-            if ($account = input('account', '')) $map['account'] = $account;
             if ($bank_card = input('bank_card', '')) $map['think_daifu.bank_card'] = $bank_card;
             if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
             if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
