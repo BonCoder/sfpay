@@ -41,18 +41,18 @@ class Daoru extends Base
         if ($picihao = input('picihao', '')) {
             $map['picihao'] = $picihao;
         }
+        if ($account = input('account', '')) {
+            $map['member_id'] = MemberModel::where('account', $account)->value('id');
+        }
         $start = input('start', '');
         $end = input('end', '');
         if ($start && $end) {
             $map['think_daoru.create_time'] = ['between time', [strtotime($start), strtotime($end)]];
         }
-
-        $this->assign(compact('filename', 'money', 'count', 'picihao', 'start','end'));
-
+        $this->assign(compact('filename', 'money', 'count', 'picihao', 'start','end','account'));
         if ($request->isGet()) {
             return $this->fetch();
         }
-
         $daoru = new DaoruModel();
         $Nowpage = input('page',1);
         $limits = 10;// 获取总条数

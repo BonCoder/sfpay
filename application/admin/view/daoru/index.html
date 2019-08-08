@@ -12,6 +12,10 @@
                 <div class="col-sm-12">
                     <form name="admin_list_sea" class="form-inline" method="get" action="{:url('index')}">
                         <div class="form-group">
+                            <label for="account" class="sr-only">账户</label>
+                            <input type="text" name="account" placeholder="请输入账户" value="{$account|default=''}" id="account" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <label for="filename" class="sr-only">文件名</label>
                             <input type="text" name="filename" placeholder="请输入文件名" value="{$filename|default=''}" id="filename" class="form-control">
                         </div>
@@ -194,7 +198,7 @@
         var picihao = $('#picihao').val();
         var count = $('#count').val();
         var end = $('#end').val();
-        console.log(111)
+        var account = $('#account').val();
         $.post('{:url("Daoru/index")}', {
             page: curr || 1,
             filename: filename,
@@ -203,6 +207,7 @@
             picihao: picihao,
             start: start,
             end: end,
+            account: account,
         }, function (data) {
             $(".spiner-example").css('display', 'none'); //数据加载完关闭动画
             if (data == '') {
