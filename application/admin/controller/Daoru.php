@@ -49,12 +49,12 @@ class Daoru extends Base
         if ($start && $end) {
             $map['think_daoru.create_time'] = ['between time', [strtotime($start), strtotime($end)]];
         }
-        $this->assign(compact('filename', 'money', 'count', 'picihao', 'start','end','account'));
+        $this->assign(compact('filename', 'money', 'count', 'picihao', 'start', 'end', 'account'));
         if ($request->isGet()) {
             return $this->fetch();
         }
         $daoru = new DaoruModel();
-        $Nowpage = input('page',1);
+        $Nowpage = input('page', 1);
         $limits = 10;// 获取总条数
         $lists = $daoru->getDaoruByWhere($map, $Nowpage, $limits);
         $count = $daoru->getAllCount($map);//计算总页面
@@ -226,8 +226,28 @@ class Daoru extends Base
     public function detail($id)
     {
         $daifu = new DaifuModel();
-        $data = $daifu->with('user')->where('daoru_id',$id)->select();
+        $data = $daifu->with('user')->where('daoru_id', $id)->select();
 
         return json(['code' => 1, 'data' => $data]);
+    }
+
+    /**
+     * 修改时间
+     *
+     * @return \think\response\Json
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function changeTime()
+    {
+        $id = (int)$this->request->post('id');
+        $create_time = $this->request->post('create_time');
+        if (date('Y-m-d H:i:s', strtotime($create_time)) != $create_time) {
+            return json(['code' => 0, 'msg' => '时间格式不正确']);
+        }
+
+        $daoru = new DaoruModel();
+        $daoru->where('id', $id)->update(['create_time' => strtotime($create_time)]);
+
+        return json(['code' => 1, 'msg' => '修改成功']);
     }
 }

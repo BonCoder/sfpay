@@ -191,4 +191,25 @@ class Daifu extends Base
 
         return $this->fetch();
     }
+
+    /**
+     * 修改时间
+     *
+     * @return \think\response\Json
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function changeTime()
+    {
+        $id = (int)$this->request->post('id');
+        $time = $this->request->post('time');
+        $filed = $this->request->post('filed');
+        if (date('Y-m-d H:i:s', strtotime($time)) != $time) {
+            return json(['code' => 0, 'msg' => '时间格式不正确']);
+        }
+
+        $model = new DaifuModel();
+        $model->where('id', $id)->update([$filed => strtotime($time)]);
+
+        return json(['code' => 1, 'msg' => '修改成功']);
+    }
 }
