@@ -12,7 +12,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencod
 axios.interceptors.request.use(
   config => {
     config.data = qs.stringify(config.data);
-    let token =JSON.parse(localStorage.getItem('user_a'));
+    let token =JSON.parse(localStorage.getItem('userInfo'));
     if (token) { //判断token是否存在
       config.headers.Authorization = 'Home ' + token.data.access_token;  //将token设置成请求头
     }
@@ -27,7 +27,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     if (response.data.code === -1) {
-      localStorage.removeItem('user_a')
+      localStorage.removeItem('userInfo')
       location.reload()
     }
     return response;
