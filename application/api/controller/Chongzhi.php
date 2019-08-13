@@ -90,4 +90,37 @@ class Chongzhi extends Base
 
         return $this->sendJson(compact('money', 'chongzhi', 'daifu'));
     }
+
+    /**
+     * 充值记录
+     *
+     * @param ChongZhiModel $chongzhi
+     * @return \think\response\Json|\think\response\Jsonp
+     * @throws \think\exception\DbException
+     * @link https://www.bobcoder.cc/
+     * @Date 2019/7/29
+     * @author Bob<bob@bobcoder.cc>
+     */
+    public function admin_lists(ChongZhiModel $chongzhi)
+    {
+        $get = $this->request->get();
+        $limit = (int)$this->request->get('limit', 5);
+        $offset = (int)$this->request->get('offset', 0);
+
+        $map = [];
+        isset($get['type']) && $get['type'] ? $map['type'] =  $get['type'] : false;
+        $start = $get['start'] ?? '';
+        $end = $get['end'] ?? '';
+        if ($start && $end) {
+            $map['create_time'] = ['between time', [strtotime($get['start']), $get['end']]];
+        }
+
+        $list = $chongzhi->with('user2')
+            ->where($map)
+            ->limit($offset, $limit)
+            ->select();
+
+        return $this->sendJson($list);
+    }
+
 }
