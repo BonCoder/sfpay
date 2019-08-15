@@ -14,15 +14,15 @@
     <Card v-show="!status&&!payStatus" v-for="(props,index) in list " :key="index">
       <div class="ivu-col box" v-for="(item,idx) in props " :key="idx" v-show="!item.time">
         <div>
-          <span class="span-1">{{item.name}}</span>
-          <span  class="span-2" v-show="item.value!=='status'">{{item.value}}</span>
+          <span>{{item.name}}</span>
+          <span v-show="item.value!=='status'">{{item.value}}</span>
           <i-button v-show="item.value=='status'" size="small" type="success">开启</i-button>
         </div>
       </div>
       <div class="ivu-col box time">
         <div>
-          <span class="span-1">上次操作时间</span>
-          <span class="span-2">{{props[props.length-1].value}}</span>
+          <span>上次操作时间</span>
+          <span>{{props[props.length-1].value}}</span>
         </div>
       </div>
       <div class="options">
@@ -50,7 +50,7 @@
     <i-form v-show="status" class="form">
       <Form-item v-for="(item,idx) in formData " :key="idx" :label="item.name">
         <i-input v-model="formData[idx][item.key]" :placeholder="'请输入'+item.name" v-if="!item.type"></i-input>
-        <Upload v-if="item.type==1" style="float:left" action="http://www.shenfupay.net/admin/upload/uploadface" name='file' :on-error="uploadError" :on-success="upload"> 
+        <Upload v-if="item.type==1" style="float:left" action="http://www.shenfupay.net/admin/upload/uploadface" name='file' :on-error="uploadError" :on-success="upload">
           <i-button v-if="item.type ==1" size="default" type="primary">选择头像</i-button>
         </Upload>
       </Form-item>
@@ -68,201 +68,196 @@
 </template>
 
 <script>
-export default {
-  name: "HelloWorld",
-  props: ["show"],
-  data() {
-    return {
-      status: false,
-      list: [],
-      query: {},
-      pay: {},
-      payStatus: false,
-      page: 0,
-      formData: [],
+  export default {
+    name: "HelloWorld",
+    props: ["show"],
+    data() {
+      return {
+        status: false,
+        list: [],
+        query: {},
+        pay: {},
+        payStatus: false,
+        page: 0,
+        formData: [],
 
-    };
-  },
-  created() {
-    let that = this;
-    setInterval(() => {
-      let time = new Date();
-      that.msg = time.toLocaleString();
-    }, 1000);
-    this.getData();
-    console.log(this.formData);
-  },
-  methods: {
-    upload(e){
-      console.console(e)
+      };
     },
-    uploadError(e){
-      this.$Message.error('上传失败，请重试或检查网络')
-    },
-    pays(){
-      let that =this
-      this.$ajax({
-        url:"member/recharge",
-        data:this.pay,
-        method:"POST",
-        then:r=>{
-          that.$Message.info('充值成功')
-          that.status = false
-          that.pay={}
-        }
-      })
-    },
-    del(id){
-      let that =this
-      this.$ajax({
-        url:"member/del_member",
-        data:{id:id},
-        method:"post",
-        then:r=>{
-          that.$Message.info('操作成功')
-          thta.getData()
-        }
-      })
-    },
-    back() {
-      this.status = false;
-    },
-    topay(id) {
-      this.pay.id = id[0].id
-      this.payStatus = true;
-    },
-    cancel() {
-      this.status = false;
-      this.formData = [];
-    },
-    search() {
-      this.page = 0;
+    created() {
+      let that = this;
+      setInterval(() => {
+        let time = new Date();
+        that.msg = time.toLocaleString();
+      }, 1000);
       this.getData();
     },
-    getData(yt) {
-      let that = this;
-      this.$ajax({
-        url: "member/lists",
-        method: "get",
-        data: {
-          limit: 10,
-          offset: this.page * 10,
-          username: this.query.name
-        },
-        then: r => {
-          if (r.code != 1) {
-            this.$Message.info(r.data.msg);
+    methods: {
+      upload(e){
+      },
+      uploadError(e){
+        this.$Message.error('上传失败，请重试或检查网络')
+      },
+      pays(){
+        let that =this
+        this.$ajax({
+          url:"member/recharge",
+          data:this.pay,
+          method:"POST",
+          then:r=>{
+            that.$Message.info('充值成功')
+            that.status = false
+            that.pay={}
           }
-          let list = [];
-          r.data.forEach((val, i) => {
-            let arr = [
-              { name: "账号", value: val.account, check: true ,key:"account",id:val.id},
-              { name: "公司", value: val.nickname ,check: true ,key:"nickname"},
-              { name: "费率", value: val.rate, check: true ,key:"rate"},
-              { name: "余额", value: val.money },
-              { name: "开户名", value: val.bank_owner, check: true  ,key:"bank_owner"},
-              { name: "银行卡", value: val.bank_card, check: true ,key:"bank_card"},
-              { name: "开户行", value: val.bank_name, check: true  ,key:"bank_name"},
-              { name: "状态", value: val.status == 1 ? "正常" : "禁用" },
-              { name: "上次操作时间	", value: val.last_login_time, time: true }
-            ];
-            list.push(arr);
-          });
-          if (yt) {
-            that.list.concat(list);
-          } else {
-            that.list = list;
+        })
+      },
+      del(id){
+        let that =this
+        this.$ajax({
+          url:"member/del_member",
+          data:{id:id},
+          method:"post",
+          then:r=>{
+            that.$Message.info('操作成功')
+            that.getData()
           }
-        }
-      });
-    },
-    format(props) {
-      console.log(props);
-      let arr = [
-        { name: "公司名称", value:'', check: true ,key:"nickname"},
-        { name: "费率", value: '', check: true ,key:"rate"},
-        { name: "开户名", value: '', check: true  ,key:"bank_owner"},
-        { name: "银行卡号", value: '', check: true ,key:"bank_card"},
-        { name: "开户行", value:'', check: true ,key:"bank_name"},
-      ];
-      let p = props ? [...props] : [...arr];
-      p.forEach(val => {
-        let obj = {};
-        obj.name = val.name;
-        obj.value = val.value;
-        obj.key =val.key
-        if (!props) {
-          obj.value = "";
-        }else{
-          obj[obj.key] = obj.value
-        }
-        if (val.check) {
-          this.formData.push(obj);
-        }
-      });
-      this.formData.push({ name: "密码", value: "password" ,key:"password" });
-      this.formData.push({ name: "交易密码", value: "payPassword" ,key:"pay_password"});
-      this.formData.push({ name: "头像", value: "avatar", type: "1"  });
-      this.status = true;
-      console.log(this.list);
-    },
-    confirm(){
-      let obj ={}
-      let that = this
-      this.formData.forEach(val=>{
-        obj[val.key] = val[val.key]
-      })
-      this.$ajax({
-        url:"member/save",
-        data:obj,
-        method:"post",
-        then:r=>{
-          that.cancel()
-          that.getData()
-        }
-      })
-      console.log(obj)
-    },
-    scroll(e) {
-      let windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
-      if (
-        windowHeight + e.currentTarget.scrollTop >=
+        })
+      },
+      back() {
+        this.status = false;
+      },
+      topay(id) {
+        this.pay.id = id[0].id
+        this.payStatus = true;
+      },
+      cancel() {
+        this.status = false;
+        this.formData = [];
+      },
+      search() {
+        this.page = 0;
+        this.getData();
+      },
+      getData(yt) {
+        let that = this;
+        this.$ajax({
+          url: "member/lists",
+          method: "get",
+          data: {
+            limit: 10,
+            offset: this.page * 10,
+            username: this.query.name
+          },
+          then: r => {
+            if (r.code != 1) {
+              this.$Message.info(r.data.msg);
+            }
+            let list = [];
+            r.data.forEach((val, i) => {
+              let arr = [
+                { name: "账号", value: val.account, check: true ,key:"account",id:val.id},
+                { name: "公司名称", value: val.nickname ,check: true ,key:"nickname"},
+                { name: "费率", value: val.rate, check: true ,key:"rate"},
+                { name: "余额", value: val.money },
+                { name: "开户名", value: val.bank_owner, check: true  ,key:"bank_owner"},
+                { name: "银行卡号", value: val.bank_card, check: true ,key:"bank_card"},
+                { name: "开户行", value: val.bank_name, check: true  ,key:"bank_name"},
+                { name: "状态", value: val.status == 1 ? "正常" : "禁用" },
+                { name: "上次操作时间	", value: val.last_login_time, time: true }
+              ];
+              list.push(arr);
+            });
+            if (yt) {
+              that.list= that.list.concat(list);
+            } else {
+              that.list = list;
+            }
+          }
+        });
+      },
+      format(props) {
+        let arr = [
+          { name: "公司名称", value:'', check: true ,key:"nickname"},
+          { name: "费率", value: '', check: true ,key:"rate"},
+          { name: "开户名", value: '', check: true  ,key:"bank_owner"},
+          { name: "银行卡号", value: '', check: true ,key:"bank_card"},
+          { name: "开户行", value:'', check: true ,key:"bank_name"},
+        ];
+        let p = props ? [...props] : [...arr];
+        p.forEach(val => {
+          let obj = {};
+          obj.name = val.name;
+          obj.value = val.value;
+          obj.key =val.key
+          if (!props) {
+            obj.value = "";
+          }else{
+            obj[obj.key] = obj.value
+          }
+          if (val.check) {
+            this.formData.push(obj);
+          }
+        });
+        this.formData.push({ name: "密码", value: "password" ,key:"password" });
+        this.formData.push({ name: "交易密码", value: "payPassword" ,key:"pay_password"});
+        this.formData.push({ name: "头像", value: "avatar", type: "1"  });
+        this.status = true;
+      },
+      confirm(){
+        let obj ={}
+        let that = this
+        this.formData.forEach(val=>{
+          obj[val.key] = val[val.key]
+        })
+        this.$ajax({
+          url:"member/save",
+          data:obj,
+          method:"post",
+          then:r=>{
+            that.cancel()
+            that.getData()
+          }
+        })
+      },
+      scroll(e) {
+        let windowHeight =
+          document.documentElement.clientHeight || document.body.clientHeight;
+        if (
+          windowHeight + e.currentTarget.scrollTop >=
           e.currentTarget.scrollHeight &&
-        !this.status
-      ) {
-        this.page++;
-        this.getData(true);
+          !this.status
+        ) {
+          this.page++;
+          this.getData(true);
+        }
       }
-    }
-  },
-  computed: {}
-};
+    },
+    computed: {}
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-html {
-  /* min-height: 100%; */
-  /* background: #f2f2f2; */
-}
-.layout-content {
-  min-height: 100%;
-  width: 100%;
-  background: #f2f2f2;
-  padding-top: 20px;
-}
-.ivu-card {
-  width: 80%;
-  /* height: 100px; */
-  /* display: inline-block; */
-  margin: 0 auto;
-  margin-bottom: 20px;
-}
-.options {
-  border: none !important;
-  margin-top: 10px;
-  display: flex !important;
-  justify-content: center;
-}
+  html {
+    /* min-height: 100%; */
+    /* background: #f2f2f2; */
+  }
+  .layout-content {
+    min-height: 100%;
+    width: 100%;
+    background: #f2f2f2;
+    padding-top: 20px;
+  }
+  .ivu-card {
+    width: 80%;
+    /* height: 100px; */
+    /* display: inline-block; */
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+  .options {
+    border: none !important;
+    margin-top: 10px;
+    display: flex !important;
+    justify-content: center;
+  }
 </style>

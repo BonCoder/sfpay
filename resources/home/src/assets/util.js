@@ -1,6 +1,8 @@
 import axios from 'axios';
 import index from '../router/index';
 import qs from 'qs';
+import iview from 'iview';
+import 'iview/dist/styles/iview.css';
 
 axios.defaults.timeout = 8000;
 axios.defaults.baseURL = 'http://www.shenfupay.net/api/';
@@ -26,10 +28,6 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    if (response.data.code === -1) {
-      localStorage.removeItem('userInfo')
-      location.reload()
-    }
     return response;
   },
   error => {
@@ -57,7 +55,7 @@ const ajax = option => {
     // params: option.data || {},
     // errorCallBack:option.errorCallBack
   }
-  if(option.method=='post' || option.method=="POST"){
+  if(option.method =='post' || option.method =="POST"){
     data.data = option.data || {}
   }else{
     data.params = option.data || {}

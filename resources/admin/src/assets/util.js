@@ -1,7 +1,10 @@
 import axios from 'axios';
 import index from '../router/index';
 import qs from 'qs';
+import iview from 'iview';
+import 'iview/dist/styles/iview.css';
 
+let page =true
 axios.defaults.timeout = 8000;
 axios.defaults.baseURL = 'http://www.shenfupay.net/api/';
 // axios.defaults.baseURL = 'http://www.sfpay.com/api/';
@@ -26,10 +29,6 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    if (response.data.code === -1) {
-      localStorage.removeItem('user')
-      location.reload()
-    }
     return response;
   },
   error => {
@@ -51,6 +50,14 @@ axios.interceptors.response.use(
 )
 
 const ajax = option => {
+  if (option.data.offset&&option.data.offset ==0){
+    page = true
+  }else if(!option.data.offset){
+    page = true
+  }
+  if (!page){
+    return false
+  }
   let data = {
     url: option.url, //接口
     method: option.method || "get",
@@ -65,11 +72,12 @@ const ajax = option => {
   axios(data)
     .then(r => {
       //成功回调
-      //成功回调
-      if (r.data.data.length === 0) {
+      if (r.data.data && r.data.data.length === 0 ) {
         iview.Message.info('没有更多数据')
-        return false
+          page=false
+          return false
       }
+
       typeof option.then === 'function' && option.then(r.data)
     })
   // .catch(r => {
