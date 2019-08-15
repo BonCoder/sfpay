@@ -75,7 +75,9 @@
                                 <td>{{d[i].money}}</td>
                                 <td>{{d[i].count}}</td>
                                 <td>{{d[i].filename}}</td>
-                                <td>{{d[i].create_time}}</td>
+                                    <td>
+                                        <input placeholder="上传日期" class="form-control" value="{{d[i].create_time}}" id="daoru_{{d[i].id}}" name="start" onblur="changeTime({{d[i].id}})">
+                                    </td>
                                 <td>
                                     <a onclick="getDaoruDetail({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
                                         <i class="fa fa-send-o"></i> 查看</a>&nbsp;&nbsp;
@@ -260,6 +262,18 @@
         $('#picihao').val('');
         $('#count').val('');
         $('#end').val('');
+    }
+
+    function changeTime(id) {
+        var create_time = $('#daoru_'+id).val();
+        $.post('{:url("Daoru/changeTime")}', {
+            id:id,
+            create_time:create_time
+        }, function (res) {
+            if (res.code !== 1){
+                layer.msg('时间格式不正确', {icon: 5});
+            }
+        });
     }
 
 </script>

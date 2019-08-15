@@ -25,6 +25,9 @@ class Chong extends Base
             if ($type = input('type', '')) {
                 $map['type'] = $type;
             }
+            if ($account = input('account', '')){
+                $map['member_id'] = MemberModel::where('account', $account)->value('id') ?? 0;
+            }
             $start = input('start', '');
             $end = input('end', '');
             if ($start && $end) {
@@ -85,5 +88,25 @@ class Chong extends Base
         $this->assign(compact('member'));
 
         return $this->fetch();
+    }
+
+    /**
+     * 修改时间
+     *
+     * @return \think\response\Json
+     * @author  Bob<bob@bobcoder.cc>
+     */
+    public function changeTime()
+    {
+        $id = (int)$this->request->post('id');
+        $create_time = $this->request->post('create_time');
+        if (date('Y-m-d H:i:s', strtotime($create_time)) != $create_time) {
+            return json(['code' => 0, 'msg' => '时间格式不正确']);
+        }
+
+        $daoru = new ChongZhiModel();
+        $daoru->where('id', $id)->update(['create_time' => strtotime($create_time)]);
+
+        return json(['code' => 1, 'msg' => '修改成功']);
     }
 }

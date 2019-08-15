@@ -17,10 +17,10 @@
         </div>
       </div>
 
-      <i-button type="error" @click="del(props[0].id)">
-        <Icon type="ios-trash" size="18"></Icon>
-        <span>删除</span>
-      </i-button>
+      <!--<i-button type="error" @click="del(props[0].id)">-->
+        <!--<Icon type="ios-trash" size="18"></Icon>-->
+        <!--<span>删除</span>-->
+      <!--</i-button>-->
     </Card>
     <!-- <Page :total="40" size="small" show-total></Page> -->
   </div>
