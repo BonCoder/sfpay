@@ -8,6 +8,7 @@ import pRepayRecord from '@/components/p_repay_cord'
 import changepsw from '@/components/changepsw'
 import log from '@/components/log.vue'
 import login from '@/components/login'
+import chongzhi from '@/components/chongzhi'
 
 Vue.use(Router)
 
@@ -28,6 +29,12 @@ export default new Router({
       path: '/pay_record/:name',
       name: '批次管理',
       component: payRecord
+    }
+    ,
+    {
+      path: '/chongzhi/:name',
+      name: '充值记录',
+      component: chongzhi
     }
     ,
     {
