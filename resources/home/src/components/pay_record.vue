@@ -21,7 +21,7 @@
       </Form-item>
       <Form-item>
         <i-select placeholder="请选择类型" ref="select" @on-change="chage" clearable>
-          <Option v-for="(item,i) in options" :key="i" :value="i">{{item}}</Option>
+          <Option v-for="(item,i) in options" :key="i" :value="i+1">{{item}}</Option>
         </i-select>
       </Form-item>
       <i-button type="success" size="large" @click="search">查询</i-button>
