@@ -106,6 +106,7 @@ export default {
           this.$Message.success('审核成功');
           this.page=0;
           this.query.offset =0;
+          this.list = [];
           that.getData()
         }
       })
