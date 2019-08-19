@@ -112,11 +112,11 @@ export default {
         url:"daoru/detail",
         data:{id:this.list[i][0].id},
         then:r=>{
-          console.log(r)
           if(r.data.length==0){
             that.$Message.info('没有更多数据')
             return false
           }
+          that.seeList = [];
           r.data.forEach((val, i) => {
             let str;
             switch (val.status) {

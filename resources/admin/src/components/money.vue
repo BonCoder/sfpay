@@ -2,6 +2,9 @@
   <div class="layout-content" @scroll="scroll($event)" ref="wrap">
     <i-form inline v-show="show">
       <Form-item>
+        <i-input v-model="query.account" placeholder="请输入账号" number></i-input>
+      </Form-item>
+      <Form-item>
         <i-input v-model="query.money" placeholder="请输入金额" number></i-input>
       </Form-item>
       <Form-item>
@@ -100,6 +103,9 @@ export default {
           status:s
         },
         then:r=>{
+          this.$Message.success('审核成功');
+          this.page=0;
+          this.query.offset =0;
           that.getData()
         }
       })

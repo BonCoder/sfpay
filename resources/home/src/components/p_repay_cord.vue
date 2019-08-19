@@ -153,6 +153,7 @@
               that.$Message.info("没有更多数据");
               return false;
             }
+            that.seeList = [];
             r.data.forEach((val, i) => {
               let str;
               switch (val.status) {
