@@ -175,6 +175,7 @@
         });
       },
       format(props) {
+
         let arr = [
           { name: "公司名称", value:'', check: true ,key:"nickname"},
           { name: "费率", value: '', check: true ,key:"rate"},
@@ -192,6 +193,9 @@
             obj.value = "";
           }else{
             obj[obj.key] = obj.value
+            if (val.id){
+              obj.id= val.id
+            }
           }
           if (val.check) {
             this.formData.push(obj);
@@ -207,6 +211,9 @@
         let that = this
         this.formData.forEach(val=>{
           obj[val.key] = val[val.key]
+          if(val.id){
+            obj.id = val.id
+          }
         })
         this.$ajax({
           url:"member/save",
