@@ -33,10 +33,10 @@ class Base extends Controller
      * @param int $statusCode
      * @return Json
      */
-    public function sendError($code = 0, $message = '', $statusCode = 422){
+    public function sendError($message = '', $statusCode = 422){
 
         $headers = ['content-type' => 'application/json'];
-        return json(['code' => $code, 'msg' => $message], $statusCode)->header($headers);
+        return json(['code' => 0, 'msg' => $message], $statusCode)->header($headers);
     }
 
     /**

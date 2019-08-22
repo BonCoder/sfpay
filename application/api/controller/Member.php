@@ -90,7 +90,7 @@ class Member extends Base
         $id = $this->request->post('id', '');
         $remark = $this->request->post('remark','');
         if (!$id){
-            return $this->sendError(0,'ID不能为空');
+            return $this->sendError('ID不能为空');
         }
         if (!$money || !is_numeric($money)) {
             return json(['code' => 0, 'data' => '', 'msg' => '请输入正确的金额！']);

@@ -39,6 +39,7 @@ class Daifu extends Base
         $offset = (int)$this->request->get('offset', 0);
 
         $map = [];
+        isset($get['account']) && $get['account'] ? $map['account'] =  $get['account'] : false;
         isset($get['money']) && $get['money'] ? $map['money'] =  $get['money'] : false;
         isset($get['member_id']) && $get['member_id'] ? $map['member_id'] =  $get['member_id'] : false;
         isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] =  $get['bank_card'] : false;
@@ -72,6 +73,7 @@ class Daifu extends Base
         $offset = (int)$this->request->get('offset', 0);
 
         $map = [];
+        isset($get['account']) && $get['account'] ? $map['account'] =  $get['account'] : false;
         isset($get['money']) && $get['money'] ? $map['money'] =  $get['money'] : false;
         isset($get['member_id']) && $get['member_id'] ? $map['member_id'] =  $get['member_id'] : false;
         isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] =  $get['bank_card'] : false;
