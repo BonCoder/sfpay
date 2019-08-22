@@ -23,7 +23,6 @@ export default {
     };
   },
   created(){
-      console.log(this.$route)
       if(this.$route.params.name=="修改登陆密码"){
           this.isLogin =true
       }

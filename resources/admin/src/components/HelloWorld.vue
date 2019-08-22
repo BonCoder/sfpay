@@ -28,7 +28,7 @@
       <div class="options">
         <i-button icon="md-settings" @click="format(props)" size="small">设置</i-button>
         <i-button icon="logo-yen" type="primary" size="small" @click="topay(props)" ghost>充值</i-button>
-        <i-button icon="ios-trash-outline" size="small" type="error" @click="del(props.id)">删除</i-button>
+        <i-button icon="ios-trash-outline" size="small" type="error" @click="del(props[0].id)">删除</i-button>
       </div>
     </Card>
     <i-form v-show="payStatus" class="form">
@@ -104,9 +104,15 @@
           data:this.pay,
           method:"POST",
           then:r=>{
-            that.$Message.info('充值成功')
-            that.status = false
-            that.pay={}
+            that.$Message.success({
+              content: '充值成功', duration: 1, onClose: function () {
+                that.payStatus = false
+                that.pay={}
+                that.list = [];
+                that.page = 0;
+                that.getData()
+              }
+            })
           }
         })
       },
@@ -116,11 +122,16 @@
           url:"member/del_member",
           data:{id:id},
           method:"post",
-          then:r=>{
-            that.$Message.info('操作成功')
-            that.getData()
+          then:r=> {
+            that.$Message.success({
+              content: '操作成功', duration: 1, onClose: function () {
+                that.list = [];
+                that.page = 0;
+                that.getData()
+              }
+            })
           }
-        })
+        });
       },
       back() {
         this.status = false;
@@ -220,8 +231,14 @@
           data:obj,
           method:"post",
           then:r=>{
-            that.cancel()
-            that.getData()
+            that.$Message.success({
+              content: '操作成功', duration: 1, onClose: function () {
+                that.list = [];
+                that.page = 0;
+                that.cancel()
+                that.getData()
+              }
+            })
           }
         })
       },
