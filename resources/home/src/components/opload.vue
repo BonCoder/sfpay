@@ -15,11 +15,11 @@
       >
         <i-button type="ghost" size="large" accept="xlsx" style="color:green">导入EXCEL文件</i-button>
       </Upload>
-    <Form-item label="密码">
-      <i-input type="password" v-model="psw.password" placeholder="请输入密码"></i-input>
+    <Form-item label="交易密码">
+      <i-input type="password" v-model="psw.password" placeholder="请输入交易密码"></i-input>
     </Form-item>
     <Form-item>
-      <i-button type="success" size="large" @click="search">查询</i-button>
+      <i-button type="success" size="large" @click="search">导入</i-button>
       <i-button type="default" size="large" @click="reset">取消</i-button>
     </Form-item>
   </i-form>
@@ -34,7 +34,7 @@ export default {
       },
       list:[],
       headers:{
-        Authorization: 'Home ' + JSON.parse(localStorage.getItem('user_a')).data.access_token
+        Authorization: 'Home ' + JSON.parse(localStorage.getItem('userInfo')).data.access_token
       }
     }
   },
@@ -60,6 +60,10 @@ export default {
     search(){
       if(this.list.length==0){
         this.$Message.error('请选择文件')
+        return false
+      }
+      if(!this.psw.password){
+        this.$Message.error('请输入交易密码')
         return false
       }
       this.$refs.upload.post(this.list[0]);
