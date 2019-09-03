@@ -153,7 +153,7 @@ class ChongZhiModel extends Model
         Db::name('chongzhi')->insert($data);
 
         //修改用户余额
-        return MemberModel::money(session('uid'), $data['money']);
+        return MemberModel::money($member_id, $data['money']);
     }
 
     /**
