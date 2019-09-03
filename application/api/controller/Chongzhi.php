@@ -44,6 +44,7 @@ class Chongzhi extends Base
             ->where($map)
             ->where('member_id', $this->request->user->id)
             ->limit($offset, $limit)
+            ->order('create_time','desc')
             ->select();
 
         return $this->sendJson($list);
@@ -118,6 +119,7 @@ class Chongzhi extends Base
         $list = $chongzhi->with('user2')
             ->where($map)
             ->limit($offset, $limit)
+            ->order('create_time','desc')
             ->select();
 
         return $this->sendJson($list);
