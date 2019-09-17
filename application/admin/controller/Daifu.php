@@ -38,7 +38,6 @@ class Daifu extends Base
         if ($request->isGet()) {
             return $this->fetch();
         }
-
         $daifu = new DaifuModel();
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = 10;// 获取总条数
@@ -169,12 +168,13 @@ class Daifu extends Base
     public function member_index()
     {
         if (request()->isPost()) {
+            $map = [];
             if ($money = input('money', '')) $map['think_daifu.money'] = $money;
             if ($bank_card = input('bank_card', '')) $map['think_daifu.bank_card'] = $bank_card;
             if ($shenfenzheng = input('shenfenzheng', '')) $map['think_daifu.shenfenzheng'] = $shenfenzheng;
             if ($bank_name = input('bank_name', '')) $map['think_daifu.bank_name'] = $bank_name;
 
-            $map = ['think_daifu.member_id' => session('uid')];
+            $map['think_daifu.member_id'] = session('uid');
             $daifu = new DaifuModel();
             $Nowpage = input('get.page') ? input('get.page') : 1;
             $limits = 10;// 获取总条数
