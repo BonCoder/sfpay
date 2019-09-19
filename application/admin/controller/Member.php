@@ -225,6 +225,11 @@ class Member extends Base
     {
         $id = input('param.id');
         if ($request->isAjax()) {
+            $key = 'recharge';
+            if (cache($key)){
+                return json(['code' => 2, 'data' => '', 'msg' => '老板，请稍等3秒钟~']);
+            }
+            cache($key, $key, 60);
             $data = $request->post();
             if (!is_numeric($data['money'])) {
                 return json(['code' => 0, 'data' => '', 'msg' => '请输入正确的金额！']);
@@ -234,6 +239,7 @@ class Member extends Base
             if ($res) {
                 $username = MemberModel::where('id',$id)->value('account');
                 writelog(session('uid'), session('username'), '用户【' . $username . '】充值金额' . $data['money'], 1);
+
                 return json(['code' => 1, 'data' => '', 'msg' => '充值成功']);
             }
 

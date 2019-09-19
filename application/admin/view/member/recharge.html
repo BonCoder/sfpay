@@ -2,9 +2,23 @@
 <link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
 <link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
 <style>
-    .file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
-    .file-item .info{overflow: hidden;}
-    .uploader-list{width: 100%; overflow: hidden;}
+    .file-item {
+        float: left;
+        position: relative;
+        width: 110px;
+        height: 110px;
+        margin: 0 20px 20px 0;
+        padding: 4px;
+    }
+
+    .file-item .info {
+        overflow: hidden;
+    }
+
+    .uploader-list {
+        width: 100%;
+        overflow: hidden;
+    }
 </style>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -20,7 +34,8 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal" name="recharge" id="recharge" method="post" action="{:url('recharge')}">
+                    <form class="form-horizontal" name="recharge" id="recharge" method="post"
+                          action="{:url('recharge')}">
                         <input type="hidden" name="id" value="{$id}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">金额：</label>
@@ -38,7 +53,8 @@
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
-                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i>
+                                    返回</a>
                             </div>
                         </div>
                     </form>
@@ -51,29 +67,32 @@
 
 <script type="text/javascript">
     //提交
-    $(function(){
+    $(function () {
         $('#recharge').ajaxForm({
             beforeSubmit: checkForm,
             success: complete,
             dataType: 'json'
         });
 
-        function checkForm(){
-            if( '' == $.trim($('#money').val())){
-                layer.msg('请输入充值金额',{icon:2,time:1500,shade: 0.1}, function(index){
+        function checkForm() {
+            if ('' == $.trim($('#money').val())) {
+                layer.msg('请输入充值金额', {icon: 2, time: 1500, shade: 0.1}, function (index) {
                     layer.close(index);
                 });
                 return false;
             }
         }
 
-        function complete(data){
-            if(data.code==1){
-                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
-                    window.location.href="{:url('member/index')}";
+        function complete(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
+                    window.location.href = "{:url('member/index')}";
                 });
-            }else{
-                layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1});
+            } else if (data.code === 2) {
+                layer.msg(data.msg, {icon: 4, time: 1500, shade: 0.1});
+                return false;
+            } else {
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1});
                 return false;
             }
         }
