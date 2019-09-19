@@ -229,7 +229,7 @@ class Member extends Base
             if (cache($key)){
                 return json(['code' => 2, 'data' => '', 'msg' => '老板，请稍等3秒钟~']);
             }
-            cache($key, $key, 60);
+            cache($key, $key, 5);
             $data = $request->post();
             if (!is_numeric($data['money'])) {
                 return json(['code' => 0, 'data' => '', 'msg' => '请输入正确的金额！']);
