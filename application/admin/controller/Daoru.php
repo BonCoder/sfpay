@@ -170,8 +170,8 @@ class Daoru extends Base
                 $need = array_values($value);
                 $danp = $need[3];
                 //如果excel表格的金额数据格式不对
-                if (!is_numeric((float)$danp)) {
-                    return json(['code' => 0, 'msg' => 'excel文件导入失败，导入数值格式不对！']);
+                if (!is_numeric((float)$danp) || !$danp || floatval($danp) < 0) {
+                    return json(['code' => 0, 'msg' => 'excel文件导入失败，导入金额格式不对！']);
                 }
                 $money += floatval($danp);  //总金额增加
             }
