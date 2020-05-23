@@ -225,7 +225,7 @@ class Member extends Base
     {
         $id = input('param.id');
         if ($request->isAjax()) {
-            $key = 'recharge';
+            $key = 'recharge_'.$id;
             if (cache($key)){
                 return json(['code' => 2, 'data' => '', 'msg' => '老板，请稍等3秒钟~']);
             }

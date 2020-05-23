@@ -13,7 +13,7 @@ class Base extends Controller
         if (Request::instance()->isMobile()){
             $this->redirect(url('home/wap/admin'));
         }
-        if (!session('uid')) {
+        if(!session('uid') && request()->ip() != session('ip')){
             $this->redirect(url('login/index'));
         }
 

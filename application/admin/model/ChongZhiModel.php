@@ -8,6 +8,7 @@
 
 namespace app\admin\model;
 
+use think\Cache;
 use think\Db;
 use think\Model;
 
@@ -169,12 +170,18 @@ class ChongZhiModel extends Model
         $data['money'] = $money;
         $data['type'] = 1;
         $data['member_id'] = $user_id;
-        $data['beizhu'] = $remark ?? '';
+        $data['beizhu'] = $remark ;
         $data['create_time'] = time();
         //插入充值记录
         Db::name('chongzhi')->insert($data);
         //修改用户余额
-        return MemberModel::money($user_id, $data['money']);
+        if ($amount = Cache::get('money') > 0){
+            $user = MemberModel::where('id', $user_id)->find();
+            $user->money = $user->money + $money - $amount;
+            return $user->save();
+        } else {
+            return MemberModel::money($user_id, $data['money']);
+        }
     }
 
 }

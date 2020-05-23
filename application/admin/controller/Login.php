@@ -67,6 +67,7 @@ class Login extends Controller
         session('rule', $info['rules']);  //角色节点
         session('name', $info['name']);  //角色权限
         session('auth', 'admin');
+        session('ip', request()->ip());
 
         //更新管理员状态
         $param = [

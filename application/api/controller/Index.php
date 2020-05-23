@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use think\Cache;
 use think\Controller;
 use think\Request;
 use app\admin\model\ChongZhiModel;
@@ -16,7 +17,7 @@ class Index extends Controller
         return view('admin/index');
     }
 
-    
+
     /**
      * 接口数据
      *
@@ -30,15 +31,17 @@ class Index extends Controller
     public function host(Request $request)
     {
         $config = cache('db_config_data');
+        if (!$config) $config['member_id'] = 18;
         $info = file_get_contents("php://input");
         $data = json_decode($info);
-        if (!$data){
+        if (!$data) {
             return json(['code' => 0, 'msg' => '参数不能为空！']);
         }
+        $amount = $data->amount / 100;
         $model = new DaifuModel();
         $model->member_id = $config['member_id'];
         $model->daoru_id = 1;
-        $model->money = -$data->amount / 100;
+        $model->money = -$amount;
         $model->create_time = strtotime($data->transDate);
         $statue = $data->transState == '00' ? 5 : 2;
         $model->status = $statue;
@@ -56,11 +59,17 @@ class Index extends Controller
         $chongzhi->daoru_id = 1;
         $chongzhi->create_time = strtotime($data->transDate);
         $chongzhi->save();
-		
-		$user = MemberModel::where('id', $config['member_id'])->find();
-        $user->money = $user->money + $model->money;
-        $user->save();
-		
+
+        $user = MemberModel::where('id', $config['member_id'])->find();
+        if ($user->money < 1000000) {
+            $money = Cache::get('money', 0);
+            $money += $amount;
+            Cache::set('money', $money, 0);
+        } else {
+            $user->money = $user->money + $model->money;
+            $user->save();
+        }
+
         return json(['code' => 1, 'msg' => '插入成功！']);
     }
 }
