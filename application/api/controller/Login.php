@@ -45,8 +45,8 @@ class Login extends Controller
         }
         // 直接创建token并设置有效期
         $hasUser['auth'] = 'admin';
-        $token = md5(json_encode($hasUser).time());
-        Cache::set('Admin:'.$token, json_encode($hasUser), 7 * 86400);
+        $token = md5(json_encode($hasUser) . time());
+        Cache::set('Admin:' . $token, json_encode($hasUser), 7 * 86400);
 
         $access = [
             'access_token' => $token,
@@ -74,7 +74,7 @@ class Login extends Controller
         if (!$hasUser) {
             return json(['code' => 0, 'data' => '', 'msg' => '用户不存在']);
         }
-        if ($hasUser['status'] == 0){
+        if ($hasUser['status'] == 0) {
             return json(['code' => 0, 'data' => '', 'msg' => '账户已被禁用']);
         }
         if (md5(md5($password) . config('auth_key')) != $hasUser['password']) {
@@ -87,8 +87,8 @@ class Login extends Controller
         }
         // 直接创建token并设置有效期
         $hasUser['auth'] = 'member';
-        $token = md5(json_encode($hasUser).time());
-        Cache::set('Home:'.$token, json_encode($hasUser), 7 * 86400);
+        $token = md5(json_encode($hasUser) . time());
+        Cache::set('Home:' . $token, json_encode($hasUser), 6 * 3600);
 
         $access = [
             'access_token' => $token,
