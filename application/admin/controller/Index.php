@@ -31,8 +31,7 @@ class Index extends Base
         if(session('auth') == 'user'){
             //余额
             $money = number_format(MemberModel::where('id',session('uid'))->value('money')  ?? 0,2);
-            //欠款累积金额
-            $amount = Cache::get('money', 0);
+
             //最近一个月充值
             $chongzhi = number_format(ChongZhiModel::where('member_id',session('uid'))
                     ->where('type',1)
@@ -45,7 +44,7 @@ class Index extends Base
                     ->sum('money') ?? 0,2);
         }
 
-        $this->assign(compact('money', 'chongzhi','daifu', 'amount'));
+        $this->assign(compact('money', 'chongzhi','daifu'));
         $this->assign('info',$info);
         return $this->fetch('index');
     }

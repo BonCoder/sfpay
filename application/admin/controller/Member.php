@@ -6,6 +6,7 @@ use app\admin\model\ChongZhiModel;
 use app\admin\model\MemberModel;
 use app\admin\model\MemberGroupModel;
 use app\admin\model\RechargeModel;
+use think\Cache;
 use think\Db;
 use think\Request;
 
@@ -115,11 +116,14 @@ class Member extends Base
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = 10;// 获取总条数
         $count = $member->getAllCount($map);//计算总页面
+        //欠款累积金额
+        $amount = Cache::get('money', 0);
         $allpage = intval(ceil($count / $limits));
         $lists = $member->getMemberByWhere($map, $Nowpage, $limits);
         $this->assign('Nowpage', $Nowpage); //当前页
         $this->assign('allpage', $allpage); //总页数 
         $this->assign('val', $key);
+        $this->assign('amount', $amount);
         if (input('get.page')) {
             return json($lists);
         }
