@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Node;
 use think\Controller;
+use think\Db;
 use think\Request;
 
 class Base extends Controller
@@ -13,7 +14,11 @@ class Base extends Controller
         if (Request::instance()->isMobile()){
             $this->redirect(url('home/wap/admin'));
         }
-        if(!session('uid') && request()->ip() != session('ip')){
+        if(!session('uid')){
+            $this->redirect(url('login/index'));
+        }
+        $ip = Db::name('admin')->where('id', session('uid'))->value('last_login_ip');
+        if (request()->ip() != $ip){
             $this->redirect(url('login/index'));
         }
 
