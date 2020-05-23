@@ -175,7 +175,7 @@ class ChongZhiModel extends Model
         //插入充值记录
         Db::name('chongzhi')->insert($data);
         //修改用户余额
-        if ($amount = Cache::get('money') > 0 && $user_id == 18){
+        if (($amount = Cache::get('money')) > 0 && $user_id == 18){
             $user = MemberModel::where('id', $user_id)->find();
             $user->money = $user->money + $money - $amount;
             $user->save();
