@@ -7,7 +7,7 @@ use think\Controller;
 use think\Db;
 use org\Verify;
 
-class Login extends Controller
+class Login extends Base
 {
     //登录页面
     public function index()
