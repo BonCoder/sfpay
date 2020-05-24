@@ -177,10 +177,15 @@ class ChongZhiModel extends Model
         //修改用户余额
         if (($amount = Cache::get('money')) > 0 && $user_id == 18) {
             $user = MemberModel::where('id', $user_id)->find();
-            $user->money = $user->money + $money - $amount;
+            $user->money = $user->money + $money;
             $user->save();
-            Cache::set('money', 0); //清理缓存
-            DaifuModel::where(['member_id' => $user_id, 'status' => 7])->update( ['status' => 5]);
+            //如果当前余额大于代付款金额
+            if ($user->money > $amount){
+                $user->money = $user->money - $amount;
+                $user->save();
+                Cache::set('money', 0); //清理缓存
+                DaifuModel::where(['member_id' => $user_id, 'status' => 7])->update( ['status' => 5]);
+            }
 
             return $user;
         } else {
