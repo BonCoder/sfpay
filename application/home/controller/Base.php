@@ -12,9 +12,9 @@ class Base extends Controller
         if (Request::instance()->isMobile()){
             $this->redirect(url('wap/home'));
         }
-//        if(!session('uid')){
-//            $this->redirect(url('login/index'));
-//        }
+        if(!session('uid')){
+            $this->redirect(url('login/index'));
+        }
 
         $auth = new \com\Auth();
         $module     = strtolower(request()->module());

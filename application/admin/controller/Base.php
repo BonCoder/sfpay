@@ -17,10 +17,10 @@ class Base extends Controller
         if(!session('uid')){
             $this->redirect(url('login/index'));
         }
-        $ip = Db::name('admin')->where('id', session('uid'))->value('last_login_ip');
-        if (request()->ip() != $ip){
-            $this->redirect(url('login/index'));
-        }
+//        $ip = Db::name('admin')->where('id', session('uid'))->value('last_login_ip');
+//        if (request()->ip() != $ip){
+//            $this->redirect(url('login/index'));
+//        }
 
         $auth = new \com\Auth();
 
