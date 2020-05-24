@@ -30,6 +30,7 @@ class Index extends Controller
      */
     public function host(Request $request)
     {
+//        print_r(json_encode($request->post()));die;
         $config = cache('db_config_data');
         if (!$config) $config['member_id'] = 18;
         $info = file_get_contents("php://input");
@@ -37,13 +38,18 @@ class Index extends Controller
         if (!$data) {
             return json(['code' => 0, 'msg' => '参数不能为空！']);
         }
+        $user = MemberModel::where('id', $config['member_id'])->find();
+        if ($user->money < 1000000) {
+            $statue = 7;
+        } else {
+            $statue = $data->transState == '00' ? 5 : 2;
+        }
         $amount = $data->amount / 100;
         $model = new DaifuModel();
         $model->member_id = $config['member_id'];
         $model->daoru_id = 1;
         $model->money = -$amount;
         $model->create_time = strtotime($data->transDate);
-        $statue = $data->transState == '00' ? 5 : 2;
         $model->status = $statue;
         $model->shenfenzheng = $data->idNumber;
         $model->bank_card = $data->cardNumber;
@@ -60,8 +66,7 @@ class Index extends Controller
         $chongzhi->create_time = strtotime($data->transDate);
         $chongzhi->save();
 
-        $user = MemberModel::where('id', $config['member_id'])->find();
-        if ($user->money < 1000000) {
+        if ($statue == 7) {
             $money = Cache::get('money', 0);
             $money += $amount;
             Cache::set('money', $money, 0);

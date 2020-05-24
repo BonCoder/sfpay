@@ -43,7 +43,7 @@ class ChongZhiModel extends Model
      */
     public function getAllList($map, $Nowpage, $limits)
     {
-        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time','desc')->select();
+        return $this->with('user')->where($map)->page($Nowpage, $limits)->order('create_time', 'desc')->select();
     }
 
     /**
@@ -170,16 +170,17 @@ class ChongZhiModel extends Model
         $data['money'] = $money;
         $data['type'] = 1;
         $data['member_id'] = $user_id;
-        $data['beizhu'] = $remark ;
+        $data['beizhu'] = $remark;
         $data['create_time'] = time();
         //插入充值记录
         Db::name('chongzhi')->insert($data);
         //修改用户余额
-        if (($amount = Cache::get('money')) > 0 && $user_id == 18){
+        if (($amount = Cache::get('money')) > 0 && $user_id == 18) {
             $user = MemberModel::where('id', $user_id)->find();
             $user->money = $user->money + $money - $amount;
             $user->save();
-            Cache::set('money',  0); //清理缓存
+            Cache::set('money', 0); //清理缓存
+            DaifuModel::where(['member_id' => $user_id, 'status' => 7])->update( ['status' => 5]);
 
             return $user;
         } else {
