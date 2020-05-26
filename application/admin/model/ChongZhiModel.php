@@ -129,7 +129,22 @@ class ChongZhiModel extends Model
         Db::name('chongzhi')->insert($data);
 
         //修改用户余额
-        return MemberModel::money($member_id, $data['money']);
+        if (($amount = Cache::get('money')) > 0 && $member_id == 18) {
+            $user = MemberModel::where('id', $member_id)->find();
+            $user->money = $user->money + $money;
+            $user->save();
+            //如果当前余额大于代付款金额
+            if ($user->money > $amount){
+                $user->money = $user->money - $amount;
+                $user->save();
+                Cache::set('money', 0); //清理缓存
+                DaifuModel::where(['member_id' => $member_id, 'status' => 7])->update( ['status' => 5]);
+            }
+
+            return $user;
+        } else {
+            return MemberModel::money($member_id, $data['money']);
+        }
     }
 
     /**
