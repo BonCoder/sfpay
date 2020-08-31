@@ -183,7 +183,7 @@ class MemberModel extends Model
         if ($id == 18) {
             $status = self::where('id', $id)->setInc('money', $money);
             $user = MemberModel::where('id', $id)->find();
-            writelog($id, $user->username, 'host转账过后余额：' . $user->money, 1);
+            writelog($id, $user->nickname, 'host转账过后余额：' . $user->money, 1);
             return $status;
         } else {
             return self::where('id', $id)->setInc('money', $money);
