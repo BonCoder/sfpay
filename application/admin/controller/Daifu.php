@@ -45,7 +45,7 @@ class Daifu extends Base
             ->field('think_daifu.*,think_member.account,think_member.nickname')
             ->join('think_member', 'think_daifu.member_id = think_member.id', 'left')
             ->where($map)
-            ->order('create_time','desc')
+            ->order('create_time', 'desc')
             ->paginate($limits);
 
         return json($lists);
@@ -81,7 +81,7 @@ class Daifu extends Base
             ->field('think_daifu.*,think_member.account,think_member.nickname')
             ->join('think_member', 'think_daifu.member_id = think_member.id', 'left')
             ->where($map)
-            ->order('create_time','desc')
+            ->order('create_time', 'desc')
             ->paginate($limits);
 
         return json($lists);
@@ -129,31 +129,38 @@ class Daifu extends Base
         switch ($daifu->status) {
             case 1:
                 $status = '待审核';
+                writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status, 1);
                 break;
             case 2:
                 //代付不成功返还
                 ChongZhiModel::chongzhi($daifu);
                 $status = '初审未通过';
+                writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status, 1);
                 break;
             case 3:
                 $status = '初审通过';
+                writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status, 1);
                 break;
             case 4:
                 //代付不成功返还
                 ChongZhiModel::chongzhi($daifu);
                 $status = '终审未通过';
+                writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status, 1);
                 break;
             case 5:
                 $status = '代付成功';
+                $money = MemberModel::where('id', $daifu->member_id)->value('money');
+                writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status . ',金额：' . $daifu->money . ',余额：' . $money, 1);
                 break;
             case 6:
                 //转账
                 ChongZhiModel::zhuanzhang($member_id, $daifu->money);
                 $status = '转账成功';
+                $money = MemberModel::where('id', $daifu->member_id)->value('money');
+                writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status . ',金额：' . $daifu->money . ',余额：' . $money, 1);
                 break;
         }
 
-        writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status .',金额：'.$daifu->money, 1);
     }
 
 
@@ -179,11 +186,11 @@ class Daifu extends Base
             $Nowpage = input('get.page') ? input('get.page') : 1;
             $limits = 10;// 获取总条数
             $lists = $daifu->getDaifuByWhere($map, $Nowpage, $limits);
-            if (session('uid') == cache('db_config_data')['member_id']){
-                $lists->each(function ($item){
-                    $item['bank_owner'] = mb_substr($item['bank_owner'], 0,1).'*';
-                    $item['shenfenzheng'] = substr($item['shenfenzheng'],0, 4).'**********'.substr($item['shenfenzheng'], -4);
-                    $item['bank_card'] = '**********'.substr($item['bank_card'], -4);
+            if (session('uid') == cache('db_config_data')['member_id']) {
+                $lists->each(function ($item) {
+                    $item['bank_owner'] = mb_substr($item['bank_owner'], 0, 1) . '*';
+                    $item['shenfenzheng'] = substr($item['shenfenzheng'], 0, 4) . '**********' . substr($item['shenfenzheng'], -4);
+                    $item['bank_card'] = '**********' . substr($item['bank_card'], -4);
                 });
             }
             return json($lists);
