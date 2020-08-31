@@ -158,9 +158,9 @@ class Daifu extends Base
                 $status = '转账成功';
                 break;
         }
-        $money = MemberModel::where('id', $daifu->member_id)->value('money');
+        $money = MemberModel::where('id', $daifu->member_id)->find();
 
-        writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status . ',金额：' . $daifu->money . ',余额：' . $money, 1);
+        writelog(session('uid'),$money->nickname, '代付：开户名【' . $daifu->bank_owner . '】' . $status . ',金额：' . $daifu->money . ',余额：' . $money, 1);
     }
 
     /**
