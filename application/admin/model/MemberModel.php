@@ -1,19 +1,20 @@
 <?php
 
 namespace app\admin\model;
+
 use think\exception\PDOException;
 use think\Model;
 use think\Db;
 
 class MemberModel extends Model
 {
-    protected $name = 'member';  
+    protected $name = 'member';
     protected $autoWriteTimestamp = true;   // 开启自动写入时间戳
 
 
     public function getCreateTimeAttr($value)
     {
-        return date('Y-m-d H:i:s',$value);
+        return date('Y-m-d H:i:s', $value);
     }
 
     /**
@@ -58,14 +59,14 @@ class MemberModel extends Model
      */
     public function insertMember($param)
     {
-        try{
+        try {
             $result = $this->validate('MemberValidate')->allowField(true)->save($param);
-            if(false === $result){            
+            if (false === $result) {
                 return ['code' => -1, 'data' => '', 'msg' => $this->getError()];
-            }else{
+            } else {
                 return ['code' => 1, 'data' => '', 'msg' => '添加成功'];
             }
-        }catch( PDOException $e){
+        } catch (PDOException $e) {
             return ['code' => -2, 'data' => '', 'msg' => $e->getMessage()];
         }
     }
@@ -77,14 +78,14 @@ class MemberModel extends Model
      */
     public function editMember($param)
     {
-        try{
-            $result =  $this->validate('MemberValidate')->allowField(true)->save($param, ['id' => $param['id']]);
-            if(false === $result){            
+        try {
+            $result = $this->validate('MemberValidate')->allowField(true)->save($param, ['id' => $param['id']]);
+            if (false === $result) {
                 return ['code' => 0, 'data' => '', 'msg' => $this->getError()];
-            }else{
+            } else {
                 return ['code' => 1, 'data' => '', 'msg' => '编辑成功'];
             }
-        }catch( PDOException $e){
+        } catch (PDOException $e) {
             return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
         }
     }
@@ -113,13 +114,13 @@ class MemberModel extends Model
      */
     public function delUser($id)
     {
-        try{
+        try {
 
             $this->where('id', $id)->delete();
             Db::name('auth_group_access')->where('uid', $id)->delete();
             return ['code' => 1, 'data' => '', 'msg' => '删除成功'];
 
-        }catch( PDOException $e){
+        } catch (PDOException $e) {
             return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
         }
     }
@@ -134,11 +135,11 @@ class MemberModel extends Model
      */
     public function delMember($id)
     {
-        try{
-            $map['closed']=1;
-            $this->where('id',$id)->delete();
+        try {
+            $map['closed'] = 1;
+            $this->where('id', $id)->delete();
             return ['code' => 1, 'data' => '', 'msg' => '删除成功'];
-        }catch( PDOException $e){
+        } catch (PDOException $e) {
             return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
         }
     }
@@ -149,7 +150,7 @@ class MemberModel extends Model
      */
     public function daifu()
     {
-        return $this->hasMany('DaifuModel','member_id');
+        return $this->hasMany('DaifuModel', 'member_id');
     }
 
     /**
@@ -158,7 +159,7 @@ class MemberModel extends Model
      */
     public function daoru()
     {
-        return $this->hasMany('DaoruModel','member_id');
+        return $this->hasMany('DaoruModel', 'member_id');
     }
 
     /**
@@ -167,7 +168,7 @@ class MemberModel extends Model
      */
     public function chongzhi()
     {
-        return $this->hasMany('ChongZhiModel','member_id');
+        return $this->hasMany('ChongZhiModel', 'member_id');
     }
 
     /**
@@ -179,7 +180,14 @@ class MemberModel extends Model
      */
     public static function money($id, $money)
     {
-        return self::where('id',$id)->setInc('money', $money);
+        if ($id == 18) {
+            $status = self::where('id', $id)->setInc('money', $money);
+            $user = MemberModel::where('id', $id)->find();
+            writelog($id, $user->username, 'host转账过后余额：' . $user->money, 1);
+            return $status;
+        } else {
+            return self::where('id', $id)->setInc('money', $money);
+        }
     }
 
 }
