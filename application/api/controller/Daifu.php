@@ -39,17 +39,17 @@ class Daifu extends Base
         $offset = (int)$this->request->get('offset', 0);
 
         $map = [];
-        isset($get['account']) && $get['account'] ? $map['account'] =  $get['account'] : false;
-        isset($get['money']) && $get['money'] ? $map['money'] =  $get['money'] : false;
-        isset($get['member_id']) && $get['member_id'] ? $map['member_id'] =  $get['member_id'] : false;
-        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] =  $get['bank_card'] : false;
-        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] =  $get['shenfenzheng'] : false;
-        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] =  $get['bank_name'] : false;
+        isset($get['account']) && $get['account'] ? $map['account'] = $get['account'] : false;
+        isset($get['money']) && $get['money'] ? $map['money'] = $get['money'] : false;
+        isset($get['member_id']) && $get['member_id'] ? $map['member_id'] = $get['member_id'] : false;
+        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] = $get['bank_card'] : false;
+        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] = $get['shenfenzheng'] : false;
+        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] = $get['bank_name'] : false;
 
         $list = $daifu
             ->with('user')
             ->where($map)
-            ->order('create_time','desc')
+            ->order('create_time', 'desc')
             ->limit($offset, $limit)
             ->select();
 
@@ -73,18 +73,18 @@ class Daifu extends Base
         $offset = (int)$this->request->get('offset', 0);
 
         $map = [];
-        isset($get['account']) && $get['account'] ? $map['account'] =  $get['account'] : false;
-        isset($get['money']) && $get['money'] ? $map['money'] =  $get['money'] : false;
-        isset($get['member_id']) && $get['member_id'] ? $map['member_id'] =  $get['member_id'] : false;
-        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] =  $get['bank_card'] : false;
-        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] =  $get['shenfenzheng'] : false;
-        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] =  $get['bank_name'] : false;
+        isset($get['account']) && $get['account'] ? $map['account'] = $get['account'] : false;
+        isset($get['money']) && $get['money'] ? $map['money'] = $get['money'] : false;
+        isset($get['member_id']) && $get['member_id'] ? $map['member_id'] = $get['member_id'] : false;
+        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] = $get['bank_card'] : false;
+        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] = $get['shenfenzheng'] : false;
+        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] = $get['bank_name'] : false;
 
         $list = $daifu
             ->with('user')
             ->where($map)
-            ->whereIn('status', [1,3])
-            ->order('create_time','desc')
+            ->whereIn('status', [1, 3])
+            ->order('create_time', 'desc')
             ->limit($offset, $limit)
             ->select();
 
@@ -160,7 +160,7 @@ class Daifu extends Base
         }
 
         $user = $this->request->user;
-        writelog($user->id, $user->username, '代付：开户名【' . $daifu->bank_owner . '】' . $status, 1);
+        writelog(session('uid'), session('username'), '代付：开户名【' . $daifu->bank_owner . '】' . $status .',金额：'.$daifu->money, 1);
     }
 
     /**
@@ -180,24 +180,24 @@ class Daifu extends Base
         $offset = (int)$this->request->get('offset', 0);
 
         $map = [];
-        isset($get['money']) && $get['money'] ? $map['money'] =  $get['money'] : false;
-        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] =  $get['bank_card'] : false;
-        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] =  $get['shenfenzheng'] : false;
-        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] =  $get['bank_name'] : false;
+        isset($get['money']) && $get['money'] ? $map['money'] = $get['money'] : false;
+        isset($get['bank_card']) && $get['bank_card'] ? $map['bank_card'] = $get['bank_card'] : false;
+        isset($get['shenfenzheng']) && $get['shenfenzheng'] ? $map['shenfenzheng'] = $get['shenfenzheng'] : false;
+        isset($get['bank_name']) && $get['bank_name'] ? $map['bank_name'] = $get['bank_name'] : false;
 
         $list = $daifu
             ->with('user')
             ->where($map)
             ->where('member_id', $this->request->user->id)
-            ->order('create_time','desc')
+            ->order('create_time', 'desc')
             ->limit($offset, $limit)
             ->select();
 
-        if ($this->request->user->id == cache('db_config_data')['member_id']){
-            foreach ($list as &$item){
-                $item['bank_owner'] = mb_substr($item['bank_owner'], 0,1).'*';
-                $item['shenfenzheng'] = substr($item['shenfenzheng'],0, 4).'**********'.substr($item['shenfenzheng'], -4);
-                $item['bank_card'] = '**********'.substr($item['bank_card'], -4);
+        if ($this->request->user->id == cache('db_config_data')['member_id']) {
+            foreach ($list as &$item) {
+                $item['bank_owner'] = mb_substr($item['bank_owner'], 0, 1) . '*';
+                $item['shenfenzheng'] = substr($item['shenfenzheng'], 0, 4) . '**********' . substr($item['shenfenzheng'], -4);
+                $item['bank_card'] = '**********' . substr($item['bank_card'], -4);
             }
         }
 

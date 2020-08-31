@@ -139,6 +139,8 @@ class ChongZhiModel extends Model
                 $user->save();
                 Cache::set('money', 0); //清理缓存
                 DaifuModel::where(['member_id' => $member_id, 'status' => 7])->update( ['status' => 5]);
+
+                writelog($user->id, $user->username, 'host账号清空欠款：'.$amount , 1);
             }
 
             return $user;
